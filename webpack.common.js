@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, 'src/scripts/index.js'),
+    app: path.resolve(__dirname, './src/app.js'),
   },
   output: {
     filename: '[name].bundle.js',
@@ -14,13 +14,31 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.css$/i,
+        exclude: /styles/,
+        use: ['to-string-loader', 'css-loader'],
+      },
+      {
+        test: /\.css$/i,
+        include: /styles/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'style-loader',
+            loader: 'file-loader',
           },
+        ],
+      },
+      {
+        test: /\.html$/i,
+        use: [
           {
-            loader: 'css-loader',
+            loader: 'html-loader',
+            options: {
+              minimize: true,
+            },
           },
         ],
       },

@@ -1,6 +1,6 @@
 import 'regenerator-runtime';
-import '../styles/style.css';
-import '../styles/responsive.css';
+import './views/components/navbar/navbar';
+import './views/components/jumbotron/jumbotron';
 import App from './views/app';
 
 const app = new App({
@@ -14,3 +14,5 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('load', () => {
   app.renderPage();
 });
+
+export default app;

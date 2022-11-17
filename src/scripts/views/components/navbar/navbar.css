@@ -1,0 +1,54 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 55px;
+    background-color: #270082;
+    padding: 0 35px;
+    color: #fff;
+    width: calc(100vw - 70px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .1);
+}
+
+.navbar > .navbar__logo > p {
+    font-family: 'Sacramento', cursive;
+    font-size: 2em;
+}
+.navbar > .navbar__list {
+    width: 30%;
+}
+.navbar > .navbar__list > ul {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.navbar > .navbar__list > ul > li {
+    list-style: none;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+}
+.navbar__account > button {
+    font-family: 'Raleway', sans-serif;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+    margin: 0 5px;
+}
+.navbar__account > button.login, 
+.navbar__account > button.started {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+
+ 
+.navbar__account > button.started {
+    /* border: 1px solid #fff; */
+    padding: 8px 12px;
+    border-radius: 3px;
+    background-color: #8E05C2;
+    font-size: 1.05em;
+}
