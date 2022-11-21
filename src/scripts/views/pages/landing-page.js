@@ -1,5 +1,8 @@
 import "../../../styles/landingpage.css";
 import ilustration1 from "../../../asset/illustration/work-together.png";
+import iconTask from "../../../asset/icons/icons8-task.png";
+import iconCollaboration from "../../../asset/icons/icons8-collaborating.png";
+import iconDashboard from "../../../asset/icons/icons8-dashboard.png";
 
 const LandingPage = {
   async render() {
@@ -24,17 +27,55 @@ const LandingPage = {
                   </div>
               </div>
           </div>
+          <div class="landing__page__addTask">
+              <h1>Add Task That <span>Matter To You</span></h1>
+              <div class="addTask__cardPromo">
+                  <div class="cardPromo">
+                      <div class="cardPromo__icon">
+                          <img src=${iconTask} alt="task icon" />
+                      </div>
+                      <div class="cardPromo__title">
+                          <h3>Add Task Efficiently</h3>
+                      </div>
+                      <div class="cardPromo__desc">
+                          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, autem? Inventore maxime, quam illo expedita totam repellendus nulla eius neque?</p>
+                      </div>
+                  </div>
+                  <div class="cardPromo">
+                      <div class="cardPromo__icon">
+                          <img src=${iconDashboard} alt="task icon" />
+                      </div>
+                      <div class="cardPromo__title">
+                          <h3>Easy Manage Your Team</h3>
+                      </div>
+                      <div class="cardPromo__desc">
+                          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, autem? Inventore maxime, quam illo expedita totam repellendus nulla eius neque?</p>
+                      </div>
+                  </div>
+                  <div class="cardPromo">
+                      <div class="cardPromo__icon">
+                          <img src=${iconCollaboration} alt="task icon" />
+                      </div>
+                      <div class="cardPromo__title">
+                          <h3>Collaborative Team Work</h3>
+                      </div>
+                      <div class="cardPromo__desc">
+                          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, autem? Inventore maxime, quam illo expedita totam repellendus nulla eius neque?</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
       </div>
     `;
   },
 
-//   async afterRender() {
-//     const landingContainer = document.querySelector('#landing__page');
-//     movies.forEach((movie) => {
-//       landingContainer.innerHTML += createMovieItemTemplate(movie);
-//     });
-//   },
+  //   async afterRender() {
+  //     const landingContainer = document.querySelector('#landing__page');
+  //     movies.forEach((movie) => {
+  //       landingContainer.innerHTML += createMovieItemTemplate(movie);
+  //     });
+  //   },
 };
 
 export default LandingPage;

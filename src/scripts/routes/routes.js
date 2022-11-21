@@ -1,7 +1,8 @@
 import LandingPage from '../views/pages/landing-page';
+import login from '../views/pages/login';
 
 const routes = {
-  '/': LandingPage, // default page
+  '/': login, // default page
 };
 
 export default routes;
