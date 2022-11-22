@@ -1,7 +1,7 @@
 import "../../../styles/login.css";
-import loginIlustration from "../../../asset/illustration/Data_security_26.png";
 import iconLogin from "../../../asset/icons/login-3d-icons.png";
 import iconLogin2 from "../../../asset/icons/login-3d-icons2.png";
+import iconLoginByGoogle from "../../../asset/icons/btn_google_signin_dark_pressed_web@2x.png";
 
 
 const Login = {
@@ -21,12 +21,18 @@ const Login = {
                 </form>
                 <button>Sign in</button>
             </div>
+            <div class="sigin__gogle">
+                <p>-- Or Sign in with --</p>
+                <div class="google__icon">
+                    <img src=${iconLoginByGoogle} alt="icon google" />
+                </div>
+            </div>
             <div class="form__doesnHaveAccount">
                 <p>Don't have account ? register now</p>
             </div>
           </div>
           </div>
-          <p>Copyright @Wgether 2022</p>
+          <p class="copyright">Copyright @Wgether 2022</p>
           <div class="login__ilustration">
             <img src=${iconLogin} alt="login ilustration" />
           </div>
