@@ -1,5 +1,143 @@
+@import  "tabulator-tables";
+
 .content__dashboard {
     display: flex;
     background-color: #F8FAFC;
-    height: 100vh;
+    min-height: 100vh;
+    overflow: scroll;
 }
+
+.dashboard__menu {
+    min-width: 80% ;
+    margin: 30px auto;
+}
+
+.menu__title > h1 {
+    font-size: 2.1em;
+    margin: 10px 0;
+}
+
+/* card */
+.menu__card__clients {
+    height: 25%;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+
+.clients__card {
+    height: 80%;
+    width: 20%;
+    background-color: #fff;
+    box-shadow: 0 0 18px rgba(0, 0, 0, .05);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card__icon > img {
+    height: 40px;
+    width: 40px;
+}
+
+.card__count > h1 {
+    font-size: 3em;
+}
+
+.card__title > p {
+    color: rgba(0, 0, 0, .8);
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+
+/* MYTASK */
+/* .dashboard__mytask {
+    width: 20%;
+    background-color: #fff;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .05);
+    border-radius: 15px 0 0 15px ;
+} */
+
+.menu__statistik {
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.statistik__donut,
+.statistik__lineChart {
+    width: 45%;
+    height: 80%;
+    background-color: #fff;
+    box-shadow: 0 0 18px rgba(0, 0, 0, .05);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+
+}
+
+.statistik__donut > h1 {
+    position: absolute;
+    top: 0px;
+}
+
+.statistik__donut > h1,
+.statistik__lineChart > h1 {
+    font-size: 1.2em;
+    margin-top: 15px;
+    color: rgba(0, 0, 0, .7);
+    letter-spacing: 1px;
+}
+
+.statistik__lineChart {
+    width: 52% !important;
+}
+
+
+/* table */
+
+.menu__table {
+    background-color: #fff;
+    box-shadow: 0 0 18px rgba(0, 0, 0, .05);
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+
+}
+
+.menu__table > h1 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.8em;
+}
+
+.tabulator {
+    border-radius: 5px;
+    background-color: #fff;
+    /* border: none; */
+}
+
+.tabulator-row {
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content {
+    white-space: normal;
+    background-color: #270082;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+
