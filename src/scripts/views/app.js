@@ -3,14 +3,16 @@ import UrlParser from '../routes/url-parser';
 import routes from '../routes/routes';
 
 class App {
-  constructor({ content }) {
+  constructor({ content, drawer }) {
     this._content = content;
+    this._drawer = drawer;
 
     this._initialAppShell();
   }
 
   _initialAppShell() {
     DrawerInitiator.init({
+      drawer: this._drawer,
       content: this._content,
     });
 

@@ -9,7 +9,6 @@ const LandingPage = {
     return `
       <div class="content">
         <div id="landing__page" class="landing__page">
-          <nav-bar></nav-bar>
           <jumbo-tron></jumbo-tron>
           <div class="landing__page__tryOurApp">
               <h1>Get and try the <span class="logo">Wgether </span> app for free</h1>

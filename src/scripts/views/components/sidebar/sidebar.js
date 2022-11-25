@@ -22,7 +22,7 @@ class sidebar extends HTMLElement {
         </style>
         <div class="sidebar">
             <div class="sidebar__logo">
-                <p>W<small>gther</small></p>
+                
             </div>
             <div class="sidebar__menu">
                 <ul>

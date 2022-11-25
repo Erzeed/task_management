@@ -1,7 +1,11 @@
 import "../../../styles/login.css";
 import iconLogin from "../../../asset/icons/43916.png";
 import iconLogin2 from "../../../asset/illustration/3d-register-illustration.png";
-
+import {
+  registerPage,
+  registerPageWithGogle,
+} from "../../globals/api-endpoint";
+import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
 
 const Register = {
   async render() {
@@ -17,12 +21,12 @@ const Register = {
                 <form>
                     <input type='email' id='email' placeholder="Email" /><br/>
                     <input type="password" id='password' placeholder="Password" /><br/>
-                    <input type="password" id='password' placeholder="Re-type Password" /><br/>
+                    <input type="password" id='password2' placeholder="Re-type Password" /><br/>
                 </form>
                 <button>Create Account</button>
             </div>
             <div class="form__doesnHaveAccount">
-                <p>Don't have account ? register now</p>
+                <p><a href="/#/login">Login Now</a></p>
             </div>
           </div>
           </div>
@@ -37,12 +41,51 @@ const Register = {
     `;
   },
 
-  //   async afterRender() {
-  //     const landingContainer = document.querySelector('#landing__page');
-  //     movies.forEach((movie) => {
-  //       landingContainer.innerHTML += createMovieItemTemplate(movie);
-  //     });
-  //   },
+  async afterRender() {
+    let pass = "";
+    let pass2 = "";
+    let data = {
+      email: "",
+      password: "",
+    };
+    const email = document.querySelector("#email");
+    const password = document.querySelector("#password");
+    const re_type_password = document.querySelector("#password2");
+    const button = document.querySelector(".form__input button");
+    email.addEventListener("change", (e) => {
+      data = {
+        ...data,
+        email: e.target.value,
+      };
+    });
+    password.addEventListener("change", (e) => {
+      pass = e.target.value;
+    });
+    re_type_password.addEventListener("change", (e) => {
+      pass2 = e.target.value;
+    });
+    button.addEventListener("click", async () => {
+      if (pass === pass2) {
+        data = {
+          ...data,
+          password: pass,
+        };
+        const response = await registerPage(data).catch((err) => err);
+        if (response.error === false) {
+          console.log(response);
+          validasiFormRegisLogin(response);
+          // setTimeout(() => {
+          //   navigate("/");
+          // }, 1610);
+        } else {
+          console.log(response);
+          validasiFormRegisLogin(response);
+        }
+      } else {
+        alert("password tidak cocok");
+      }
+    });
+  },
 };
 
 export default Register;

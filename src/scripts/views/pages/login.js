@@ -2,7 +2,11 @@ import "../../../styles/login.css";
 import iconLogin from "../../../asset/icons/login-3d-icons.png";
 import iconLogin2 from "../../../asset/icons/login-3d-icons2.png";
 import iconLoginByGoogle from "../../../asset/icons/btn_google_signin_dark_pressed_web@2x.png";
-
+import {
+  loginByEmailPass,
+  registerPageWithGogle,
+} from "../../globals/api-endpoint";
+import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
 
 const Login = {
   async render() {
@@ -28,7 +32,7 @@ const Login = {
                 </div>
             </div>
             <div class="form__doesnHaveAccount">
-                <p>Don't have account ? register now</p>
+                <p>Don't have account ? <a href="/#/register">Register Now</a></p>
             </div>
           </div>
           </div>
@@ -43,12 +47,38 @@ const Login = {
     `;
   },
 
-  //   async afterRender() {
-  //     const landingContainer = document.querySelector('#landing__page');
-  //     movies.forEach((movie) => {
-  //       landingContainer.innerHTML += createMovieItemTemplate(movie);
-  //     });
-  //   },
+  async afterRender() {
+    let data = {
+      email: "",
+      password: "",
+    };
+    const email = document.querySelector("#email");
+    const password = document.querySelector("#password");
+    const button = document.querySelector(".form__input button");
+    email.addEventListener("change", (e) => {
+      data = {
+        ...data,
+        email: e.target.value,
+      };
+    });
+    password.addEventListener("change", (e) => {
+      data = {
+        ...data,
+        password: e.target.value,
+      };
+    });
+    button.addEventListener("click", async () => {
+      const response = await loginByEmailPass(data).catch((err) => err);
+      if (response.uid !== undefined) {
+        validasiFormRegisLogin(response);
+        setTimeout(() => {
+          window.location.href = '/#/dashboard';
+        }, 1610);
+      } else {
+        validasiFormRegisLogin(response);
+      }
+    });
+  },
 };
 
 export default Login;

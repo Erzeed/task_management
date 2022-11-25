@@ -5,6 +5,7 @@ import './views/components/sidebar/sidebar';
 import App from './views/app';
 
 const app = new App({
+  drawer: document.querySelector('nav-bar').shadowRoot.querySelector('.navbar .navbar__list ul'),
   content: document.querySelector('#mainContent'),
 });
 
