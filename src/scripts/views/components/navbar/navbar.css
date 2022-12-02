@@ -37,11 +37,16 @@
     letter-spacing: 1.5px;
     margin: 0 5px;
 }
-.navbar__account > button.login, 
+.navbar__account > button.login,
 .navbar__account > button.started {
     background-color: transparent;
     border: none;
     color: #fff;
+}
+
+.navbar__account > button.login > a {
+   text-decoration: none;
+   color: #fff;
 }
 
  
