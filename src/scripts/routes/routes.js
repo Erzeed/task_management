@@ -9,7 +9,8 @@ const routes = {
   '/landingpage': LandingPage,
   '/login': login,
   '/register': register,
-  '/dashboard': dashboard
+  '/dashboard': dashboard,
+  '/profile': profile
 };
 
 export default routes;
