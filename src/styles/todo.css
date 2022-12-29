@@ -1,0 +1,132 @@
+.content__todo {
+    display: flex;
+}
+
+.todo__main {
+    width: 100%;
+    min-height: 100vh;
+    margin: 10px 0 0 50px;
+    padding: 30px;
+    overflow-x: scroll;
+}
+
+.todo__main > h1 {
+    margin: 15px 0;
+    color: rgba(0, 0, 0, .6);
+    letter-spacing: 1px;
+}
+
+.main__list {
+    display: flex;
+    min-width: 100%;
+}
+
+.main__list > .todo {
+    min-width: 250px;
+    height: fit-content;
+    background-color: #F6F5F8;
+    margin: 0 20px 0 0;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+.todo__card {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo__title {
+    height: 30px;
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.todo__title > p:last-child {
+    background-color: #270082;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: normal !important;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 95%;
+    min-height: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .05);
+    margin: 5px 0;
+    padding: 10px;
+}
+
+.card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.card__header > p {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.card__header > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, .5);
+}
+
+.card__footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.card__body {
+    margin: 10px 0;
+    height: fit-content;
+    letter-spacing: 1px;
+    font-size: .95em;
+    color: rgba(0, 0, 0, .7);
+}
+
+.footer__name , 
+.footer__createAt {
+    margin-top: 5px;
+}
+
+.footer__createAt {
+    background-color: #270082;
+    height: 20px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 5px;
+}

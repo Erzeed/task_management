@@ -3,6 +3,7 @@ import login from '../views/pages/login';
 import register from '../views/pages/register';
 import dashboard from '../views/pages/dashboard';
 import profile from '../views/pages/profile';
+import todo from '../views/pages/todo';
 
 const routes = {
   '/': LandingPage,
@@ -10,7 +11,8 @@ const routes = {
   '/login': login,
   '/register': register,
   '/dashboard': dashboard,
-  '/profile': profile
+  '/profile': profile,
+  '/todo': todo
 };
 
 export default routes;
