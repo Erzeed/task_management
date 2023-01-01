@@ -50,7 +50,7 @@
     border-bottom: 2px solid rgba(255, 255, 255, 1);
 }
 
-.sidebar__menu > ul > li > img,
+.sidebar__menu > ul > li > a > img,
 .sidebar__logout > img {
     width: 30px;
     height: 30px;

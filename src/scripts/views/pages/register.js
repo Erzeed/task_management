@@ -10,7 +10,7 @@ import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
 const Register = {
   async render() {
     return `
-      <div class="content">
+      <div class="content__login">
         <div id="login__page" class="login__page">
           <div class="login__form">
             <div class="form__title">

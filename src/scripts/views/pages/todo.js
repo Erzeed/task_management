@@ -1,4 +1,5 @@
 import "../../../styles/todo.css";
+import {cekUser} from "../../utils/cekUser";
 
 const Todo = {
   async render() {
@@ -109,7 +110,7 @@ const Todo = {
   },
 
   async afterRender() {
-    console.log('haii');
+    cekUser()
 
   },
 };

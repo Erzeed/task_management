@@ -26,9 +26,15 @@ class sidebar extends HTMLElement {
             </div>
             <div class="sidebar__menu">
                 <ul>
-                    <li class=${this.class}><img src=${logoHome} alt="home" /></li>
-                    <li><img src=${logoTask} alt="task" /></li>
-                    <li><img src=${logoSetting} alt="setting" /></li>
+                    <li class=${this.class}>
+                    <a href="/#/dashboard"><img src=${logoHome} alt="home" /></a>
+                    </li>
+                    <li>
+                    <a href="/#/todo"><img src=${logoTask} alt="task" /></a>
+                    </li>
+                    <li>
+                    <a href="/#/profile"><img src=${logoSetting} alt="setting" /><a/>
+                    </li>
                 </ul>
             </div>
             <div class="sidebar__logout">

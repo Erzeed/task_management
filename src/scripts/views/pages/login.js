@@ -28,7 +28,8 @@ const Login = {
             <div class="sigin__gogle">
                 <p>-- Or Sign in with --</p>
                 <div class="google__icon">
-                    <img src=${iconLoginByGoogle} alt="icon google" />
+          
+                    <img class="btn__goggle" src=${iconLoginByGoogle} alt="icon google" />
                 </div>
             </div>
             <div class="form__doesnHaveAccount">
@@ -55,6 +56,7 @@ const Login = {
     const email = document.querySelector("#email");
     const password = document.querySelector("#password");
     const button = document.querySelector(".form__input button");
+    const btn__goggle = document.querySelector(".btn__goggle");
     email.addEventListener("change", (e) => {
       data = {
         ...data,
@@ -78,6 +80,18 @@ const Login = {
         validasiFormRegisLogin(response);
       }
     });
+    btn__goggle.addEventListener("click", async () => {
+      const responseGogle = await registerPageWithGogle().catch((err) => err);
+    if (responseGogle) {
+      validasiFormRegisLogin(responseGogle);
+      if (responseGogle.uid !== undefined) {
+        localStorage.setItem("id", responseGogle.uid);
+        setTimeout(() => {
+          window.location.href = '/#/dashboard';
+        }, 1610)
+      }
+    }
+    })
   },
 };
 

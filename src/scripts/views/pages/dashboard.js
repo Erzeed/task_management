@@ -6,7 +6,7 @@ import revisiIcon from "../../../asset/icons/icons8-revisi.png";
 import doneIcon from "../../../asset/icons/icons8-done.png";
 import Tabulator from "tabulator-tables/src/js/core/Tabulator";
 import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
-
+import {cekUser} from "../../utils/cekUser";
 Tabulator.registerModule([SortModule]);
 
 const Dashboard = {
@@ -90,6 +90,7 @@ const Dashboard = {
   },
 
   async afterRender() {
+    cekUser();
     const ctx = document.getElementById("myChart").getContext("2d");
     const lineChart = document.getElementById("lineChart").getContext("2d");
     const data = {

@@ -1,6 +1,7 @@
 import "../../../styles/profile.css";
 import banner from "../../../asset/banner/gradienta-banner-unsplash.jpeg";
 import profile from "../../../asset/img/profile-default.jpg";
+import {cekUser} from "../../utils/cekUser";
 
 const Profile = {
   async render() {
@@ -39,9 +40,10 @@ const Profile = {
     `;
   },
 
-  // async afterRender() {
+  async afterRender() {
+    cekUser()
 
-  // },
+  },
 };
 
 export default Profile;
