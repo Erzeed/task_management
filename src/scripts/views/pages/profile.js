@@ -7,7 +7,7 @@ const Profile = {
   async render() {
     return `
       <div class="content__profile">
-      <side-bar class="active"></side-bar>
+      <side-bar class="profile"></side-bar>
         <div class="profile__main"> 
           <div class="header">
             <div class="header__banner">

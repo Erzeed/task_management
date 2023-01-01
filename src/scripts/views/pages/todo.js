@@ -5,7 +5,7 @@ const Todo = {
   async render() {
     return `
       <div class="content__todo">
-      <side-bar class="active"></side-bar>
+      <side-bar class="todo"></side-bar>
       <div class="todo__main">
         <h1>Bimbingan Skripsi</h1>
         <div class="main__list">

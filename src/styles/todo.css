@@ -1,13 +1,14 @@
 .content__todo {
     display: flex;
+    overflow: hidden;
+    
 }
 
 .todo__main {
     width: 100%;
     min-height: 100vh;
     margin: 10px 0 0 50px;
-    padding: 30px;
-    overflow-x: scroll;
+    padding: 30px 50px;
 }
 
 .todo__main > h1 {
@@ -19,10 +20,13 @@
 .main__list {
     display: flex;
     min-width: 100%;
+    overflow-x: scroll;
+    min-height: 100%;
+    padding-right: 20px;
 }
 
 .main__list > .todo {
-    min-width: 250px;
+    min-width: 300px;
     height: fit-content;
     background-color: #F6F5F8;
     margin: 0 20px 0 0;

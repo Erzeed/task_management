@@ -1,10 +1,12 @@
 @import  "tabulator-tables";
 
+
 .content__dashboard {
     display: flex;
     background-color: #F8FAFC;
     min-height: 100vh;
     overflow: scroll;
+    position: relative;
 }
 
 .dashboard__menu {
@@ -12,9 +14,25 @@
     margin: 30px auto;
 }
 
+.menu__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .menu__title > h1 {
     font-size: 2.1em;
     margin: 10px 0;
+}
+
+.menu__title > button {
+    height: 30px;
+    padding: 5px 7px;
+    border: none;
+    background-color: #270082;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .1);
 }
 
 /* card */
@@ -31,7 +49,7 @@
     width: 20%;
     background-color: #fff;
     box-shadow: 0 0 18px rgba(0, 0, 0, .05);
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -76,7 +94,7 @@
     height: 80%;
     background-color: #fff;
     box-shadow: 0 0 18px rgba(0, 0, 0, .05);
-    border-radius: 20px;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,4 +158,100 @@
     color: #fff;
 }
 
+/* form */
+
+.create__form {
+    display: flex;
+    opacity: 0;
+    position: fixed;
+    top: calc(50vh - 150px);
+    left: calc(50vw - 150px);
+    width: 300px;
+    height: 300px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    overflow: scroll;
+    padding: 20px 20px;
+    flex-direction:column;
+    justify-content: space-between;
+    transition: all 0.2s ease-in-out; 
+    transform: scale(0);
+}
+
+.create__form.active {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.create__form > h1 {
+    text-align: center;
+}
+
+.create__form > form {
+    height: 50%;
+}
+
+.create__form > form > input,
+.create__form > form > .buttonIn__input > input {
+    width: 100%;
+    height: 35px;
+    margin: 5px 0;
+    padding: 0 10px;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+}
+
+.create__form > form > input:focus , 
+.create__form > form > .buttonIn__input > input{
+    outline-style: none;
+}
+
+.create__form > form > .buttonIn__input {
+    display: flex;
+    position: relative;
+}
+
+.random__pas {
+    position: absolute;
+    top: 16px;
+    right: 5px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #270082;
+    font-size: .8em;
+    letter-spacing: 1px;
+}
+
+.create__form > .btn__create {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.create__form > .btn__create > button {
+    height: 30px;
+    width: 60px;
+    border: none;
+    background-color: #270082;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.showPass {
+    display: flex;
+    margin-top: 10px;
+}
+
+.showPass > input {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.showPass > p {
+    color: rgba(0, 0, 0, .7);
+}
 

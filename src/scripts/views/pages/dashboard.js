@@ -13,10 +13,11 @@ const Dashboard = {
   async render() {
     return `
       <div class="content__dashboard">
-      <side-bar class="active"></side-bar>
+      <side-bar class="home"></side-bar>
         <div class="dashboard__menu">
             <div class="menu__title">
                 <h1>Selamat datang, Feizal .</h1>
+                <button class="create">Create Account</button>
             </div>
             <div class="menu__card__clients">
                 <div class="clients__card">
@@ -75,8 +76,25 @@ const Dashboard = {
                 </div>
             </div>
             <div class="menu__table">
-            <h1>Data Mahasiswa Bimbingan</h1>
+                <h1>Data Mahasiswa Bimbingan</h1>
                 <div id="data-table"></div>
+            </div>
+            <div class="create__form">
+              <h1>Create Account</h1>
+              <form>
+                  <input type='email' id='email' placeholder="Email" /><br/>
+                  <div class="buttonIn__input">
+                    <input type="password" id='password' placeholder="Password" /><br/>
+                    <button class="random__pas" type='button' >Random</button>
+                  </div>
+                  <div class="showPass">
+                    <input type="checkbox" class="checkBox">
+                    <p>show password</p>
+                  </div>
+              </form>
+              <div class="btn__create">
+                <button type='button'>Simpan</button>
+              </div>
             </div>
         </div>
         <div class="dashboard__mytask">
@@ -93,6 +111,9 @@ const Dashboard = {
     cekUser();
     const ctx = document.getElementById("myChart").getContext("2d");
     const lineChart = document.getElementById("lineChart").getContext("2d");
+    const random__pas = document.querySelector(".random__pas");
+    const checkBox = document.querySelector(".checkBox");
+    const create = document.querySelector(".create");
     const data = {
       labels: ["Bab 1", "Bab 2", "Bab 3", "Bab 4", "Bab 5"],
       datasets: [
@@ -272,6 +293,33 @@ const Dashboard = {
         },
       ],
     });
+
+    const randomPass = () => {
+      const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const passwordLength = 12;
+      let password = "";
+      for (let i = 0; i <= passwordLength; i++) {
+        let randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber +1);
+       }
+       return password;
+    }
+    random__pas.addEventListener("click", () => {
+      document.getElementById("password").value = randomPass();
+    })
+    checkBox.addEventListener("click", () => {
+      const pass = document.getElementById("password");
+      if (pass.type === "password") {
+        pass.type = "text";
+      } else {
+        pass.type = "password";
+      }
+    })
+    create.addEventListener("click", () => {
+      const form = document.querySelector(".create__form");
+      form.classList.add("active")
+    })
+
   },
 };
 

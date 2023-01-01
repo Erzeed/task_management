@@ -10,7 +10,7 @@ class sidebar extends HTMLElement {
     this.shadowDOM = this.attachShadow({ mode: "open" });
   }
   connectedCallback() {
-    this.class = this.getAttribute('class') || null;
+    this.class = this.getAttribute("class") || null;
 
     this.render();
   }
@@ -26,14 +26,14 @@ class sidebar extends HTMLElement {
             </div>
             <div class="sidebar__menu">
                 <ul>
-                    <li class=${this.class}>
-                    <a href="/#/dashboard"><img src=${logoHome} alt="home" /></a>
+                    <li class=${this.class == "home" ? "active" : ""}>
+                      <a href="/#/dashboard"><img src=${logoHome} alt="home" /></a>
                     </li>
-                    <li>
-                    <a href="/#/todo"><img src=${logoTask} alt="task" /></a>
+                    <li class=${this.class == "todo" ? "active" : ""}>
+                      <a href="/#/todo"><img src=${logoTask} alt="task" /></a>
                     </li>
-                    <li>
-                    <a href="/#/profile"><img src=${logoSetting} alt="setting" /><a/>
+                    <li class=${this.class == "profile" ? "active" : ""}>
+                      <a href="/#/profile"><img src=${logoSetting} alt="setting" /><a/>
                     </li>
                 </ul>
             </div>
