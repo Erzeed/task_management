@@ -7,6 +7,7 @@ import doneIcon from "../../../asset/icons/icons8-done.png";
 import Tabulator from "tabulator-tables/src/js/core/Tabulator";
 import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
 import {cekUser} from "../../utils/cekUser";
+import {createNewUser, getDataUser} from "../../globals/api-endpoint.js";
 Tabulator.registerModule([SortModule]);
 
 const Dashboard = {
@@ -39,7 +40,7 @@ const Dashboard = {
                         <h1>10</h1>
                     </div>
                     <div class="card__title">
-                        <p>Proggres Mahasiswa</p>
+                        <p>Review</p>
                     </div>
                 </div>
                 <div class="clients__card">
@@ -80,20 +81,24 @@ const Dashboard = {
                 <div id="data-table"></div>
             </div>
             <div class="create__form">
-              <h1>Create Account</h1>
-              <form>
-                  <input type='email' id='email' placeholder="Email" /><br/>
-                  <div class="buttonIn__input">
-                    <input type="password" id='password' placeholder="Password" /><br/>
-                    <button class="random__pas" type='button' >Random</button>
-                  </div>
-                  <div class="showPass">
-                    <input type="checkbox" class="checkBox">
-                    <p>show password</p>
-                  </div>
-              </form>
-              <div class="btn__create">
-                <button type='button'>Simpan</button>
+              <div class="form__container">
+                <h1>Create Account</h1>
+                <form id="form">
+                    <input type='text' id='username' class="inputForm" placeholder="Username" /><br/>
+                    <input type='email' id='email' class="inputForm" placeholder="Email" /><br/>
+                    <div class="buttonIn__input">
+                      <input type="password" id='password'class="inputForm" placeholder="Password"/><br/>
+                      <button class="random__pas" type='button' >Random</button>
+                    </div>
+                    <div class="showPass">
+                      <input type="checkbox" class="checkBox">
+                      <p>show password</p>
+                    </div>
+                </form>
+                <div class="btn__create">
+                  <button class="simpan" type='button'>Simpan</button>
+                  <button class="cancel" type='button'>Cancel</button>
+                </div>
               </div>
             </div>
         </div>
@@ -109,11 +114,49 @@ const Dashboard = {
 
   async afterRender() {
     cekUser();
+    let dataNewAccount = {
+      idDosen: "",
+      username: "",
+      email: "",
+      password: "",
+      role: ""
+    }
+    const id = localStorage.getItem("id");
     const ctx = document.getElementById("myChart").getContext("2d");
     const lineChart = document.getElementById("lineChart").getContext("2d");
     const random__pas = document.querySelector(".random__pas");
     const checkBox = document.querySelector(".checkBox");
     const create = document.querySelector(".create");
+    const cancel = document.querySelector(".cancel");
+    const simpan = document.querySelector(".simpan");
+    const form = document.querySelectorAll('.inputForm');
+
+    const getData = async () => {
+      const data = await getDataUser(id);
+      console.log(data)
+    }
+
+    getData();
+
+
+    [...form].forEach(e => {
+      e.addEventListener("change", (e) => {
+        const id = localStorage.getItem("id")
+        dataNewAccount = {
+          ...dataNewAccount,
+          idDosen: id,
+          [e.target.id]: e.target.value,
+          role: "mahasiswa"
+        }
+      })
+    });
+   
+
+    simpan.addEventListener("click", () => {
+      createNewUser(dataNewAccount);
+    })
+
+    
     const data = {
       labels: ["Bab 1", "Bab 2", "Bab 3", "Bab 4", "Bab 5"],
       datasets: [
@@ -232,7 +275,7 @@ const Dashboard = {
     ];
 
     //define table
-    new Tabulator("#data-table", {
+    const table = new Tabulator("#data-table", {
       //   minHeight: 300,
       rowHeight: 40,
       headerSort: true,
@@ -294,6 +337,13 @@ const Dashboard = {
       ],
     });
 
+    table.on("rowClick", function(e, row){
+        alert("Row " + row.getIndex() + " Clicked!!!!")
+    });
+  
+    table.on("rowContext", function(e, row){
+        alert("Row " + row.getIndex() + " Context Clicked!!!!")
+    });
     const randomPass = () => {
       const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const passwordLength = 12;
@@ -316,8 +366,21 @@ const Dashboard = {
       }
     })
     create.addEventListener("click", () => {
+      const formUp = document.querySelector(".create__form");
+      formUp.classList.add("active")
+      // const data = {
+      //   email: "testUser2@gmail.com",
+      //   password: "123456"
+      // }
+      // createNewUser(data)
+      // [...form].forEach((item) => {
+    //   console.log(item);
+    });
+      
+
+    cancel.addEventListener("click", () => {
       const form = document.querySelector(".create__form");
-      form.classList.add("active")
+      form.classList.remove("active")
     })
 
   },

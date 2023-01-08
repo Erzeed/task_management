@@ -73,6 +73,7 @@ const Login = {
       const response = await loginByEmailPass(data).catch((err) => err);
       if (response.uid !== undefined) {
         validasiFormRegisLogin(response);
+        localStorage.setItem("id", response.uid);
         setTimeout(() => {
           window.location.href = '/#/dashboard';
         }, 1610);

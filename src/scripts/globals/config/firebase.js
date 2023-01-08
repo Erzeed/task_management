@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -9,6 +10,7 @@ import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyDepmw5_xfFkgf1WpmlwFyoye3MzAgM_eE",
   authDomain: "wgther-b4fc3.firebaseapp.com",
+  databaseURL : "https://wgther-b4fc3-default-rtdb.asia-southeast1.firebasedatabase.app/",
   projectId: "wgther-b4fc3",
   storageBucket: "wgther-b4fc3.appspot.com",
   messagingSenderId: "661573276889",

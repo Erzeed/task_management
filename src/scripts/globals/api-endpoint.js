@@ -4,7 +4,18 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  set,
+  remove,
+} from "firebase/database";
+import { doc, setDoc , getFirestore, getDoc} from "firebase/firestore"; 
+
 import app from "./config/firebase";
 
 export const registerPage = (data) => {
@@ -54,11 +65,67 @@ export const loginByEmailPass = (data) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log(user);
         resolve(user);
       })
       .catch((error) => {
         const errorCode = error.code;
-        reject(errorCode)
+        reject(errorCode);
+      });
+  });
+};
+export const createNewUser = (data) => {
+  return new Promise((resolve, reject) => {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // resolve(user);
+        const db = getFirestore(app);
+        const userId = user.uid;
+        setDoc(doc(db, "Mahasiswa", userId),{
+            username: data.username,
+            iddosen: data.idDosen,
+            role: data.role
+          }).then(() => {
+            alert("Username added to user document in Cloud Firestore.");
+          }).catch((error) => {
+            alert(error);
+          });
+      })
+      .catch((error) => {
+        const errorMessage = error.code;
+        alert(error)
+        reject(errorMessage);
+      });
+  });
+};
+
+export const getDataUser = (id) => {
+  return new Promise((resolve , reject) => {
+    const db = getFirestore(app);
+      getDoc(doc(db, "Mahasiswa", id))
+      .then(docSnap => {
+        if (docSnap.exists()) {
+          resolve(docSnap.data())
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        reject(error)
+      });
+  });
+};
+
+export const updateProfileUser = (id, data) => {
+  return new Promise((resolve , reject) => {
+    const db = getFirestore(app);
+    setDoc(doc(db, "Mahasiswa", id), data)
+      .then(() => {
+        alert("Username added to user document in Cloud Firestore.");
+      }).catch((error) => {
+        alert(error);
       });
   });
 };

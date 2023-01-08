@@ -15,6 +15,14 @@ class sidebar extends HTMLElement {
     this.render();
   }
 
+  logOut() {
+    const btnLogOut = this.shadowDOM.querySelector('.sidebar__logout img');
+    btnLogOut.addEventListener("click", () => {
+      localStorage.removeItem("id");
+      window.location.href = "/#/login";
+    })
+  }
+
   render() {
     this.shadowDOM.innerHTML = `
         <style>
@@ -42,6 +50,7 @@ class sidebar extends HTMLElement {
             </div>
         </div>
     `;
+    this.logOut()
   }
 }
 

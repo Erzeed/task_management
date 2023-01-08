@@ -1,11 +1,13 @@
 import "../../../styles/profile.css";
 import banner from "../../../asset/banner/gradienta-banner-unsplash.jpeg";
-import profile from "../../../asset/img/profile-default.jpg";
-import {cekUser} from "../../utils/cekUser";
+import profileimg from "../../../asset/img/profile-default.jpg";
+import { cekUser } from "../../utils/cekUser";
+import { getDataUser} from "../../globals/api-endpoint.js";
 
-const Profile = {
-  async render() {
-    return `
+
+const profile = {
+    async render() {
+        return `
       <div class="content__profile">
       <side-bar class="profile"></side-bar>
         <div class="profile__main"> 
@@ -14,36 +16,60 @@ const Profile = {
               <img src=${banner} alt="" />
             </div>
             <div class="header__img">
-              <img src=${profile} alt="" />
+              <img src=${profileimg} alt="" />
             </div>
             <div class="header__txt">
-              <h2>Feizal Reza</h2>
-              <p>Universitas Amikom Yogyakarta</p>
+                <div class="header__title">
+                    <h2>Feizal Reza</h2>
+                    <p>Universitas Amikom Yogyakarta</p>
+                </div>
+                <div class="header__btn">
+                    <button>Edit Profile</button>
+                </div>
             </div>
           </div>
-          <div class="profile__input form-style-2">
-            <form action="#" class="form">
-              <label for="field1"><span>Nim <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-              <label for="field1"><span>Name <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-              <label for="field2"><span>Email <span class="required">*</span></span><input type="text" class="input-field" name="field2" value="" /></label>
-              <label for="field1"><span>Jurusan <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-              <label for="field1"><span>Judul Skripsi <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-              <div class="button">
-              <label><span> </span><input type="submit" value="Submit" /></label>
-              </div>
-
-            </form>
-          </div>
+          <div class="profile__detail">
+            <div class="detail">
+                <div class="detail__name">
+                    <p>Nim</p>
+                    <p>Angkatan</p>
+                    <p>Nama</p>
+                    <p>Email</p>
+                    <p>Nomor Telepon</p>
+                    <p>Jurusan</p>
+                    <p>Judul Skripsi</p>
+                    <p>Dosen Pembimbing</p>
+                </div>
+                <div class="detail__value">
+                    <p>19.11.2877</p>
+                    <p>2019</p>
+                    <p>Feizal Reza</p>
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                    <p>-</p>
+                </div>            
+            </div>
         </div>
         
       </div>
     `;
-  },
+    },
 
-  async afterRender() {
-    cekUser()
+    async afterRender() {
+        cekUser()
+        const id = localStorage.getItem("id");
+        const header__btn = document.querySelector(".header__btn button");
 
-  },
+        header__btn.addEventListener("click", () => {
+            window.location = "/#/editprofile"
+        })
+
+        const getData = await getDataUser(id);
+        console.log(getData)
+
+    },
 };
 
-export default Profile;
+export default profile;
