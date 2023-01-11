@@ -123,6 +123,7 @@ export const createNewUser = (data, id) => {
         const userId = user.uid;
         setDoc(doc(db, "Mahasiswa", userId),{
             nim: data.nim,
+            email: user.email,
             id_dosen: data.idDosen,
             role_status: data.role
           }).then(() => {
@@ -173,7 +174,7 @@ export const getDataUser = (id) => {
             if (docSnap.exists()) {
               resolve(docSnap.data())
             } else {
-              console.log("No such document!");
+              resolve("Data Kosong");
             }
           })
           .catch((error) => {
@@ -198,3 +199,29 @@ export const updateProfileUser = (id, data, role) => {
       });
   });
 };
+
+export const getAllDataMhsBmbngan = (id) => {
+  return new Promise((resolve, reject) => {
+    const db = getFirestore(app);
+    getDoc(doc(db, "Dosen", id))
+      .then(docSnap => {
+        if (docSnap.exists()) {
+          let dataUser = [];
+          const {id_mhs_bimbingan} = docSnap.data()
+          id_mhs_bimbingan.forEach(e => {
+            getDataUser(e).then(e => {
+              dataUser.push(e)
+              if(id_mhs_bimbingan.length == dataUser.length) {
+                  resolve(dataUser)
+                }
+            })
+          })
+        } else {
+          console.log("data kosong")
+        }
+      })
+      .catch((error) => {
+        reject(error)
+      });
+  })
+}

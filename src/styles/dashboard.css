@@ -38,10 +38,9 @@
 
 /* card */
 .menu__card__clients {
-    height: 25%;
+    height: 30%;
     display: flex;
     align-items: center;
-    margin: 20px 0;
     justify-content: space-between;
 }
 
@@ -87,12 +86,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .statistik__donut,
 .statistik__lineChart {
     width: 45%;
-    height: 80%;
+    height: 90%;
     background-color: #fff;
     box-shadow: 0 0 18px rgba(0, 0, 0, .05);
     border-radius: 15px;
@@ -101,6 +101,7 @@
     align-items: center;
     flex-direction: column;
     position: relative;
+    padding: 10px;
 
 }
 
@@ -157,6 +158,33 @@
     justify-content: center;
     align-items: center;
     color: #fff;
+}
+
+#data-table > p {
+    text-align: center;
+}
+
+.tabulator .tabulator-header .tabulator-col[tabulator-field="judul"],
+.tabulator-row .tabulator-cell[tabulator-field="judul"] {
+    width: 300px !important;
+    overflow: auto;
+  }
+
+.button__refresh {
+    display: flex;
+    justify-content: end;
+    margin: 10px;
+}
+
+.button__refresh > button {
+    height: 30px;
+    padding: 5px 7px;
+    border: none;
+    background-color: #270082;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
 }
 
 /* form */

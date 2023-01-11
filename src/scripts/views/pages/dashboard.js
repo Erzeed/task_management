@@ -4,10 +4,10 @@ import userIcon from "../../../asset/icons/icons8-user.png";
 import proggresIcon from "../../../asset/icons/icons8-in-progress.png";
 import revisiIcon from "../../../asset/icons/icons8-revisi.png";
 import doneIcon from "../../../asset/icons/icons8-done.png";
-import Tabulator from "tabulator-tables/src/js/core/Tabulator";
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
 import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
 import {cekUser} from "../../utils/cekUser";
-import {createNewUser, getDataUser} from "../../globals/api-endpoint.js";
+import {createNewUser, getDataUser, getAllDataMhsBmbngan} from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
 
@@ -79,7 +79,12 @@ const Dashboard = {
             </div>
             <div class="menu__table">
                 <h1>Data Mahasiswa Bimbingan</h1>
-                <div id="data-table"></div>
+                <div id="data-table">
+                <p>Data bimbingang kosong </p>
+                </div>
+                <div class="button__refresh">
+                    <button>Refresh</button>
+                </div>
             </div>
             <div class="create__form">
               <div class="form__container">
@@ -131,6 +136,7 @@ const Dashboard = {
     const create = document.querySelector(".create");
     const cancel = document.querySelector(".cancel");
     const simpan = document.querySelector(".simpan");
+    const button__refresh = document.querySelector(".button__refresh button");
     const form = document.querySelectorAll('.inputForm');
 
     const getData = async () => {
@@ -167,6 +173,7 @@ const Dashboard = {
         createNewUser(dataNewAccount, id);
       }
     })
+    
 
     
     const data = {
@@ -238,124 +245,95 @@ const Dashboard = {
         },
       },
     });
-    //define data
-    const tabledata = [
-      {
-        id: 1,
-        nim: "19.11.2877",
-        nama: "Feizal Reza",
-        email: "feizalreza29@gmail.com",
-        jurusan: "S1 Informatika",
-        judul: "Implementasi Progressive Web...",
-        mulai_bimbingan: "20/10/2022",
-        terakhir_bimbingan: "26/11/2022",
-        bab_skripsi: 2,
-      },
-      {
-        id: 1,
-        nim: "19.11.2877",
-        nama: "Billy Bob",
-        email: "feizalreza29@gmail.com",
-        jurusan: "S1 Informatika",
-        judul: "Implementasi Progressive Web...",
-        mulai_bimbingan: "20/10/2022",
-        terakhir_bimbingan: "26/11/2022",
-        bab_skripsi: 2,
-      },
-      {
-        id: 1,
-        nim: "19.11.2877",
-        nama: "Billy Bob",
-        email: "feizalreza29@gmail.com",
-        jurusan: "S1 Informatika",
-        judul: "Implementasi Progressive Web...",
-        mulai_bimbingan: "20/10/2022",
-        terakhir_bimbingan: "26/11/2022",
-        bab_skripsi: 2,
-      },
-      {
-        id: 1,
-        nim: "19.11.2877",
-        nama: "Billy Bob",
-        email: "feizalreza29@gmail.com",
-        jurusan: "S1 Informatika",
-        judul: "Implementasi Progressive Web...",
-        mulai_bimbingan: "20/10/2022",
-        terakhir_bimbingan: "26/11/2022",
-        bab_skripsi: 2,
-      },
-    ];
 
     //define table
-    const table = new Tabulator("#data-table", {
-      //   minHeight: 300,
-      rowHeight: 40,
-      headerSort: true,
-      layout: "fitData",
-      data: tabledata,
-      responsiveLayout: "collapse",
-      columns: [
-        {
-          title: "Nim",
-          field: "nim",
-          sorter: "string",
-          hozAlign: "center",
-          vertAlign: "middle",
-        },
-        {
-          title: "Name",
-          field: "nama",
-          sorter: "string",
-          hozAlign: "left",
-          vertAlign: "middle",
-        },
-        {
-          title: "Email",
-          field: "email",
-          hozAlign: "left",
-          vertAlign: "middle",
-        },
-        {
-          title: "Jurusan",
-          field: "jurusan",
-          hozAlign: "left",
-          vertAlign: "middle",
-        },
-        {
-          title: "Judul",
-          field: "judul",
-          hozAlign: "left",
-          vertAlign: "middle",
-        },
-        {
-          title: "Mulai Bimbingan",
-          field: "mulai_bimbingan",
-          hozAlign: "center",
-          vertAlign: "middle",
-          formatter: "color",
-        },
-        {
-          title: "Terakhir Bimbingan",
-          field: "terakhir_bimbingan",
-          hozAlign: "center",
-          vertAlign: "middle",
-        },
-        {
-          title: "Bab",
-          field: "bab_skripsi",
-          hozAlign: "center",
-          vertAlign: "middle",
-        },
-      ],
-    });
+    const defaultValue = (cell) => {
+      if(!cell.getValue()) {
+        return "-";
+      }
+      return cell.getValue();
+    }
 
-    table.on("rowClick", function(e, row){
-        alert("Row " + row.getIndex() + " Clicked!!!!")
-    });
+    const getAllDataMhs = async () => {
+      const dataMhs = await getAllDataMhsBmbngan(id);
+      const table = new Tabulator("#data-table", {
+        //   minHeight: 300,
+        rowHeight: 40,
+        data: dataMhs,
+        columns: [
+          {
+            title: "Nim",
+            field: "nim",
+            sorter: "string",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Name",
+            field: "nama",
+            sorter: "string",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Email",
+            field: "email",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Jurusan",
+            field: "jurusan",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Judul",
+            field: "judul",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Mulai Bimbingan",
+            field: "mulai_bimbingan",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Terakhir Bimbingan",
+            field: "terakhir_bimbingan",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+          {
+            title: "Bab",
+            field: "bab_skripsi",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter:defaultValue
+          },
+        ],
+      });
   
-    table.on("rowContext", function(e, row){
-        alert("Row " + row.getIndex() + " Context Clicked!!!!")
-    });
+      table.on('rowClick', (e, row) => {
+        alert("Row " + row.getIndex() + " Clicked!!!!")
+      })
+    }
+
+    getAllDataMhs()
+
+    button__refresh.addEventListener("click", () => {
+      getAllDataMhs();
+      table.redraw(true);
+  });
+
     const randomPass = () => {
       const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const passwordLength = 12;
@@ -377,22 +355,18 @@ const Dashboard = {
         pass.type = "password";
       }
     })
+
+    
     create.addEventListener("click", () => {
       const formUp = document.querySelector(".create__form");
       formUp.classList.add("active")
-      // const data = {
-      //   email: "testUser2@gmail.com",
-      //   password: "123456"
-      // }
-      // createNewUser(data)
-      // [...form].forEach((item) => {
-    //   console.log(item);
+      
     });
       
 
     cancel.addEventListener("click", () => {
-      const form = document.querySelector(".create__form");
-      form.classList.remove("active")
+      const formUp = document.querySelector(".create__form");
+      formUp.classList.remove("active")
     })
 
   },
