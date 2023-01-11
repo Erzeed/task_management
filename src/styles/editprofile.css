@@ -87,19 +87,19 @@
 	width: 55%;
 }
 .form-style-2 #btnSubmit,
-.form-style-2 input[type=button]{
+.form-style-2 #cancel{
 	border: none;
 	padding: 8px 15px 8px 15px;
-	background: #8E05C2;
+	background-color: #8E05C2;
 	color: #fff;
-	margin-right: 35px;
+	margin-right: 5px;
 	cursor: pointer;
 	box-shadow: 3px 3px 10px rgba(0, 0, 0, .2);
 	border-radius: 3px;
 	transition: all .1s;
 }
-.form-style-2 #btnSubmit:active,
-.form-style-2 input[type=button]:active{
+.form-style-2 > #btnSubmit:active,
+.form-style-2 > #cancel:active{
 	box-shadow: none;
 	transform: scale(.95);
 }
@@ -107,4 +107,9 @@
 .profile__input > form > .button {
 	display: flex;
 	justify-content: end;
+}
+
+.profile__input > form > .button > #cancel {
+	background-color: red !important;
+	margin-right: 50px !important;
 }

@@ -8,6 +8,7 @@ import Tabulator from "tabulator-tables/src/js/core/Tabulator";
 import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
 import {cekUser} from "../../utils/cekUser";
 import {createNewUser, getDataUser} from "../../globals/api-endpoint.js";
+
 Tabulator.registerModule([SortModule]);
 
 const Dashboard = {
@@ -17,7 +18,7 @@ const Dashboard = {
       <side-bar class="home"></side-bar>
         <div class="dashboard__menu">
             <div class="menu__title">
-                <h1>Selamat datang, Feizal .</h1>
+                <h1>Selamat datang <span id="username"></span> .</h1>
                 <button class="create">Create Account</button>
             </div>
             <div class="menu__card__clients">
@@ -84,7 +85,7 @@ const Dashboard = {
               <div class="form__container">
                 <h1>Create Account</h1>
                 <form id="form">
-                    <input type='text' id='username' class="inputForm" placeholder="Username" /><br/>
+                    <input type='text' id='nim' class="inputForm" placeholder="Nim" /><br/>
                     <input type='email' id='email' class="inputForm" placeholder="Email" /><br/>
                     <div class="buttonIn__input">
                       <input type="password" id='password'class="inputForm" placeholder="Password"/><br/>
@@ -116,11 +117,12 @@ const Dashboard = {
     cekUser();
     let dataNewAccount = {
       idDosen: "",
-      username: "",
+      nim: "",
       email: "",
       password: "",
       role: ""
     }
+    let user = {};
     const id = localStorage.getItem("id");
     const ctx = document.getElementById("myChart").getContext("2d");
     const lineChart = document.getElementById("lineChart").getContext("2d");
@@ -133,7 +135,12 @@ const Dashboard = {
 
     const getData = async () => {
       const data = await getDataUser(id);
-      console.log(data)
+      user = data;
+      changeTitle(data.nama)
+    }
+
+    const changeTitle = (title) => {
+      document.getElementById("username").innerHTML = title;
     }
 
     getData();
@@ -146,14 +153,19 @@ const Dashboard = {
           ...dataNewAccount,
           idDosen: id,
           [e.target.id]: e.target.value,
-          role: "mahasiswa"
+          role: "Mahasiswa"
         }
       })
     });
    
 
-    simpan.addEventListener("click", () => {
-      createNewUser(dataNewAccount);
+    simpan.addEventListener("click", async () => {
+      const {nim, email, password} = dataNewAccount
+      if(nim == "" || email == "" || password == ""){
+        alert("Semua data harus di isi")
+      } else {
+        createNewUser(dataNewAccount, id);
+      }
     })
 
     

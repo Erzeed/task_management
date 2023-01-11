@@ -74,9 +74,10 @@ const Login = {
       if (response.uid !== undefined) {
         validasiFormRegisLogin(response);
         localStorage.setItem("id", response.uid);
-        setTimeout(() => {
-          window.location.href = '/#/dashboard';
-        }, 1610);
+        // setTimeout(() => {
+        //   window.location.href = '/#/dashboard';
+        // }, 1610);
+        console.log(response);
       } else {
         validasiFormRegisLogin(response);
       }

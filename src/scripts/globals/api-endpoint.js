@@ -6,15 +6,16 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import {
-  getDatabase,
-  ref,
-  push,
-  onValue,
-  set,
-  remove,
-} from "firebase/database";
-import { doc, setDoc , getFirestore, getDoc} from "firebase/firestore"; 
+// import {
+//   getDatabase,
+//   ref,
+//   push,
+//   onValue,
+//   set,
+//   remove,
+// } from "firebase/database";
+import { validasiCreateUser } from "../utils/validasiLoginRegister";
+import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion} from "firebase/firestore"; 
 
 import app from "./config/firebase";
 
@@ -32,6 +33,46 @@ export const registerPage = (data) => {
       });
   });
 };
+
+const cekRoleUser = (user) => {
+  return new Promise((resolve, reject) => {
+    const userId = user.uid;
+    const db = getFirestore(app);
+    getDoc(doc(db, "Dosen", userId))
+    .then(docSnap => {
+      if (docSnap.exists()) {
+        // resolve(docSnap.data())
+        console.log("ada")
+      } else {
+        getDoc(doc(db, "Mahasiswa", userId))
+        .then(docSnap => {
+          if (docSnap.exists()) {
+            console.log(docSnap.data())
+          } else {
+            setDoc(doc(db, "Dosen", userId), {
+              nama: user.displayName,
+              iddosen: userId,
+              role_status: "dosen",
+              email: user.email
+            })
+            .then(() => {
+              console.log("data update");
+            }).catch((error) => {
+              console.log(error);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+      }
+    })
+    .catch((error) => {
+      reject(error)
+    });
+
+  })
+}
 export const registerPageWithGogle = () => {
   return new Promise((resolve, reject) => {
     const provider = new GoogleAuthProvider();
@@ -43,16 +84,13 @@ export const registerPageWithGogle = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        cekRoleUser(user)
         resolve(user, token);
       })
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
         reject(errorCode, email, credential);
       });
   });
@@ -74,7 +112,7 @@ export const loginByEmailPass = (data) => {
       });
   });
 };
-export const createNewUser = (data) => {
+export const createNewUser = (data, id) => {
   return new Promise((resolve, reject) => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, data.email, data.password)
@@ -84,19 +122,40 @@ export const createNewUser = (data) => {
         const db = getFirestore(app);
         const userId = user.uid;
         setDoc(doc(db, "Mahasiswa", userId),{
-            username: data.username,
-            iddosen: data.idDosen,
-            role: data.role
+            nim: data.nim,
+            id_dosen: data.idDosen,
+            role_status: data.role
           }).then(() => {
-            alert("Username added to user document in Cloud Firestore.");
+            getDoc(doc(db, "Dosen", id))
+            .then(docSnap => {
+              if (docSnap.exists() && docSnap.data().id_mhs_bimbingan) {
+                resolve(docSnap.data())
+                updateDoc(doc(db, "Dosen", id), {
+                    id_mhs_bimbingan: arrayUnion(userId) 
+                  }, { merge: true })
+                  .then(() => {
+                    validasiCreateUser("succes");
+                  }).catch((error) => {
+                    console.log(error.code);
+                  });
+              } else {
+                  setDoc(doc(db, "Dosen", id), {
+                    id_mhs_bimbingan: [userId]
+                  }, { merge: true })
+                  .then(() => {
+                    validasiCreateUser("succes");
+                  }).catch((error) => {
+                    console.log(error.code);
+                  });
+              }
+            })
           }).catch((error) => {
-            alert(error);
+            console.log(error);
           });
       })
       .catch((error) => {
         const errorMessage = error.code;
-        alert(error)
-        reject(errorMessage);
+        validasiCreateUser(errorMessage);
       });
   });
 };
@@ -109,7 +168,17 @@ export const getDataUser = (id) => {
         if (docSnap.exists()) {
           resolve(docSnap.data())
         } else {
-          console.log("No such document!");
+          getDoc(doc(db, "Dosen", id))
+          .then(docSnap => {
+            if (docSnap.exists()) {
+              resolve(docSnap.data())
+            } else {
+              console.log("No such document!");
+            }
+          })
+          .catch((error) => {
+            reject(error)
+          });
         }
       })
       .catch((error) => {
@@ -118,10 +187,10 @@ export const getDataUser = (id) => {
   });
 };
 
-export const updateProfileUser = (id, data) => {
+export const updateProfileUser = (id, data, role) => {
   return new Promise((resolve , reject) => {
     const db = getFirestore(app);
-    setDoc(doc(db, "Mahasiswa", id), data)
+    setDoc(doc(db, role, id), data, { merge: true })
       .then(() => {
         alert("Username added to user document in Cloud Firestore.");
       }).catch((error) => {

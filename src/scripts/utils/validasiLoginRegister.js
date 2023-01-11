@@ -18,3 +18,13 @@ export const validasiFormRegisLogin = (response) => {
         loading(false,"Succes");
     }
   };
+
+export const validasiCreateUser = (response) => {
+  if (response === "auth/email-already-in-use") {
+    loading(true,"Email sudah terdaftar");
+  }else if (response === "auth/weak-password") {
+    loading(true,"Minimal password 6 karacter");
+  }else if (response == "succes") {
+    loading(false,"Succes");
+}
+}
