@@ -6,14 +6,14 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-// import {
-//   getDatabase,
-//   ref,
-//   push,
-//   onValue,
-//   set,
-//   remove,
-// } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  set,
+  remove,
+} from "firebase/database";
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
 import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion} from "firebase/firestore"; 
 
@@ -122,6 +122,7 @@ export const createNewUser = (data, id) => {
         const db = getFirestore(app);
         const userId = user.uid;
         setDoc(doc(db, "Mahasiswa", userId),{
+            id: userId,
             nim: data.nim,
             email: user.email,
             id_dosen: data.idDosen,
@@ -222,6 +223,36 @@ export const getAllDataMhsBmbngan = (id) => {
       })
       .catch((error) => {
         reject(error)
+      });
+  })
+}
+
+export const saveDataInTodo = (data, id) => {
+  return new Promise((resolve , reject) => {
+      const db = getDatabase()
+      push(ref(db, `users/${id}/todo`),data)
+      .then(() => {
+          resolve(true)
+      })
+      .catch((error => {
+          console.log(error);
+          reject(false)
+      }))
+  })
+}
+
+export const getDataTodo = (id) => {
+  return new Promise((resolve , reject) => {
+      const db = getDatabase();
+      const starCountRef = ref(db,`users/${id}/todo`)
+      onValue(starCountRef, (snapshot) => {
+        const data = []
+        if(snapshot.val() != null){
+            Object.keys(snapshot.val()).forEach(e => {
+                data.push(snapshot.val()[e])
+                resolve(data)
+            })
+        }
       });
   })
 }

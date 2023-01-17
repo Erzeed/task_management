@@ -230,7 +230,7 @@
 }
 
 .popUp__container > form > textarea::placeholder {
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 .popUp__container > form > input {
