@@ -16,6 +16,7 @@
     justify-content: space-between;
     align-items: center;
     height: 30px;
+    position: relative;
 }
 
 .card__header > p {
@@ -37,15 +38,71 @@
     color: rgba(0, 0, 0, .5);
 }
 
+.card__header > .card__nav {
+    position: absolute;
+    top: 30px;
+    right: -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 5px;
+    width: 80px;
+    height: 70px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    transition: all 0.1s ease-in-out; 
+    transform: scale(0);
+    opacity: 0;
+}
+.card__header > .card__nav.active {
+    transform: scale(1);
+    opacity: 1;
+}
+.card__header > .card__nav > button {
+    border: none;
+    background-color: transparent;
+    letter-spacing: .5px;
+    color: rgba(0, 0, 0, .65);
+    cursor: pointer;
+    margin: 2px;
+}
+
+.card__header > .card__nav > button:hover {
+    transform: scale(.95);
+    color: rgba(0, 0, 0, 1);
+}
+
 .card__footer {
     display: flex;
     justify-content: space-between;
+    border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 .card__body {
     margin: 10px 0;
     height: fit-content;
+    max-width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
     letter-spacing: 1px;
     font-size: .95em;
     color: rgba(0, 0, 0, .7);
+}
+
+.footer__name , 
+.footer__createAt {
+    margin-top: 5px;
+}
+
+.footer__createAt {
+    background-color: #270082;
+    height: 20px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 5px;
 }

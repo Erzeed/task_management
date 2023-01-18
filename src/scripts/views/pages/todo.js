@@ -20,6 +20,7 @@ const Todo = {
                     <p>5</p>
                 </div>
                 <div class="todo__card">
+                    <p>Data kosong</p>
         
                 </div>
             </div>
@@ -105,7 +106,6 @@ const Todo = {
 
   async afterRender() {
     cekUser()
-    const menu = document.querySelectorAll(".menu");
     const openForm = document.querySelector(".openForm");
     const cancel = document.querySelector(".cancel");
     const simpan = document.querySelector(".simpan");
@@ -114,6 +114,7 @@ const Todo = {
     const textArea = document.querySelector(".popUp__container form textarea");
     const todo__card = document.querySelector(".todo__card");
     let dataInputForm = {
+        id:"",
         status: "",
         nim: "",
         judul: "",
@@ -129,28 +130,34 @@ const Todo = {
         dataUserBimbingan.forEach(async (data) => {
             const resp = await getDataTodo(data.id);
             dataTodo.push(...resp)
-            // showDataInTodo(dataTodo)
         })
+        setTimeout(() => {
+            showDataInTodo(dataTodo)
+        }, 3000)
     }
     
     const showDataInTodo = (data) => {
-        data.forEach(e => {
-            if(e.status == "todo") {
-                todo__card.innerHTML += cardTodo(e)
-                console.log(e)
-
-            }
-        })
+        todo__card.innerHTML = ""
+        if(data.length == 0) {
+            todo__card.innerHTML = "<p>Data kosong</p>"
+        }else {
+            data.forEach(e => {
+                if(e.status == "todo") {
+                    todo__card.innerHTML += cardTodo(e)
+                }
+            })
+        }
 
     }
 
     getDataInTodo()
 
-    menu.forEach(e  => {
-        e.addEventListener("click", (e) => {
+
+    window.addEventListener("click", (e) => {
+        if(e.target.classList == "menu") {
             e.path[1].childNodes[5].classList.toggle("active")
-        })
-    })
+        }
+    });
 
     openForm.addEventListener("click", () => {
         const form = document.querySelector(".popUp__container");
@@ -193,8 +200,14 @@ const Todo = {
             let count = 0
             dataUserBimbingan.forEach(async (data) => {
                 if(data.nim == nim) {
+                    dataInputForm = {
+                        ...dataInputForm,
+                        id: data.id
+                    }
                     const resp = await saveDataInTodo(dataInputForm, data.id);
-                    console.log(resp)
+                    if(resp){
+                        getDataInTodo()
+                    }
                 } else {
                     count++
                     if(count == dataUserBimbingan.length){

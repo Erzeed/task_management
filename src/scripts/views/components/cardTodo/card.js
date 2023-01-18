@@ -9,6 +9,11 @@ export const cardTodo = ({nim, judul, deskripsi}) =>  {
             <div class="card__header">
                 <p>${judul}</p>
                 <button class="menu">...</button>
+                <div class="card__nav">
+                    <button class="move">move</button>
+                    <button class="back">back</button>
+                    <button class="delete">delete</button>
+                </div>
             </div>
             <div class="card__body">
                 <p>${deskripsi}</p>
