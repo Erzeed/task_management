@@ -13,6 +13,7 @@ import {
   onValue,
   set,
   remove,
+  update
 } from "firebase/database";
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
 import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion} from "firebase/firestore"; 
@@ -208,6 +209,7 @@ export const getAllDataMhsBmbngan = (id) => {
       .then(docSnap => {
         if (docSnap.exists()) {
           let dataUser = [];
+          console.log(docSnap.data())
           const {id_mhs_bimbingan} = docSnap.data()
           id_mhs_bimbingan.forEach(e => {
             getDataUser(e).then(e => {
@@ -246,13 +248,47 @@ export const getDataTodo = (id) => {
       const db = getDatabase();
       const starCountRef = ref(db,`users/${id}/todo`)
       onValue(starCountRef, (snapshot) => {
-        const data = []
-        if(snapshot.val() != null){
-            Object.keys(snapshot.val()).forEach(e => {
-                data.push(snapshot.val()[e])
-                resolve(data)
-            })
-        }
+          try {
+            const data = []
+            if(snapshot.val() != null){
+                Object.keys(snapshot.val()).forEach(e => {
+                  data.push({
+                    ... snapshot.val()[e],
+                    id: e
+                })
+              })
+              resolve(data)
+            }
+          } catch (error) {
+            reject(error)
+          }
       });
+  })
+}
+
+export const updateCardStatus = (status,userId,todoId) =>  {
+  return new Promise((resolve , reject) => {
+      const db = getDatabase()
+      update(ref(db, `users/${userId}/todo/${todoId}`),{
+          status: status
+      }).then(() => {
+          resolve(true)
+      })
+      .catch((error => {
+          reject(error)
+      }))
+  })
+}
+
+export const deleteCard = (idMhs, idCard) =>  {
+  return new Promise((resolve, reject) => {
+    const db = getDatabase()
+    remove(ref(db, `users/${idMhs}/todo/${idCard}` ))
+    .then(() => {
+        resolve(true)
+    })
+    .catch(error => {
+        reject(error)
+    })
   })
 }

@@ -1,7 +1,13 @@
 import "../../../styles/todo.css";
-import {cekUser} from "../../utils/cekUser";
-import {cardTodo} from "../components/cardTodo/card"
-import {getAllDataMhsBmbngan, saveDataInTodo , getDataTodo} from "../../globals/api-endpoint.js";
+import { cekUser } from "../../utils/cekUser";
+import { cardTodo } from "../components/cardTodo/card";
+import {
+  getAllDataMhsBmbngan,
+  saveDataInTodo,
+  getDataTodo,
+  updateCardStatus,
+  deleteCard,
+} from "../../globals/api-endpoint.js";
 
 const Todo = {
   async render() {
@@ -19,7 +25,7 @@ const Todo = {
                     <p>Todo</p>
                     <p>5</p>
                 </div>
-                <div class="todo__card">
+                <div class="todo__card todo">
                     <p>Data kosong</p>
         
                 </div>
@@ -29,8 +35,8 @@ const Todo = {
                     <p>Do Ing</p>
                     <p>5</p>
                 </div>
-                <div class="todo__card">
-                
+                <div class="todo__card doing">
+                    <p>Data kosong</p>
                 </div>
             </div>
             <div class="todo review">
@@ -38,29 +44,8 @@ const Todo = {
                     <p>Review</p>
                     <p>5</p>
                 </div>
-                <div class="todo__card">
-                <div class="card">
-                    <div class="card__header">
-                        <p>Bab 1</p>
-                        <button class="menu">...</button>
-                        <div class="card__nav">
-                            <button class="move">move</button>
-                            <button class="back">back</button>
-                            <button class="delete">delete</button>
-                        </div>
-                    </div>
-                    <div class="card__body">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, eius.</p>
-                    </div>
-                    <div class="card__footer">
-                        <div class="footer__name">
-                            <p>Feizal Reza</p>
-                        </div>
-                        <div class="footer__createAt">
-                            <p>1 Jan 2023</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="todo__card review">
+                    <p>Data kosong</p>
                 </div>
             </div>
             <div class="todo revisi">
@@ -68,7 +53,7 @@ const Todo = {
                     <p>Revisi</p>
                     <p>5</p>
                 </div>
-                <div class="todo__card">
+                <div class="todo__card revisi">
                 
                 </div>
             </div>
@@ -77,7 +62,7 @@ const Todo = {
                     <p>Done</p>
                     <p>5</p>
                 </div>
-                <div class="todo__card">
+                <div class="todo__card done">
                 
                 </div>
             </div>
@@ -105,119 +90,159 @@ const Todo = {
   },
 
   async afterRender() {
-    cekUser()
+    cekUser();
     const openForm = document.querySelector(".openForm");
     const cancel = document.querySelector(".cancel");
     const simpan = document.querySelector(".simpan");
     const id = localStorage.getItem("id");
     const userInput = document.querySelectorAll(".popUp__container form input");
     const textArea = document.querySelector(".popUp__container form textarea");
-    const todo__card = document.querySelector(".todo__card");
+    const allTodo = document.querySelectorAll(".todo__card");
+    const todo__card = document.querySelector(".todo__card.todo");
+    const doingCard = document.querySelector(".todo__card.doing");
+    const reviewCard = document.querySelector(".todo__card.review");
+    const revisiCard = document.querySelector(".todo__card.revisi");
+    const doneCard = document.querySelector(".todo__card.done");
     let dataInputForm = {
-        id:"",
-        status: "",
-        nim: "",
-        judul: "",
-        createdAt: "",
-        deskripsi: ""
-    }
+      id_mhs: "",
+      status: "",
+      nim: "",
+      judul: "",
+      createdAt: "",
+      deskripsi: "",
+    };
     let dataUserBimbingan = [];
     const respDataMhs = await getAllDataMhsBmbngan(id);
     dataUserBimbingan = respDataMhs;
 
     const getDataInTodo = () => {
-        const dataTodo = []
-        dataUserBimbingan.forEach(async (data) => {
-            const resp = await getDataTodo(data.id);
-            dataTodo.push(...resp)
-        })
-        setTimeout(() => {
-            showDataInTodo(dataTodo)
-        }, 3000)
-    }
-    
+      const dataTodo = [];
+      dataUserBimbingan.forEach(async (data) => {
+        const resp = await getDataTodo(data.id);
+        dataTodo.push(...resp);
+        showDataInTodo(dataTodo);
+      });
+    };
+
     const showDataInTodo = (data) => {
-        todo__card.innerHTML = ""
-        if(data.length == 0) {
-            todo__card.innerHTML = "<p>Data kosong</p>"
-        }else {
-            data.forEach(e => {
-                if(e.status == "todo") {
-                    todo__card.innerHTML += cardTodo(e)
-                }
-            })
-        }
+      [...allTodo].forEach((e) => {
+        e.innerHTML = "";
+      });
+      if (data.length == 0) {
+        todo__card.innerHTML = "<p>Data kosong</p>";
+      } else {
+        data.forEach((e) => {
+          if (e.status == "todo") {
+            todo__card.innerHTML += cardTodo(e);
+          } else if (e.status == "doing") {
+            doingCard.innerHTML += cardTodo(e);
+          } else if (e.status == "review") {
+            reviewCard.innerHTML += cardTodo(e);
+          } else if (e.status == "revisi") {
+            revisiCard.innerHTML += cardTodo(e);
+          } else if (e.status == "done") {
+            doneCard.innerHTML += cardTodo(e);
+          }
+        });
+      }
+    };
 
+    const moveCard = async (status, idMhs, idCard) => {
+      const resp = await updateCardStatus(status, idMhs, idCard);
+      if (resp) {
+        getDataInTodo();
+      } else {
+        console.log(resp);
+      }
+    };
+
+    const delCard = async (idMhs, idCard) => {
+        const respUser = confirm("Apakah anda yakin ?")
+        if(respUser) {
+            const resp = await deleteCard(idMhs, idCard);
+            if(resp){
+                getDataInTodo();
+            }
+            console.log(resp)
+        }
     }
 
-    getDataInTodo()
-
+    getDataInTodo();
 
     window.addEventListener("click", (e) => {
-        if(e.target.classList == "menu") {
-            e.path[1].childNodes[5].classList.toggle("active")
-        }
+      if (e.target.classList == "menu") {
+        e.target.nextElementSibling.classList.toggle("active");
+      } else if (e.target.classList == "move todo") {
+        moveCard("doing", e.target.dataset.id_mhs, e.target.id);
+      } else if (e.target.classList == "move doing") {
+        moveCard("review", e.target.dataset.id_mhs, e.target.id);
+      } else if (e.target.classList == "move review") {
+        moveCard("revisi", e.target.dataset.id_mhs, e.target.id);
+      } else if (e.target.classList == "move revisi") {
+        moveCard("done", e.target.dataset.id_mhs, e.target.id);
+      } else if (e.target.classList == "delete") {
+        delCard(e.target.dataset.id_mhs, e.target.id);
+      }
     });
 
     openForm.addEventListener("click", () => {
-        const form = document.querySelector(".popUp__container");
-        const listnim = document.querySelector(".listnim");
-        form.classList.add("active")
-        dataUserBimbingan.forEach(e => {
-            listnim.innerHTML += `<option value=${e.nim}>`;
-        })
+      const form = document.querySelector(".popUp__container");
+      const listnim = document.querySelector(".listnim");
+      form.classList.add("active");
+      dataUserBimbingan.forEach((e) => {
+        listnim.innerHTML += `<option value=${e.nim}>`;
       });
-      
+    });
+
     cancel.addEventListener("click", () => {
-        const form = document.querySelector(".popUp__container");
-        form.classList.remove("active");
+      const form = document.querySelector(".popUp__container");
+      form.classList.remove("active");
     });
 
-    textArea.addEventListener("change", e => {
+    textArea.addEventListener("change", (e) => {
+      dataInputForm = {
+        ...dataInputForm,
+        [e.target.id]: e.target.value,
+      };
+    });
+
+    [...userInput].forEach((e) => {
+      e.addEventListener("change", (data) => {
         dataInputForm = {
-            ...dataInputForm,
-            [e.target.id]: e.target.value,
-        }
-
+          ...dataInputForm,
+          [data.target.id]: data.target.value,
+          status: "todo",
+          createdAt: Date.now(),
+        };
+      });
     });
-    
-    [...userInput].forEach(e => {
-        e.addEventListener("change", data => {
-            dataInputForm = {
-                ...dataInputForm,
-                [data.target.id]: data.target.value,
-                status: "todo",
-                createdAt: Date.now()
-            }
-        })
-    })
 
-     simpan.addEventListener("click", () => {
-        const {nim, judul, deskripsi} = dataInputForm;
-        if(nim == "" || judul == "" || deskripsi == ""){
-            alert("Semua data harus di isi")
-        }else {
-            let count = 0
-            dataUserBimbingan.forEach(async (data) => {
-                if(data.nim == nim) {
-                    dataInputForm = {
-                        ...dataInputForm,
-                        id: data.id
-                    }
-                    const resp = await saveDataInTodo(dataInputForm, data.id);
-                    if(resp){
-                        getDataInTodo()
-                    }
-                } else {
-                    count++
-                    if(count == dataUserBimbingan.length){
-                        alert("Nim tidak ditemukan")
-                    }
-                }
-            })
-            count = 0;
-        }
-    })
+    simpan.addEventListener("click", () => {
+      const { nim, judul, deskripsi } = dataInputForm;
+      if (nim == "" || judul == "" || deskripsi == "") {
+        alert("Semua data harus di isi");
+      } else {
+        let count = 0;
+        dataUserBimbingan.forEach(async (data) => {
+          if (data.nim == nim) {
+            dataInputForm = {
+              ...dataInputForm,
+              id_mhs: data.id,
+            };
+            const resp = await saveDataInTodo(dataInputForm, data.id);
+            if (resp) {
+              getDataInTodo();
+            }
+          } else {
+            count++;
+            if (count == dataUserBimbingan.length) {
+              alert("Nim tidak ditemukan");
+            }
+          }
+        });
+        count = 0;
+      }
+    });
   },
 };
 

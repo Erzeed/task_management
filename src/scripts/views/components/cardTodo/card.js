@@ -1,18 +1,18 @@
 import css from "./card.css";
 
-export const cardTodo = ({nim, judul, deskripsi}) =>  {
+export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs}) =>  {
     return `
         <style>
             ${css}
         </style>
-        <div class="card">
+        <div class="card" id="${id}">
             <div class="card__header">
                 <p>${judul}</p>
                 <button class="menu">...</button>
                 <div class="card__nav">
-                    <button class="move">move</button>
+                    <button class="move ${status}" data-id_mhs="${id_mhs}" id="${id}">move</button>
                     <button class="back">back</button>
-                    <button class="delete">delete</button>
+                    <button class="delete" data-id_mhs="${id_mhs}" id="${id}">delete</button>
                 </div>
             </div>
             <div class="card__body">
