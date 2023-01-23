@@ -167,22 +167,69 @@ const Todo = {
         }
     }
 
+    const backCard = (elements) => {
+      const idMhs = elements.target.parentElement.dataset.id_mhs;
+      const idCard = elements.target.parentElement.id;
+      if(elements.target.classList == "back doing"){
+        moveCard("todo", idMhs, idCard);
+      } else if (elements.target.classList == "back review"){
+        moveCard("doing", idMhs, idCard);
+      } else if (elements.target.classList == "back revisi"){
+        moveCard("review", idMhs, idCard);
+      } else if (elements.target.classList == "back done"){
+        moveCard("revisi", idMhs, idCard);
+      }
+    }
+
+    const cekOpenMenuActive = (elements, idCard) => {
+      if(elements.id == idCard){
+        if(elements.classList.value.includes("active")){
+          elements.classList.remove("active")
+        }
+      }
+    }
+
+    const activatedMenu = (elementActivate, unActivatedElement, idCard) => {
+      [...elementActivate].forEach((el,i) => {
+        cekOpenMenuActive(unActivatedElement[i], idCard)
+        if(el.id == idCard) {
+          el.classList.toggle("active")
+        }
+      })
+    }
+
+    const openMenu = (elements) => {
+      const footer__link = document.querySelectorAll(".footer__link");
+      const footer__uploads = document.querySelectorAll(".footer__upload");
+
+      if (elements.target.classList == "btnLinks") {
+        activatedMenu(footer__link, footer__uploads, elements.target.id)
+      } else if (elements.target.classList == "btnLampiran") {
+        activatedMenu(footer__uploads, footer__link, elements.target.id);
+      }
+    }
+
     getDataInTodo();
 
     window.addEventListener("click", (e) => {
+      const idMhs = e.target.parentElement.dataset.id_mhs;
+      const idCard = e.target.parentElement.id;
+
       if (e.target.classList == "menu") {
         e.target.nextElementSibling.classList.toggle("active");
       } else if (e.target.classList == "move todo") {
-        moveCard("doing", e.target.dataset.id_mhs, e.target.id);
+        moveCard("doing", idMhs, idCard);
       } else if (e.target.classList == "move doing") {
-        moveCard("review", e.target.dataset.id_mhs, e.target.id);
+        moveCard("review", idMhs, idCard);
       } else if (e.target.classList == "move review") {
-        moveCard("revisi", e.target.dataset.id_mhs, e.target.id);
+        moveCard("revisi", idMhs, idCard);
       } else if (e.target.classList == "move revisi") {
-        moveCard("done", e.target.dataset.id_mhs, e.target.id);
+        moveCard("done", idMhs, idCard);
       } else if (e.target.classList == "delete") {
-        delCard(e.target.dataset.id_mhs, e.target.id);
-      }
+        delCard(idMhs, idCard);
+      }  
+      backCard(e)
+      openMenu(e)
     });
 
     openForm.addEventListener("click", () => {
