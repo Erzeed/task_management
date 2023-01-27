@@ -1834,6 +1834,11 @@ array-flatten@^2.1.2:
   resolved "https://registry.npmjs.org/array-flatten/-/array-flatten-2.1.2.tgz"
   integrity sha512-hNfzcOV8W4NdualtqBFPyVO+54DSJuZGY9qT4pRroB6S9e3iiido2ISIC5h9R2sPJ8H3FHCIiEnsv1lPXO3KtQ==
 
+autosize@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/autosize/-/autosize-5.0.2.tgz#0a327c200dda4a1742817e94dcb8af5700685689"
+  integrity sha512-FPVt5ynkqUAA9gcMZnJHka1XfQgr1WNd/yRfIjmj5WGmjua+u5Hl9hn8M2nU5CNy2bEIcj1ZUwXq7IOHsfZG9w==
+
 babel-loader@^8.2.5:
   version "8.3.0"
   resolved "https://registry.npmjs.org/babel-loader/-/babel-loader-8.3.0.tgz"

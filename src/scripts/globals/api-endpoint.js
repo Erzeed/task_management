@@ -17,8 +17,10 @@ import {
 } from "firebase/database";
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
 import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion} from "firebase/firestore"; 
+import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL  } from "firebase/storage";
 
 import app from "./config/firebase";
+const storage = getStorage(app);
 
 export const registerPage = (data) => {
   return new Promise((resolve, reject) => {
@@ -290,5 +292,37 @@ export const deleteCard = (idMhs, idCard) =>  {
     .catch(error => {
         reject(error)
     })
+  })
+}
+
+export const uploadFile = (file) =>  {
+  return new Promise((resolve, reject) => {
+    const storage = getStorage(app);
+    const uploadTask = uploadBytesResumable(refStorage(storage, `/file/${file.name}`), file )
+    uploadTask.on('state_changed',
+    (snapshot) => {
+      let count = 0;
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      console.log(progress);
+      resolve(count)
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    }, 
+    (error) => {
+      reject(error)
+    }, 
+    () => {
+      // Upload completed successfully, now we can get the download URL
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+      });
+    }
+  );
   })
 }

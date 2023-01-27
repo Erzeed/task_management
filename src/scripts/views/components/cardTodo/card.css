@@ -11,7 +11,7 @@
     padding: 10px;
 }
 
-.card__header {
+.card > .card__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +19,7 @@
     position: relative;
 }
 
-.card__header > p {
+.card > .card__header > p {
     font-size: 1.3em;
     font-weight: bold;
 }
@@ -132,7 +132,8 @@
 }
 
 .footer__link, 
-.footer__upload {
+.footer__upload,
+.footer__comment {
     width: 100%;
     padding: 10px;
     background-color: #f6f5f8;
@@ -142,10 +143,14 @@
     display: none;
 }
 
-.footer__link.active,
-.footer__upload.active {
-    display: flex;
+.footer__comment {
+    flex-direction: column;
+}
 
+.footer__link.active,
+.footer__upload.active,
+.footer__comment.active {
+    display: flex;
 }
 
 .footer__link > form, 
@@ -167,7 +172,8 @@
 
 
 .footer__upload > form > button,
-.footer__link > form > button {
+.footer__link > form > button,
+.btnComment > button {
     width: 18%;
     height: 80%;
     border: none;
@@ -175,8 +181,79 @@
     border-radius: 3px;
     color: #fff;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, .2);
+    cursor: pointer;
+    padding: 0 5px;
 }
 
 .footer__upload > form > button {
     width: 25%;
+}
+
+/* footer__comment */
+
+.comment__area {
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+
+.comment__area > form > textarea {
+    border: none;
+    padding: 5px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 1em;
+    background-color: #f4f4f4;
+}
+
+.comment__area > form > textarea:focus {
+    outline-style: none;
+}
+
+.btnComment {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btnComment > button  {
+    width: 40px;
+    height: 25px;
+}
+
+/* card__comment */
+
+.comment__user {
+    background-color: #fff;
+    padding: 10px;
+}
+
+.card__comment {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.card__comment > .card__header {
+    display: flex;
+}
+
+.card__header > .profile > img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.card__header > .header__name {
+    margin-left: 10px;
+}
+
+.card__header > .header__name > p {
+    font-size: 1em;
+}
+
+.card__header > .header__name > small {
+    color: rgba(0, 0, 0, .6);
+    font-size: .8em;
 }

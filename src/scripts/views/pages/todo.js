@@ -7,6 +7,7 @@ import {
   getDataTodo,
   updateCardStatus,
   deleteCard,
+  uploadFile
 } from "../../globals/api-endpoint.js";
 
 const Todo = {
@@ -189,9 +190,10 @@ const Todo = {
       }
     }
 
-    const activatedMenu = (elementActivate, unActivatedElement, idCard) => {
+    const activatedMenu = (elementActivate, unActivatedElement, unActivatedElement2, idCard) => {
       [...elementActivate].forEach((el,i) => {
-        cekOpenMenuActive(unActivatedElement[i], idCard)
+        cekOpenMenuActive(unActivatedElement[i], idCard);
+        cekOpenMenuActive(unActivatedElement2[i], idCard);
         if(el.id == idCard) {
           el.classList.toggle("active")
         }
@@ -201,17 +203,20 @@ const Todo = {
     const openMenu = (elements) => {
       const footer__link = document.querySelectorAll(".footer__link");
       const footer__uploads = document.querySelectorAll(".footer__upload");
+      const footer__comment = document.querySelectorAll(".footer__comment");
 
       if (elements.target.classList == "btnLinks") {
-        activatedMenu(footer__link, footer__uploads, elements.target.id)
+        activatedMenu(footer__link, footer__uploads, footer__comment, elements.target.id)
       } else if (elements.target.classList == "btnLampiran") {
-        activatedMenu(footer__uploads, footer__link, elements.target.id);
+        activatedMenu(footer__uploads, footer__link, footer__comment, elements.target.id);
+      } else if (elements.target.classList == "btnKoment") {
+        activatedMenu(footer__comment, footer__link, footer__uploads, elements.target.id);
       }
     }
 
     getDataInTodo();
 
-    window.addEventListener("click", (e) => {
+    window.addEventListener("click", async (e) => {
       const idMhs = e.target.parentElement.dataset.id_mhs;
       const idCard = e.target.parentElement.id;
 
@@ -227,6 +232,10 @@ const Todo = {
         moveCard("done", idMhs, idCard);
       } else if (e.target.classList == "delete") {
         delCard(idMhs, idCard);
+      }  else if (e.target.classList == "btn__file") {
+        const file = document.getElementById("file__upoloud").files[0];
+        const resp = await uploadFile(file)
+        console.log(resp)
       }  
       backCard(e)
       openMenu(e)
