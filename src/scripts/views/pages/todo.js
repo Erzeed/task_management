@@ -233,7 +233,7 @@ const Todo = {
       } else if (e.target.classList == "delete") {
         delCard(idMhs, idCard);
       }  else if (e.target.classList == "btn__file") {
-        const file = document.getElementById("file__upoloud").files[0];
+        const file = e.target.previousElementSibling.files[0];
         const resp = await uploadFile(file)
         console.log(resp)
       }  

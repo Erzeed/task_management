@@ -18,7 +18,8 @@ const succes = (title) => {
 const error = (title) => {
   customToast.fire({
     title: `${title}`,
-    icon: "error"
+    icon: "error",
+    timer: 2000,
   });
 };
 
@@ -39,4 +40,27 @@ export const loading = (data, message) => {
         }
       }
     });
+};
+
+export const loadingProggresUploadFile = (data, nameFile, message) => {
+  customToast
+    .fire({
+      title: `upload file ${nameFile} in progress ${data}% remaining`,
+      timer: 20000,
+      timerProgressBar: false,
+      didOpen: () => {
+        Swal.showLoading();
+        if(data == 100){
+          Swal.stopTimer()
+          succes(message);
+        }
+      },
+    })
+
+};
+
+export const loadingUploadError = (nameFile,) => {
+
+    error(`upload file ${nameFile} failed`);
+
 };

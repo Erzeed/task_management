@@ -18,9 +18,9 @@ import {
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
 import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL  } from "firebase/storage";
-
+import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
 import app from "./config/firebase";
-const storage = getStorage(app);
+
 
 export const registerPage = (data) => {
   return new Promise((resolve, reject) => {
@@ -301,10 +301,8 @@ export const uploadFile = (file) =>  {
     const uploadTask = uploadBytesResumable(refStorage(storage, `/file/${file.name}`), file )
     uploadTask.on('state_changed',
     (snapshot) => {
-      let count = 0;
       const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      console.log(progress);
-      resolve(count)
+      loadingProggresUploadFile(progress, file.name , "Upload completed")
       switch (snapshot.state) {
         case 'paused':
           console.log('Upload is paused');
@@ -316,6 +314,7 @@ export const uploadFile = (file) =>  {
     }, 
     (error) => {
       reject(error)
+      loadingUploadError(file.name )
     }, 
     () => {
       // Upload completed successfully, now we can get the download URL
