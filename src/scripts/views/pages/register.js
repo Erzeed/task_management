@@ -19,6 +19,7 @@ const Register = {
             </div>
             <div class="form__input">
                 <form>
+                    <input type='text' id='username' placeholder="Username" /><br/>
                     <input type='email' id='email' placeholder="Email" /><br/>
                     <input type="password" id='password' placeholder="Password" /><br/>
                     <input type="password" id='password2' placeholder="Re-type Password" /><br/>
@@ -45,10 +46,12 @@ const Register = {
     let pass = "";
     let pass2 = "";
     let data = {
+      username: "",
       email: "",
       password: "",
     };
     const email = document.querySelector("#email");
+    const username = document.querySelector("#username");
     const password = document.querySelector("#password");
     const re_type_password = document.querySelector("#password2");
     const button = document.querySelector(".form__input button");
@@ -56,6 +59,12 @@ const Register = {
       data = {
         ...data,
         email: e.target.value,
+      };
+    });
+    username.addEventListener("change", (e) => {
+      data = {
+        ...data,
+        username: e.target.value,
       };
     });
     password.addEventListener("change", (e) => {
@@ -74,9 +83,9 @@ const Register = {
         if (response.error === false) {
           console.log(response);
           validasiFormRegisLogin(response);
-          // setTimeout(() => {
-          //   navigate("/");
-          // }, 1610);
+          setTimeout(() => {
+            navigate("/login");
+          }, 1610);
         } else {
           console.log(response);
           validasiFormRegisLogin(response);

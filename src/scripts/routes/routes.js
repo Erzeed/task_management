@@ -19,7 +19,7 @@ const routes = {
   '/editprofile': EditProfile,
   '/profile': profile,
   '/todo': todo,
-  '/detailbimbingan': DetailBimbingann
+  '/detailbimbingan/:id': DetailBimbingann
 };
 
 

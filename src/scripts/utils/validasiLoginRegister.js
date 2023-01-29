@@ -26,5 +26,5 @@ export const validasiCreateUser = (response) => {
     loading(true,"Minimal password 6 karacter");
   }else if (response == "succes") {
     loading(false,"Succes");
-}
+  }
 }

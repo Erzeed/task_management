@@ -3,11 +3,16 @@ import Chart from "chart.js/auto";
 import userIcon from "../../../asset/icons/icons8-user.png";
 import proggresIcon from "../../../asset/icons/icons8-in-progress.png";
 import revisiIcon from "../../../asset/icons/icons8-revisi.png";
+import deleteIcon from "../../../asset/icons/delete-24.png";
 import doneIcon from "../../../asset/icons/icons8-done.png";
-import {TabulatorFull as Tabulator} from 'tabulator-tables';
+import { TabulatorFull as Tabulator } from "tabulator-tables";
 import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
-import {cekUser} from "../../utils/cekUser";
-import {createNewUser, getDataUser, getAllDataMhsBmbngan} from "../../globals/api-endpoint.js";
+import { cekUser } from "../../utils/cekUser";
+import {
+  createNewUser,
+  getDataUser,
+  getAllDataMhsBmbngan,
+} from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
 
@@ -87,24 +92,22 @@ const Dashboard = {
                 </div>
             </div>
             <div class="create__form">
-              <div class="form__container">
-                <h1>Create Account</h1>
-                <form id="form">
-                    <input type='text' id='nim' class="inputForm" placeholder="Nim" /><br/>
-                    <input type='email' id='email' class="inputForm" placeholder="Email" /><br/>
-                    <div class="buttonIn__input">
-                      <input type="password" id='password'class="inputForm" placeholder="Password"/><br/>
-                      <button class="random__pas" type='button' >Random</button>
-                    </div>
-                    <div class="showPass">
-                      <input type="checkbox" class="checkBox">
-                      <p>show password</p>
-                    </div>
-                </form>
-                <div class="btn__create">
-                  <button class="simpan" type='button'>Simpan</button>
-                  <button class="cancel" type='button'>Cancel</button>
-                </div>
+              <h1>Create Account</h1>
+              <form id="form">
+                  <input type='text' id='nim' class="inputForm" placeholder="Nim" /><br/>
+                  <input type='email' id='email' class="inputForm" placeholder="Email" /><br/>
+                  <div class="buttonIn__input">
+                    <input type="password" id='password'class="inputForm" placeholder="Password"/><br/>
+                    <button class="random__pas" type='button' >Random</button>
+                  </div>
+                  <div class="showPass">
+                    <input type="checkbox" class="checkBox">
+                    <p>show password</p>
+                  </div>
+              </form>
+              <div class="btn__create">
+                <button class="simpan" type='button'>Simpan</button>
+                <button class="cancel" type='button'>Cancel</button>
               </div>
             </div>
         </div>
@@ -125,8 +128,8 @@ const Dashboard = {
       nim: "",
       email: "",
       password: "",
-      role: ""
-    }
+      role: "",
+    };
     let user = {};
     const id = localStorage.getItem("id");
     const ctx = document.getElementById("myChart").getContext("2d");
@@ -137,45 +140,41 @@ const Dashboard = {
     const cancel = document.querySelector(".cancel");
     const simpan = document.querySelector(".simpan");
     const button__refresh = document.querySelector(".button__refresh button");
-    const form = document.querySelectorAll('.inputForm');
+    const form = document.querySelectorAll(".inputForm");
 
     const getData = async () => {
       const data = await getDataUser(id);
       user = data;
-      changeTitle(data.nama)
-    }
+      changeTitle(data.nama);
+    };
 
     const changeTitle = (title) => {
       document.getElementById("username").innerHTML = title;
-    }
+    };
 
     getData();
 
-
-    [...form].forEach(e => {
+    [...form].forEach((e) => {
       e.addEventListener("change", (e) => {
-        const id = localStorage.getItem("id")
+        const id = localStorage.getItem("id");
         dataNewAccount = {
           ...dataNewAccount,
           idDosen: id,
           [e.target.id]: e.target.value,
-          role: "Mahasiswa"
-        }
-      })
+          role: "Mahasiswa",
+        };
+      });
     });
-   
 
     simpan.addEventListener("click", async () => {
-      const {nim, email, password} = dataNewAccount
-      if(nim == "" || email == "" || password == ""){
-        alert("Semua data harus di isi")
+      const { nim, email, password } = dataNewAccount;
+      if (nim == "" || email == "" || password == "") {
+        alert("Semua data harus di isi");
       } else {
         createNewUser(dataNewAccount, id);
       }
-    })
-    
+    });
 
-    
     const data = {
       labels: ["Bab 1", "Bab 2", "Bab 3", "Bab 4", "Bab 5"],
       datasets: [
@@ -201,7 +200,7 @@ const Dashboard = {
           label: "Mahasiswa",
           data: [1, 5, 10, 3, 0],
           // borderColor: Utils.CHART_COLORS.red,
-          borderColor: 'rgb(43,36,130)',
+          borderColor: "rgb(43,36,130)",
           pointStyle: "circle",
           pointRadius: 10,
           pointHoverRadius: 15,
@@ -218,10 +217,10 @@ const Dashboard = {
         plugins: {
           legend: {
             position: "right",
-          }
+          },
         },
         layout: {
-            padding: 20
+          padding: 20,
         },
       },
     });
@@ -231,16 +230,16 @@ const Dashboard = {
       options: {
         responsive: true,
         layout: {
-            padding: {
-                left: 20,
-                bottom: 20
-            }
+          padding: {
+            left: 20,
+            bottom: 20,
+          },
         },
         scales: {
           y: {
             beginAtZero: true,
             max: 20,
-            min: 0
+            min: 0,
           },
         },
       },
@@ -248,11 +247,11 @@ const Dashboard = {
 
     //define table
     const defaultValue = (cell) => {
-      if(!cell.getValue()) {
+      if (!cell.getValue()) {
         return "-";
       }
       return cell.getValue();
-    }
+    };
 
     const getAllDataMhs = async () => {
       const dataMhs = await getAllDataMhsBmbngan(id);
@@ -260,6 +259,7 @@ const Dashboard = {
         //   minHeight: 300,
         rowHeight: 40,
         data: dataMhs,
+        placeholder: "No Data Set",
         columns: [
           {
             title: "Nim",
@@ -267,7 +267,7 @@ const Dashboard = {
             sorter: "string",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Name",
@@ -275,78 +275,79 @@ const Dashboard = {
             sorter: "string",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Email",
             field: "email",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Jurusan",
             field: "jurusan",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Judul",
             field: "judul",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Mulai Bimbingan",
             field: "mulai_bimbingan",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Terakhir Bimbingan",
             field: "terakhir_bimbingan",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
           {
             title: "Bab",
             field: "bab_skripsi",
             hozAlign: "center",
             vertAlign: "middle",
-            formatter:defaultValue
+            formatter: defaultValue,
           },
         ],
       });
-  
-      table.on('rowClick', (e, row) => {
-        alert("Row " + row.getIndex() + " Clicked!!!!")
-      })
-    }
 
-    getAllDataMhs()
+      table.on("rowClick", (e, row) => {
+        window.location.href = `/#/detailbimbingan/${row.getIndex()}`;
+      });
+    };
+
+    getAllDataMhs();
 
     button__refresh.addEventListener("click", () => {
       getAllDataMhs();
       table.redraw(true);
-  });
+    });
 
     const randomPass = () => {
-      const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const chars =
+        "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const passwordLength = 12;
       let password = "";
       for (let i = 0; i <= passwordLength; i++) {
         let randomNumber = Math.floor(Math.random() * chars.length);
-        password += chars.substring(randomNumber, randomNumber +1);
-       }
-       return password;
-    }
+        password += chars.substring(randomNumber, randomNumber + 1);
+      }
+      return password;
+    };
     random__pas.addEventListener("click", () => {
       document.getElementById("password").value = randomPass();
-    })
+    });
     checkBox.addEventListener("click", () => {
       const pass = document.getElementById("password");
       if (pass.type === "password") {
@@ -354,21 +355,17 @@ const Dashboard = {
       } else {
         pass.type = "password";
       }
-    })
+    });
 
-    
     create.addEventListener("click", () => {
       const formUp = document.querySelector(".create__form");
-      formUp.classList.add("active")
-      
+      formUp.classList.add("active");
     });
-      
 
     cancel.addEventListener("click", () => {
       const formUp = document.querySelector(".create__form");
-      formUp.classList.remove("active")
-    })
-
+      formUp.classList.remove("active");
+    });
   },
 };
 

@@ -1,4 +1,5 @@
 import "../../../styles/detailBimbingan.css";
+import UrlParser from '../../routes/url-parser';
 import {cekUser} from "../../utils/cekUser";
 
 const DetailBimbingann = {
@@ -63,6 +64,8 @@ const DetailBimbingann = {
 
     async afterRender() {
         cekUser()
+        const url = UrlParser.parseActiveUrlWithoutCombiner();
+        console.log(url.id)
     },
 };
 

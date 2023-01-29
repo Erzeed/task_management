@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import {
   getDatabase,
@@ -25,9 +26,17 @@ import app from "./config/firebase";
 export const registerPage = (data) => {
   return new Promise((resolve, reject) => {
     const auth = getAuth();
+    const db = getFirestore(app);
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
+        // cekRoleUser(user);
+        setDoc(doc(db, "Dosen", user.uid), {
+          nama: data.username,
+          iddosen: user.uid,
+          role_status: "dosen",
+          email: user.email
+        })
         resolve(user);
       })
       .catch((error) => {
@@ -106,7 +115,7 @@ export const loginByEmailPass = (data) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        cekRoleUser(user)
         resolve(user);
       })
       .catch((error) => {
@@ -139,6 +148,7 @@ export const createNewUser = (data, id) => {
                     id_mhs_bimbingan: arrayUnion(userId) 
                   }, { merge: true })
                   .then(() => {
+                    console.log("haii")
                     validasiCreateUser("succes");
                   }).catch((error) => {
                     console.log(error.code);
@@ -148,6 +158,7 @@ export const createNewUser = (data, id) => {
                     id_mhs_bimbingan: [userId]
                   }, { merge: true })
                   .then(() => {
+                    console.log("haii2")
                     validasiCreateUser("succes");
                   }).catch((error) => {
                     console.log(error.code);
@@ -197,9 +208,10 @@ export const updateProfileUser = (id, data, role) => {
     const db = getFirestore(app);
     setDoc(doc(db, role, id), data, { merge: true })
       .then(() => {
-        alert("Username added to user document in Cloud Firestore.");
+        resolve(true)
       }).catch((error) => {
-        alert(error);
+        reject(error)
+        console.log(error)
       });
   });
 };
@@ -213,14 +225,16 @@ export const getAllDataMhsBmbngan = (id) => {
           let dataUser = [];
           console.log(docSnap.data())
           const {id_mhs_bimbingan} = docSnap.data()
-          id_mhs_bimbingan.forEach(e => {
-            getDataUser(e).then(e => {
-              dataUser.push(e)
-              if(id_mhs_bimbingan.length == dataUser.length) {
-                  resolve(dataUser)
-                }
+          if(id_mhs_bimbingan !== undefined){
+            id_mhs_bimbingan.forEach(e => {
+              getDataUser(e).then(e => {
+                dataUser.push(e)
+                if(id_mhs_bimbingan.length == dataUser.length) {
+                    resolve(dataUser)
+                  }
+              })
             })
-          })
+          }
         } else {
           console.log("data kosong")
         }

@@ -2,6 +2,7 @@ import "../../../styles/editprofile.css";
 import {cekUser} from "../../utils/cekUser";
 import {updateProfileUser, getDataUser} from "../../globals/api-endpoint.js";
 import { editForm } from "../components/editForm/editForm";
+import { loading } from "../../utils/customToast";
 
 const EditProfile = {
   async render() {
@@ -17,6 +18,7 @@ const EditProfile = {
               <label for="field1"><span>Nama </span><input  id="nama" type="text" class="input-field" name="field1" value="" /></label>
               <label for="field2"><span>Nomor Telepon </span><input  id="nomor_telepon" type="tel" class="input-field" name="field2" value="" /></label>
               <label for="field1"><span>Angkatan </span><input  id="angkatan" type="number" class="input-field" name="field1" value="" /></label>
+              <label for="field1"><span>Fakultas </span><input  id="fakultas" type="text" class="input-field" name="field1" value="" /></label>
               <label for="field1"><span>Jurusan </span><input  id="jurusan" type="text" class="input-field" name="field1" value="" /></label>
               <label for="field1"><span>Judul Skripsi </span><input  id="judul_skripsi" type="text" class="input-field" name="field1" value="" /></label>
               <div class="button">
@@ -34,19 +36,16 @@ const EditProfile = {
   async afterRender() {
     cekUser()
     let dataUser = {
-      Angkatan: "",
-      Judul_Skripsi: "",
-      Jurusan: "",
-      Name: "",
-      Nomor_Telepon: ""
+      angkatan: "",
+      judul_skripsi: "",
+      jurusan: "",
+      nama: "",
+      nomor_telepon: "",
+      fakultas: "",
     }
     const id = localStorage.getItem("id")
     const form = document.querySelectorAll(".input-field");
-    const profile__input = document.querySelector(".profile__input");
 
-    const getUserData = await getDataUser(id);
-    // profile__input.innerHTML = editForm(getUserData);
-    
     
     [...form].forEach(e => {
       e.addEventListener("change", (e) => {
@@ -57,16 +56,20 @@ const EditProfile = {
       })
     });
 
-    document.addEventListener("click",e => {
+    document.addEventListener("click", async (e) => {
       if(e.target.id == "cancel") {
         window.location.href = "/#/profile"
       }else if(e.target.id == "btnSubmit"){
-        const {Angkatan, Judul_Skripsi, Jurusan, Name, Nomor_Telepon} = dataUser;
-        if (Angkatan == "" || Judul_Skripsi == "" || Jurusan == "" || Name == "" || Nomor_Telepon == "") {
+        const {angkatan, judul_skripsi, jurusan, nama, nomor_telepon, fakultas} = dataUser;
+        if (angkatan == "" || judul_skripsi == "" || jurusan == "" || nama == "" || nomor_telepon == "" || fakultas == "") {
           alert("Semua data harus diisi");
         } else {
-          // updateProfileUser(id, dataUser)
-          console.log(dataUser)
+          const resp = await updateProfileUser(id, dataUser, "Mahasiswa")
+          if(resp){
+            loading(false,"Data berhasil di update");
+          } else {
+            loading(true, error);
+          }
         }
       }
     })

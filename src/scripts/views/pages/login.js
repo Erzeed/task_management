@@ -74,10 +74,9 @@ const Login = {
       if (response.uid !== undefined) {
         validasiFormRegisLogin(response);
         localStorage.setItem("id", response.uid);
-        // setTimeout(() => {
-        //   window.location.href = '/#/dashboard';
-        // }, 1610);
-        console.log(response);
+        setTimeout(() => {
+          window.location.href = '/#/todo';
+        }, 1610);
       } else {
         validasiFormRegisLogin(response);
       }
@@ -89,7 +88,7 @@ const Login = {
       if (responseGogle.uid !== undefined) {
         localStorage.setItem("id", responseGogle.uid);
         setTimeout(() => {
-          window.location.href = '/#/dashboard';
+          window.location.href = '/#/todo';
         }, 1610)
       }
     }
