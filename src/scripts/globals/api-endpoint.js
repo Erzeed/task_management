@@ -151,22 +151,21 @@ export const createNewUser = (data, id) => {
                     console.log("haii")
                     validasiCreateUser("succes");
                   }).catch((error) => {
-                    console.log(error.code);
+                    reject(error.code);
                   });
               } else {
                   setDoc(doc(db, "Dosen", id), {
                     id_mhs_bimbingan: [userId]
                   }, { merge: true })
                   .then(() => {
-                    console.log("haii2")
                     validasiCreateUser("succes");
                   }).catch((error) => {
-                    console.log(error.code);
+                    reject(error.code);
                   });
               }
             })
           }).catch((error) => {
-            console.log(error);
+            reject(error.code);
           });
       })
       .catch((error) => {

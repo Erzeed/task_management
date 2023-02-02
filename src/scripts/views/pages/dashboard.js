@@ -8,6 +8,8 @@ import doneIcon from "../../../asset/icons/icons8-done.png";
 import { TabulatorFull as Tabulator } from "tabulator-tables";
 import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
 import { cekUser } from "../../utils/cekUser";
+import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
+import { loading } from "../../utils/customToast";
 import {
   createNewUser,
   getDataUser,
@@ -142,12 +144,12 @@ const Dashboard = {
     const simpan = document.querySelector(".simpan");
     const button__refresh = document.querySelector(".button__refresh button");
     const form = document.querySelectorAll(".inputForm");
-    const loadingToast = document.querySelector('loading-roll');
+    const loadingToast = document.querySelector("loading-roll");
 
     const getData = async () => {
       const data = await getDataUser(id);
-      if(data) {
-        loadingToast.style.display = 'none';
+      if (data) {
+        loadingToast.style.display = "none";
         user = data;
         changeTitle(data.nama);
       }
@@ -177,9 +179,27 @@ const Dashboard = {
         alert("Semua data harus di isi");
       } else {
         const dataMhs = await getAllDataMhsBmbngan(id);
-        dataMhs.forEach(data => {
-          console.log(data.nim, dataNewAccount.nim)
-        })
+        let nimAda = false;
+        if (dataMhs) {
+          dataMhs.forEach((data) => {
+            if (data.nim == dataNewAccount.nim) {
+              nimAda = true;
+              return;
+            }
+          });
+          if (!nimAda) {
+            const resp = await createNewUser(dataNewAccount, id);
+            if (resp) {
+              loading(false, "Berhasil membuat akun mahasiswa");
+            } else {
+              validasiFormRegisLogin(resp);
+            }
+          } else {
+            loading(true, "Nim sudah terdaftar");
+          }
+        } else {
+          loading(true, dataMhs);
+        }
       }
     });
 
