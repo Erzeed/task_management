@@ -7,7 +7,8 @@ import {
   getDataTodo,
   updateCardStatus,
   deleteCard,
-  uploadFile
+  uploadFile,
+  getDataUser
 } from "../../globals/api-endpoint.js";
 
 const Todo = {
@@ -16,6 +17,7 @@ const Todo = {
       <div class="content__todo">
       <side-bar class="todo"></side-bar>
       <div class="todo__main">
+      <loading-roll></loading-roll>
         <div class="main__title">
             <h1>Bimbingan Skripsi</h1>
             <button class="openForm">Add Todo</button>
@@ -70,12 +72,12 @@ const Todo = {
         </div>
         <div class="popUp__container" >
             <form action=''>
-                <label htmlFor="nim">Nim</label>
+                <label htmlFor="nim">Nim*</label>
                 <input list="listnim" name="nim" id="nim" placeholder="Nim">
                 <datalist id="listnim">
                     
                 </datalist>
-                <label htmlFor="judul">Judul</label>
+                <label htmlFor="judul">Judul*</label>
                 <input type="text" name="judul" placeholder="Judul" id="judul"/>
                 <label htmlFor="content">Deskripsi</label>
                 <textarea name="content" id="deskripsi" placeholder="Deskripsi" cols="30" rows="10" ></textarea>
@@ -104,6 +106,8 @@ const Todo = {
     const reviewCard = document.querySelector(".todo__card.review");
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
+    const loading = document.querySelector('loading-roll');
+
     let dataInputForm = {
       id_mhs: "",
       status: "",
@@ -112,23 +116,48 @@ const Todo = {
       createdAt: "",
       deskripsi: "",
     };
+    
     let dataUserBimbingan = [];
-    const respDataMhs = await getAllDataMhsBmbngan(id);
-    dataUserBimbingan = respDataMhs;
+    const dataUser = await getDataUser(id);
+    localStorage.setItem("role", dataUser.role_status)
 
-    const getDataInTodo = () => {
+    const getDataInTodo = async  (role) => {
       const dataTodo = [];
-      dataUserBimbingan.forEach(async (data) => {
-        const resp = await getDataTodo(data.id);
+      if(role == "mhs"){
+        const resp = await getDataTodo(id);
         dataTodo.push(...resp);
         showDataInTodo(dataTodo);
-      });
+      }else {
+        dataUserBimbingan.forEach( async (data) => {
+          const resp = await getDataTodo(data.id);
+          if(resp) {
+            dataTodo.push(...resp);
+            showDataInTodo(dataTodo)
+          }
+        });
+      }
     };
+
+    const cekRoleUser = async () => {
+      if(dataUser.role_status == "Mahasiswa"){
+        openForm.style.display = "none";
+        getDataInTodo("mhs");
+        loading.style.display = 'none';
+      } else {
+        const respDataMhs = await getAllDataMhsBmbngan(id);
+        dataUserBimbingan = respDataMhs;
+        getDataInTodo("dosen");
+        loading.style.display = 'none';
+      }
+    }
+
+    cekRoleUser();
 
     const showDataInTodo = (data) => {
       [...allTodo].forEach((e) => {
         e.innerHTML = "";
       });
+      // console.log(data)
       if (data.length == 0) {
         todo__card.innerHTML = "<p>Data kosong</p>";
       } else {
@@ -151,7 +180,7 @@ const Todo = {
     const moveCard = async (status, idMhs, idCard) => {
       const resp = await updateCardStatus(status, idMhs, idCard);
       if (resp) {
-        getDataInTodo();
+        cekRoleUser();
       } else {
         console.log(resp);
       }
@@ -162,7 +191,7 @@ const Todo = {
         if(respUser) {
             const resp = await deleteCard(idMhs, idCard);
             if(resp){
-                getDataInTodo();
+              cekRoleUser();
             }
             console.log(resp)
         }
@@ -214,7 +243,6 @@ const Todo = {
       }
     }
 
-    getDataInTodo();
 
     window.addEventListener("click", async (e) => {
       const idMhs = e.target.parentElement.dataset.id_mhs;
@@ -243,8 +271,8 @@ const Todo = {
 
     openForm.addEventListener("click", () => {
       const form = document.querySelector(".popUp__container");
-      const listnim = document.querySelector(".listnim");
       form.classList.add("active");
+      const listnim = document.querySelector("#listnim");
       dataUserBimbingan.forEach((e) => {
         listnim.innerHTML += `<option value=${e.nim}>`;
       });
@@ -274,8 +302,8 @@ const Todo = {
     });
 
     simpan.addEventListener("click", () => {
-      const { nim, judul, deskripsi } = dataInputForm;
-      if (nim == "" || judul == "" || deskripsi == "") {
+      const { nim, judul } = dataInputForm;
+      if (nim == "" || judul == "") {
         alert("Semua data harus di isi");
       } else {
         let count = 0;
@@ -287,8 +315,9 @@ const Todo = {
             };
             const resp = await saveDataInTodo(dataInputForm, data.id);
             if (resp) {
-              getDataInTodo();
+              cekRoleUser();
             }
+            console.log(dataInputForm, data.id)
           } else {
             count++;
             if (count == dataUserBimbingan.length) {

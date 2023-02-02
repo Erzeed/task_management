@@ -2,6 +2,7 @@ import 'regenerator-runtime';
 import './views/components/navbar/navbar';
 import './views/components/jumbotron/jumbotron';
 import './views/components/sidebar/sidebar';
+import './views/components/loading/loading';
 import App from './views/app';
 
 const app = new App({

@@ -17,46 +17,63 @@
 
 .profile__main > .header {
     width: 100%;
-    height: 50vh;
-    position: relative;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, .1); */
-    padding: 30px 20px;
+    height: 37vh;
+    display: flex;
+    align-items: flex-end;
 }
 
 .header > .header__banner {
-    height: 75%;
-    width: 100%;
+    height: 40%;
+    width: 100vw;
     border-radius: 15px;
+    position: absolute;
+	left: 0;
+	top: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .header > .header__banner > img,
-.header > .header__img > img {
+.header__txt > .header__img > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 15px;
 }
 
-.header > .header__img {
+.header__txt > .header__img > img{
+    border-radius: 15px;
+
+}
+
+.header__txt > .header__img {
     width: 120px;
     height: 120px;
-    /* background-color: #270082; */
-    position: absolute;
-    bottom: 40px;
-    left: 60px;
+    position: relative;
     border-radius: 10px;
+    z-index: 3;
 }
 
-.header > .header__img > img {
+.header__txt > .header__img > img {
     object-fit: contain;
 }
 
 .header__txt {
-    width: 67%;
+    position: relative;
+    width: 90%;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    
     align-items: center;
+    z-index: 3;
+}
+
+.header__txt > .header__title {
+    margin-left: 20px;
+    width: 80%;
+}
+
+.header__txt > .header__title > h2 {
+    color: #fff;
 }
 
 .header__txt > .header__title > p {
@@ -76,17 +93,17 @@
 }
 
 .profile__detail {
-    margin-top: 10px;
-    border-top: 1px solid rgba(0, 0, 0, .05);
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, .1); */
+    border-top: 1px solid rgba(0, 0, 0, .08);
     width: 90%;
     padding: 30px 20px;
     border-radius: 5px;
     min-height: 30vh;
+    margin: 20px auto;
 }
 
 .detail {
     display: flex;
+    justify-content: center;
     width: 100%;
     height: 100%;
 }
@@ -152,8 +169,7 @@
     margin: 20px 0;
 }
 
-.form__container > form > input,
-.form__container > form > .buttonIn__input > input {
+.form__container > form > input {
     width: 100%;
     height: 35px;
     margin: 5px 0;
@@ -163,13 +179,32 @@
     border-radius: 3px;
 }
 
-.form__container > form > input:focus , 
-.form__container > form > .buttonIn__input > input{
+.form__container > form > input:focus {
     outline-style: none;
 }
 
-.form__container > form > .buttonIn__input {
+.form__container > .btn__create {
     display: flex;
-    position: relative;
+    justify-content: flex-end;
 }
+
+.form__container > .btn__create > * {
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn__create > .simpan {
+    background-color: #8E05C2;
+    margin-right: 10px;
+}
+
+.btn__create > .cancel {
+    background-color: red;
+}
+
 

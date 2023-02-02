@@ -15,6 +15,11 @@ class sidebar extends HTMLElement {
     this.render();
   }
 
+  cekRole() {
+    const role = localStorage.getItem("role");
+    return role;
+  }
+
   logOut() {
     const btnLogOut = this.shadowDOM.querySelector('.sidebar__logout img');
     btnLogOut.addEventListener("click", () => {
@@ -35,7 +40,7 @@ class sidebar extends HTMLElement {
             <div class="sidebar__menu">
                 <ul>
                     <li class=${this.class == "home" ? "active" : ""}>
-                      <a href="/#/dashboard"><img src=${logoHome} alt="home" /></a>
+                      <a href=${this.cekRole() == "dosen" ? "/#/dashboard" : `/#/detailbimbingan/${localStorage.getItem("id")}`}><img src=${logoHome} alt="home" /></a>
                     </li>
                     <li class=${this.class == "todo" ? "active" : ""}>
                       <a href="/#/todo"><img src=${logoTask} alt="task" /></a>
@@ -50,7 +55,8 @@ class sidebar extends HTMLElement {
             </div>
         </div>
     `;
-    this.logOut()
+    this.logOut();
+    this.cekRole();
   }
 }
 

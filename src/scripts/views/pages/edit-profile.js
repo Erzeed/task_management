@@ -1,7 +1,6 @@
 import "../../../styles/editprofile.css";
 import {cekUser} from "../../utils/cekUser";
 import {updateProfileUser, getDataUser} from "../../globals/api-endpoint.js";
-import { editForm } from "../components/editForm/editForm";
 import { loading } from "../../utils/customToast";
 
 const EditProfile = {
@@ -15,12 +14,18 @@ const EditProfile = {
           </div>
           <div class="profile__input form-style-2">
             <form action="#" class="form">
-              <label for="field1"><span>Nama </span><input  id="nama" type="text" class="input-field" name="field1" value="" /></label>
-              <label for="field2"><span>Nomor Telepon </span><input  id="nomor_telepon" type="tel" class="input-field" name="field2" value="" /></label>
-              <label for="field1"><span>Angkatan </span><input  id="angkatan" type="number" class="input-field" name="field1" value="" /></label>
-              <label for="field1"><span>Fakultas </span><input  id="fakultas" type="text" class="input-field" name="field1" value="" /></label>
-              <label for="field1"><span>Jurusan </span><input  id="jurusan" type="text" class="input-field" name="field1" value="" /></label>
-              <label for="field1"><span>Judul Skripsi </span><input  id="judul_skripsi" type="text" class="input-field" name="field1" value="" /></label>
+              <label for="field1"><span>Foto Profile </span>
+              <input
+                type="file"
+                id="img_upload"
+                accept="image/png, image/jpeg" />
+              </label>
+              <label for="field1"><span>Nama* </span><input  id="nama" type="text" class="input-field" name="field1" value="" /></label>
+              <label for="field2"><span>Nomor Telepon* </span><input  id="nomor_telepon" type="tel" class="input-field" name="field2" value="" /></label>
+              <label for="field1"><span>Angkatan* </span><input  id="angkatan" type="number" class="input-field" name="field1" value="" /></label>
+              <label for="field1"><span>Fakultas* </span><input  id="fakultas" type="text" class="input-field" name="field1" value="" /></label>
+              <label for="field1"><span>Jurusan* </span><input  id="jurusan" type="text" class="input-field" name="field1" value="" /></label>
+              <label for="field1"><span>Judul Skripsi* </span><input  id="judul_skripsi" type="text" class="input-field" name="field1" value="" /></label>
               <div class="button">
                 <button type="button" id="btnSubmit">Simpan</button>
                 <button type="button" id="cancel">Cancel</button>
@@ -62,7 +67,7 @@ const EditProfile = {
       }else if(e.target.id == "btnSubmit"){
         const {angkatan, judul_skripsi, jurusan, nama, nomor_telepon, fakultas} = dataUser;
         if (angkatan == "" || judul_skripsi == "" || jurusan == "" || nama == "" || nomor_telepon == "" || fakultas == "") {
-          alert("Semua data harus diisi");
+          loading(true, "Semua data harus diisi");
         } else {
           const resp = await updateProfileUser(id, dataUser, "Mahasiswa")
           if(resp){

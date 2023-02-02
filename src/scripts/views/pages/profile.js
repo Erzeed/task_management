@@ -10,16 +10,17 @@ const profile = {
   async render() {
     return `
       <div class="content__profile">
-      <side-bar class="profile"></side-bar>
+         <side-bar class="profile"></side-bar>
         <div class="profile__main"> 
+        <loading-roll></loading-roll>
           <div class="header">
             <div class="header__banner">
               <img src=${banner} alt="" />
             </div>
-            <div class="header__img">
-              <img src=${profileimg} alt="" />
-            </div>
             <div class="header__txt">
+                <div class="header__img">
+                  <img src=${profileimg} alt="" />
+                </div>
                 <div class="header__title">
                     <h2>User</h2>
                     <p>Mahasiswa</p>
@@ -31,26 +32,7 @@ const profile = {
           </div>
           <div class="profile__detail">
             <div class="detail">
-                <div class="detail__name">
-                    <p>Nim</p>
-                    <p>Nama</p>
-                    <p>Email</p>
-                    <p>Nomor Telepon</p>
-                    <p>Angkatan</p>
-                    <p>Jurusan</p>
-                    <p>Judul Skripsi</p>
-                    <p>Dosen Pembimbing</p>
-                </div>
-                <div class="detail__value">
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                    <p>-</p>
-                </div>            
+                            
             </div>
         </div>
         <div class="edit__profileDosen">
@@ -60,7 +42,6 @@ const profile = {
                   <input type='text' id='nik' class="inputForm" placeholder="Nik" /><br/>
                   <input type='text' id='nama' class="inputForm" placeholder="Nama" /><br/>
                   <input type='text' id='nomor_telepon' class="inputForm" placeholder="Nomor Telepon" /><br/>
-                  
               </form>
               <div class="btn__create">
                 <button class="simpan" type='button'>Simpan</button>
@@ -88,6 +69,8 @@ const profile = {
     const form = document.querySelectorAll("#form");
     const header__titleH2 = document.querySelector(".header__title h2");
     const header__titleP = document.querySelector(".header__title p");
+    const loadingToast = document.querySelector('loading-roll');
+
 
     [...form].forEach((e) => {
       e.addEventListener("change", (e) => {
@@ -98,29 +81,56 @@ const profile = {
       });
     });
 
-    const getData = await getDataUser(id);
-    if(getData.role_status == "Mahasiswa"){
-      const dataDosen = await getDataUser(getData.id_dosen);
-      profile__detail.innerHTML = showDetail(getData, dataDosen);
-    }else {
-      profile__detail.innerHTML = showDetail(getData);
-    }
-    header__titleH2.innerHTML = getData.nama !== undefined ? getData.nama : "User";
-    header__titleP.innerHTML = getData.role_status;
-    header__btn.addEventListener("click", () => {
-      if (getData.role_status == "dosen") {
-        formUp.classList.add("active");
-      } else {
-        window.location = "/#/editprofile";
-      }
-    });
+    const getData = async () => {
+      const resp = await getDataUser(id);
+      if (resp){
 
-    simpan.addEventListener("click", () => {
+        header__titleH2.innerHTML = resp.nama !== undefined ? resp.nama : "User";
+        header__titleP.innerHTML = resp.role_status;
+        onHandleEditProfile(resp);
+
+        if(resp.role_status == "Mahasiswa"){
+          const dataDosen = await getDataUser(resp.id_dosen);
+          profile__detail.innerHTML = showDetail(resp, dataDosen);
+          loadingToast.style.display = 'none';
+        }else {
+          const dataTemp = {
+            nama : "",
+            email : "",
+            nomor_telepon : "",
+          }
+          profile__detail.innerHTML = showDetail(resp, dataTemp);
+          loadingToast.style.display = 'none';
+        }
+      }else {
+        console.log(resp)
+      }
+    }
+
+    getData();
+
+    const onHandleEditProfile = (data) => {
+      header__btn.addEventListener("click", () => {
+        if (data.role_status == "dosen") {
+          formUp.classList.add("active");
+        } else {
+          window.location = "/#/editprofile";
+        }
+      });
+    }
+
+    simpan.addEventListener("click", async () => {
       const { nik, nama, nomor_telepon } = dataUser;
       if (nik == "" || nama == "" || nomor_telepon == "") {
-        alert("Semua data harus di isi");
+        loading(true, "Semua data harus diisi");
       } else {
-        updateProfileUser(id, dataUser, "Dosen");
+          const resp = await updateProfileUser(id, dataUser, "Dosen");
+          if(resp){
+            loading(false,"Data berhasil di update");
+            getData();
+          } else {
+            loading(true, error);
+          }
       }
     });
 

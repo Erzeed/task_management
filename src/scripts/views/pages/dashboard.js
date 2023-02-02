@@ -22,6 +22,7 @@ const Dashboard = {
       <div class="content__dashboard">
       <side-bar class="home"></side-bar>
         <div class="dashboard__menu">
+          <loading-roll></loading-roll>
             <div class="menu__title">
                 <h1>Selamat datang <span id="username"></span> .</h1>
                 <button class="create">Create Account</button>
@@ -141,11 +142,15 @@ const Dashboard = {
     const simpan = document.querySelector(".simpan");
     const button__refresh = document.querySelector(".button__refresh button");
     const form = document.querySelectorAll(".inputForm");
+    const loadingToast = document.querySelector('loading-roll');
 
     const getData = async () => {
       const data = await getDataUser(id);
-      user = data;
-      changeTitle(data.nama);
+      if(data) {
+        loadingToast.style.display = 'none';
+        user = data;
+        changeTitle(data.nama);
+      }
     };
 
     const changeTitle = (title) => {
@@ -171,7 +176,10 @@ const Dashboard = {
       if (nim == "" || email == "" || password == "") {
         alert("Semua data harus di isi");
       } else {
-        createNewUser(dataNewAccount, id);
+        const dataMhs = await getAllDataMhsBmbngan(id);
+        dataMhs.forEach(data => {
+          console.log(data.nim, dataNewAccount.nim)
+        })
       }
     });
 
@@ -285,6 +293,13 @@ const Dashboard = {
             formatter: defaultValue,
           },
           {
+            title: "Fakultas",
+            field: "fakultas",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter: defaultValue,
+          },
+          {
             title: "Jurusan",
             field: "jurusan",
             hozAlign: "center",
@@ -292,8 +307,15 @@ const Dashboard = {
             formatter: defaultValue,
           },
           {
+            title: "Angkatan",
+            field: "angkatan",
+            hozAlign: "center",
+            vertAlign: "middle",
+            formatter: defaultValue,
+          },
+          {
             title: "Judul",
-            field: "judul",
+            field: "judul_skripsi",
             hozAlign: "center",
             vertAlign: "middle",
             formatter: defaultValue,

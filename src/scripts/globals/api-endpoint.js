@@ -187,6 +187,7 @@ export const getDataUser = (id) => {
           getDoc(doc(db, "Dosen", id))
           .then(docSnap => {
             if (docSnap.exists()) {
+              console.log("hai")
               resolve(docSnap.data())
             } else {
               resolve("Data Kosong");
@@ -223,7 +224,6 @@ export const getAllDataMhsBmbngan = (id) => {
       .then(docSnap => {
         if (docSnap.exists()) {
           let dataUser = [];
-          console.log(docSnap.data())
           const {id_mhs_bimbingan} = docSnap.data()
           if(id_mhs_bimbingan !== undefined){
             id_mhs_bimbingan.forEach(e => {
@@ -236,7 +236,7 @@ export const getAllDataMhsBmbngan = (id) => {
             })
           }
         } else {
-          console.log("data kosong")
+          resolve("data kosong")
         }
       })
       .catch((error) => {
@@ -264,8 +264,8 @@ export const getDataTodo = (id) => {
       const db = getDatabase();
       const starCountRef = ref(db,`users/${id}/todo`)
       onValue(starCountRef, (snapshot) => {
+        const data = []
           try {
-            const data = []
             if(snapshot.val() != null){
                 Object.keys(snapshot.val()).forEach(e => {
                   data.push({
