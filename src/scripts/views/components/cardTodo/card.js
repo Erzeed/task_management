@@ -41,13 +41,13 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs}) =>  {
                 </div>
             </div>
             <div class="footer__link" id="${id}">
-                <form >
+                <form data-id_mhs="${id_mhs}" id="${id}">
                     <input type="url" placeHolder="masukkan url">
                     <button type="button">Ok</button>
                 </form>
             </div>
             <div class="footer__upload" id="${id}">
-                <form >
+                <form data-id_mhs="${id_mhs}" id="${id}">
                     <input
                     type="file"
                     id="file__upoloud"

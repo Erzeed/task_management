@@ -10,6 +10,7 @@ import {
   uploadFile,
   getDataUser
 } from "../../globals/api-endpoint.js";
+import { loading } from "../../utils/customToast";
 
 const Todo = {
   async render() {
@@ -106,7 +107,7 @@ const Todo = {
     const reviewCard = document.querySelector(".todo__card.review");
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
-    const loading = document.querySelector('loading-roll');
+    const loadingToast = document.querySelector('loading-roll');
 
     let dataInputForm = {
       id_mhs: "",
@@ -142,12 +143,12 @@ const Todo = {
       if(dataUser.role_status == "Mahasiswa"){
         openForm.style.display = "none";
         getDataInTodo("mhs");
-        loading.style.display = 'none';
+        loadingToast.style.display = 'none';
       } else {
         const respDataMhs = await getAllDataMhsBmbngan(id);
         dataUserBimbingan = respDataMhs;
         getDataInTodo("dosen");
-        loading.style.display = 'none';
+        loadingToast.style.display = 'none';
       }
     }
 
@@ -193,7 +194,6 @@ const Todo = {
             if(resp){
               cekRoleUser();
             }
-            console.log(resp)
         }
     }
 
@@ -262,8 +262,12 @@ const Todo = {
         delCard(idMhs, idCard);
       }  else if (e.target.classList == "btn__file") {
         const file = e.target.previousElementSibling.files[0];
-        const resp = await uploadFile(file)
-        console.log(resp)
+        if(file == undefined){
+          loading(true, "File tidak ada")
+        }else{
+          const resp = await uploadFile(dataUser.nim, "file-pdf",file, idMhs, idCard )
+          console.log(resp)
+        }
       }  
       backCard(e)
       openMenu(e)
@@ -316,8 +320,10 @@ const Todo = {
             const resp = await saveDataInTodo(dataInputForm, data.id);
             if (resp) {
               cekRoleUser();
+              loading(false, "Data berhasil ditambahkan");
+            }else {
+              loading(true, resp)
             }
-            console.log(dataInputForm, data.id)
           } else {
             count++;
             if (count == dataUserBimbingan.length) {

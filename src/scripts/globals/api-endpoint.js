@@ -17,8 +17,8 @@ import {
   update
 } from "firebase/database";
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
-import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion} from "firebase/firestore"; 
-import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL  } from "firebase/storage";
+import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, Timestamp} from "firebase/firestore"; 
+import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
 import app from "./config/firebase";
 
@@ -253,7 +253,7 @@ export const saveDataInTodo = (data, id) => {
       })
       .catch((error => {
           console.log(error);
-          reject(false)
+          reject(error)
       }))
   })
 }
@@ -308,14 +308,14 @@ export const deleteCard = (idMhs, idCard) =>  {
   })
 }
 
-export const uploadFile = (file) =>  {
+export const uploadFile = (nim, namaFolder, filePdf, idMhs, idCard) =>  {
   return new Promise((resolve, reject) => {
     const storage = getStorage(app);
-    const uploadTask = uploadBytesResumable(refStorage(storage, `/file/${file.name}`), file )
+    const uploadTask = uploadBytesResumable(refStorage(storage, `${nim}/${namaFolder}/${filePdf.name}-${+ new Date()}`), filePdf )
     uploadTask.on('state_changed',
     (snapshot) => {
       const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      loadingProggresUploadFile(progress, file.name , "Upload completed")
+      loadingProggresUploadFile(progress, filePdf.name , "Upload completed")
       switch (snapshot.state) {
         case 'paused':
           console.log('Upload is paused');
@@ -327,12 +327,21 @@ export const uploadFile = (file) =>  {
     }, 
     (error) => {
       reject(error)
-      loadingUploadError(file.name )
+      loadingUploadError(filePdf.name )
     }, 
     () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log('File available at', downloadURL);
+        const db = getDatabase()
+        update(ref(db, `users/${idMhs}/todo/${idCard}`),{
+            link_file: downloadURL
+        }).then(() => {
+            console.log("hai")
+        })
+        .catch((error => {
+            console.log(error)
+        }))
       });
     }
   );
