@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 .navbar {
     display: flex;
     align-items: center;
@@ -6,7 +9,7 @@
     background-color: #270082;
     padding: 0 35px;
     color: #fff;
-    width: calc(100vw - 70px);
+    width: 100vw;
     position: sticky;
     top: 0;
     z-index: 99;
@@ -57,4 +60,100 @@
     border-radius: 3px;
     background-color: #8E05C2;
     font-size: 1.05em;
+}
+
+.navbar__account > button {
+    background-color: transparent;
+    border: none;
+}
+.hide,
+.hide {
+    display:none;
+}
+
+.popUpNotif {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    background-color: #fff;
+    width: 40vw;
+    height: 50vh;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .1);
+}
+
+.popUpNotif.active{
+    display: block;
+}
+
+.popUpNotif > .headerNotif {
+    width: 100%;
+    height: 15%;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.popUpNotif > .headerNotif > h2 {
+    color: #000;
+}
+
+.popUpNotif > .headerNotif > button {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.bodyNotif {
+    padding: 5px 20px;
+    width: 100%;
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.bodyNotif:hover {
+    background-color:rgba(0, 0, 0, .05) ;
+}
+
+.bodyNotif > .cardNotif {
+    display: flex;
+    align-items: center;
+}
+
+.cardNotif > .iconNotif {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: blue;
+    box-shadow: 0 0 5px blue;
+}
+
+.bodyNotif__desk {
+    margin-left: 20px;
+}
+
+.desk__title > p {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.desk__title > p > span {
+    font-weight: normal;
+}
+
+.desk__desc > p {
+    margin: 0;
+    font-size: .9em;
+}
+
+.desk__name > p{
+    margin: 5px 0;
+    font-size: .8em;
+    color: rgba(0, 0, 0, .8);   
 }

@@ -10,8 +10,9 @@
 }
 
 .dashboard__menu {
-    width: 80% ;
+    width: 90% ;
     margin: 30px auto;
+    padding-left: 35px;
 }
 
 .menu__title {
