@@ -8,7 +8,8 @@ import {
   updateCardStatus,
   deleteCard,
   uploadFile,
-  getDataUser
+  getDataUser,
+  addLinkBimbingan
 } from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
 
@@ -108,6 +109,7 @@ const Todo = {
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
     const loadingToast = document.querySelector('loading-roll');
+    let inputUrlUser = "";
 
     let dataInputForm = {
       id_mhs: "",
@@ -243,6 +245,38 @@ const Todo = {
       }
     }
 
+    const uploadFileBimbingan = async (element, nim, idMhs, idCard) => {
+      const file = element.target.previousElementSibling.files[0];
+      if(file == undefined){
+        loading(true, "File tidak ada")
+      }else{
+        const resp = await uploadFile(nim, "file-pdf",file, idMhs, idCard )
+        if(resp){
+          cekRoleUser()
+        }
+      }
+    }
+
+    const addUrlBimbingan = async (idMhs, idCard) => {
+      if(inputUrlUser == ""){
+        loading(true, "Mohon inputkan url")
+      }else {
+        const resp = await addLinkBimbingan(idMhs, idCard, inputUrlUser);
+        if(resp) {
+          loading(false, "Url berhasil disimpan")
+          cekRoleUser()
+        }else {
+          loading(true, resp)
+        }
+      }
+    }
+
+    window.addEventListener("change", el => {
+      if(el.target.classList == "input_url"){
+        inputUrlUser = el.target.value;
+      }
+    })
+
 
     window.addEventListener("click", async (e) => {
       const idMhs = e.target.parentElement.dataset.id_mhs;
@@ -261,13 +295,10 @@ const Todo = {
       } else if (e.target.classList == "delete") {
         delCard(idMhs, idCard);
       }  else if (e.target.classList == "btn__file") {
-        const file = e.target.previousElementSibling.files[0];
-        if(file == undefined){
-          loading(true, "File tidak ada")
-        }else{
-          const resp = await uploadFile(dataUser.nim, "file-pdf",file, idMhs, idCard )
-          console.log(resp)
-        }
+        uploadFileBimbingan(e, dataUser.nim, idMhs, idCard);
+      }  else if (e.target.classList == "btn__url") {
+        addUrlBimbingan(idMhs, idCard);
+    
       }  
       backCard(e)
       openMenu(e)

@@ -5,9 +5,12 @@ import commentsIcons from "../../../../asset/icons/comments-24.png";
 import profileimg from "../../../../asset/img/profile-default.jpg";
 import autosize from 'autosize';
 
-export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs}) =>  {
+export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file, url_file, createdAt}) =>  {
     const textarea = document.querySelector("textarea");
     autosize(textarea)
+    const date = new Date(createdAt);
+    const tglBuat = date.toLocaleString().slice(0 , 8).replace(/[/]/g, "-");
+
     return `
         <style>
             ${css}
@@ -30,7 +33,7 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs}) =>  {
                     <p>${nim}</p>
                 </div>
                 <div class="footer__createAt">
-                    <p>1 Jan 2023</p>
+                    <p>${tglBuat}</p>
                 </div>
                 <div class="footer__menu">
                     <ul>
@@ -42,9 +45,12 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs}) =>  {
             </div>
             <div class="footer__link" id="${id}">
                 <form data-id_mhs="${id_mhs}" id="${id}">
-                    <input type="url" placeHolder="masukkan url">
-                    <button type="button">Ok</button>
+                    <input class="input_url" type="url" placeHolder="masukkan url">
+                    <button class="btn__url" type="button">Ok</button>
                 </form>
+                <div class="current_file">
+                    <p>${url_file == undefined ? "" : `<a target=”_blank” href=${url_file}>Url bimbingan</a>`}</p>
+                </div>
             </div>
             <div class="footer__upload" id="${id}">
                 <form data-id_mhs="${id_mhs}" id="${id}">
@@ -54,6 +60,9 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs}) =>  {
                     accept=".doc,.docx,.pdf" />
                     <button class="btn__file" type="button">Upload</button>
                 </form>
+                <div class="current_file">
+                    <p>${link_file == undefined ? "" : `<a target=”_blank” href=${link_file}>file bimbingan</a>`}</p>
+                </div>
             </div>
             <div class="footer__comment" id="${id}">
                 <div class="comment__area">

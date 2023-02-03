@@ -153,6 +153,25 @@
     display: flex;
 }
 
+.footer__upload,
+.footer__link {
+    flex-direction: column;
+}
+
+.current_file {
+    margin: 5px;
+}
+
+.current_file > p > a {
+    text-decoration: none;
+    color: #000;
+    font-size: .95em;
+}
+
+.current_file > p > a:hover{
+    color: rgba(0, 0, 0, .7);
+}
+
 .footer__link > form, 
 .footer__upload > form {
     width: 100% ;

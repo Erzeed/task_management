@@ -9,6 +9,10 @@ class navbar extends HTMLElement {
     this.render();
   }
 
+  cekLoginOrNot() {
+    console.log("haii")
+  }
+
   render() {
     this.shadowDOM.innerHTML = `
         <style>
@@ -31,6 +35,7 @@ class navbar extends HTMLElement {
           </div>
       </div>
     `;
+    this.cekLoginOrNot();
   }
 }
 

@@ -311,7 +311,7 @@ export const deleteCard = (idMhs, idCard) =>  {
 export const uploadFile = (nim, namaFolder, filePdf, idMhs, idCard) =>  {
   return new Promise((resolve, reject) => {
     const storage = getStorage(app);
-    const uploadTask = uploadBytesResumable(refStorage(storage, `${nim}/${namaFolder}/${filePdf.name}-${+ new Date()}`), filePdf )
+    const uploadTask = uploadBytesResumable(refStorage(storage, `${nim}/${namaFolder}/${filePdf.name}`), filePdf )
     uploadTask.on('state_changed',
     (snapshot) => {
       const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -337,7 +337,7 @@ export const uploadFile = (nim, namaFolder, filePdf, idMhs, idCard) =>  {
         update(ref(db, `users/${idMhs}/todo/${idCard}`),{
             link_file: downloadURL
         }).then(() => {
-            console.log("hai")
+          resolve(true)
         })
         .catch((error => {
             console.log(error)
@@ -345,5 +345,19 @@ export const uploadFile = (nim, namaFolder, filePdf, idMhs, idCard) =>  {
       });
     }
   );
+  })
+}
+
+export const addLinkBimbingan = (idMhs, idCard, url) =>  {
+  return new Promise((resolve , reject) => {
+      const db = getDatabase()
+      update(ref(db, `users/${idMhs}/todo/${idCard}`),{
+          url_file: url
+      }).then(() => {
+          resolve(true)
+      })
+      .catch((error => {
+          reject(error)
+      }))
   })
 }
