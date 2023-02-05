@@ -114,7 +114,6 @@
     width: 100%;
     color: #000;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
-    cursor: pointer;
 }
 
 .bodyNotif:hover {
@@ -141,10 +140,19 @@
 .desk__title > p {
     font-weight: bold;
     margin: 5px 0;
+    border: none;
+}
+
+.desk__title > p > a {
+    cursor: pointer;
+    border: none;
+    color: #000;
+    outline-style: none;
 }
 
 .desk__title > p > span {
     font-weight: normal;
+    margin-left: 5px;
 }
 
 .desk__desc > p {

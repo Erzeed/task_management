@@ -6,6 +6,7 @@ import EditProfile from '../views/pages/edit-profile';
 import profile from '../views/pages/profile';
 import todo from '../views/pages/todo';
 import DetailBimbingann from '../views/pages/detail-bimbingan';
+import review from '../views/pages/review';
 
 
 
@@ -19,7 +20,8 @@ const routes = {
   '/editprofile': EditProfile,
   '/profile': profile,
   '/todo': todo,
-  '/detailbimbingan/:id': DetailBimbingann
+  '/detailbimbingan/:id': DetailBimbingann,
+  '/review/:id/:idTodo': review
 };
 
 

@@ -361,3 +361,20 @@ export const addLinkBimbingan = (idMhs, idCard, url) =>  {
       }))
   })
 }
+
+export const getDataBimbingan = (userId, todoId) => {
+  console.log(userId)
+  return new Promise((resolve , reject) => {
+      const db = getDatabase()
+      const starCountRef = ref(db,`users/${userId}/todo/${todoId}`)
+      onValue(starCountRef, (snapshot) => {
+          try {
+            if(snapshot.val() != null){
+              resolve(snapshot.val())
+            }
+          } catch (error) {
+            reject(error)
+          }
+      })
+  })
+}

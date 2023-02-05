@@ -109,6 +109,7 @@ const Todo = {
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
     const loadingToast = document.querySelector('loading-roll');
+    
     let inputUrlUser = "";
 
     let dataInputForm = {

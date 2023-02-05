@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+}
+.content__review {
+    display: flex;
+    background-color: #F8FAFC;
+    min-height: 100vh;
+}
+
+.review__page {
+    width: 90% ;
+    min-height: 100%;
+    margin: 30px auto;
+    padding-left: 35px;
+}
+
+.review__page > .container_pdf {
+    width: 80%;
+    height: 70%;
+    margin: 0 auto;
+    background-color: #E5E5E5;
+    padding-top: 20px;
+    border-radius: 5px;
+}
+
+.container_pdf > #pdfViewer {
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.body_review {
+    width: 80%;
+    height: 35%;
+    margin: 50px auto;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.review__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.review__header > .header__button {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+}
+
+.header__button > .card__nav {
+    position: absolute;
+    top: 40px;
+    right: -35px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 5px;
+    width: 80px;
+    height: 55px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    transition: all 0.1s ease-in-out; 
+    transform: scale(0);
+    display: none;
+}
+
+.header__button > .card__nav.active {
+    display: flex;
+    transform: scale(1);
+}
+
+.header__button > .card__nav > button {
+    border: none;
+    background-color: transparent;
+    letter-spacing: .5px;
+    color: rgba(0, 0, 0, .65);
+    cursor: pointer;
+    margin: 2px;
+    width: 100%;
+    height: 100%;
+}
+
+.header__button > .card__nav > button:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.review__body {
+    width: 100%;
+    height: 70%;
+    background-color: #fff;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .2);
+}
+
+.review__body > form {
+    width: 100%;
+    height: 60%;
+    padding: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.review__body > form > textarea {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 5px;
+}
+
+.body__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+    height: 40%;
+}
+
+.body__footer > .btn__footer > button {
+    width: 60px;
+    height: 30px;
+    border: none;
+    background-color: #270082;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
