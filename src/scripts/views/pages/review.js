@@ -1,13 +1,24 @@
 import "../../../styles/review.css";
 import pdfObject from 'pdfobject';
 import UrlParser from '../../routes/url-parser';
-import {getDataBimbingan, updateStatusAndCreateDataBimbingan} from "../../globals/api-endpoint.js";
+import {getDataBimbingan, updateStatusAndCreateDataBimbingan,  getDataUser} from "../../globals/api-endpoint.js";
+import { loading } from "../../utils/customToast";
+
 const Review = {
   async render() {
     return `
       <div class="content__review">
       <side-bar class="home"></side-bar>
         <div id="review__page" class="review__page">
+          <div class="container__detail">
+              <div class="detail_judul">
+                <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, enim.</h1>
+              </div>
+              <div class="detail_name">
+                <p>19.11.2877</p>
+                <p>Feizal Reza</p>
+              </div>
+          </div>
           <div class="container_pdf">
             <div id="pdfViewer"></div>
           </div>
@@ -17,6 +28,7 @@ const Review = {
                 <h2>Catatan</h2>
               </div>
               <div class="header__button">
+                <p class="status">review</p>
                 <h1>...</h1>
                 <div class="card__nav" >
                     <button class="revisi" >Revisi</button>
@@ -30,7 +42,6 @@ const Review = {
               </form>
               <div class="body__footer">
                 <div class="footer__tgl">
-                <p>20 desember 2019</p>
                 </div>
                 <div class="btn__footer">
                 <button class="kirim">Kirim</button>
@@ -46,25 +57,57 @@ const Review = {
   async afterRender() {
     let dataBimbingan = {}
     const url = UrlParser.parseActiveUrlWithoutCombiner();
-    const resp = await getDataBimbingan(url.id,url.idTodo);
     const header__button = document.querySelector(".header__button");
     const card__nav = document.querySelector(".card__nav");
     const revisi = document.querySelector(".revisi");
     const selesai = document.querySelector(".selesai");
     const kirim = document.querySelector(".kirim");
     const catatan = document.querySelector("#catatan");
+    const container__detail = document.querySelector(".container__detail");
+    const statusEl = document.querySelector(".status");
 
 
-    if(resp){
-      dataBimbingan = {
-        ...dataBimbingan,
-        ...resp
-      } 
-      pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
-      console.log(dataBimbingan);
+    const showDetalEl = (data) => {
+      console.log(data)
+      return `
+        <div class="detail_judul">
+          <h1>${data.judul}</h1>
+        </div>
+        <div class="detail_name">
+          <p>${data.nim}</p>
+          <p>${data.nama}</p>
+        </div>
+      `
     }
 
+    const getDataUserBimbingan = async () => {
+      const resp = await getDataUser(url.id);
+      if(resp) {
+        getDataForReview();
+        dataBimbingan = {
+          ...dataBimbingan,
+          nama: resp.nama
+        } 
+      }
+    }
+
+    const getDataForReview = async () => {
+      const resp = await getDataBimbingan(url.id,url.idTodo);
+      if(resp){
+        dataBimbingan = {
+          ...dataBimbingan,
+          ...resp
+        } 
+        pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
+        container__detail.innerHTML = showDetalEl(dataBimbingan);
+      }
+    }
+
+    getDataUserBimbingan()
+
+
     revisi.addEventListener("click", () => {
+      statusEl.innerText = "revisi";
       dataBimbingan = {
         ...dataBimbingan,
         status: "revisi"
@@ -72,9 +115,10 @@ const Review = {
     })
     
     selesai.addEventListener("click", () => {
+      statusEl.innerText = "selesai";
       dataBimbingan = {
         ...dataBimbingan,
-        status: "selesai"
+        status: "done"
       }
     })
 
@@ -99,7 +143,11 @@ const Review = {
           tgl_selesai: + new Date()
         }
         const resp = await updateStatusAndCreateDataBimbingan(dataBimbingan.status, url.id, url.idTodo, dataBimbingan);
-        console.log(resp);
+        if(resp) {
+          loading(false,"Data berhasil di kirim");
+        }else {
+          loading(true, resp);
+        }
       }
     })
   }

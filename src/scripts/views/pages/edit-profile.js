@@ -73,7 +73,7 @@ const EditProfile = {
           if(resp){
             loading(false,"Data berhasil di update");
           } else {
-            loading(true, error);
+            loading(true, resp);
           }
         }
       }
