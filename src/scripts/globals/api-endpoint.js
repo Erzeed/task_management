@@ -17,7 +17,7 @@ import {
   update
 } from "firebase/database";
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
-import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, Timestamp} from "firebase/firestore"; 
+import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
 import app from "./config/firebase";
@@ -59,7 +59,6 @@ const cekRoleUser = (user) => {
         getDoc(doc(db, "Mahasiswa", userId))
         .then(docSnap => {
           if (docSnap.exists()) {
-            console.log(docSnap.data())
           } else {
             setDoc(doc(db, "Dosen", userId), {
               nama: user.displayName,
@@ -363,7 +362,6 @@ export const addLinkBimbingan = (idMhs, idCard, url) =>  {
 }
 
 export const getDataBimbingan = (userId, todoId) => {
-  console.log(userId)
   return new Promise((resolve , reject) => {
       const db = getDatabase()
       const starCountRef = ref(db,`users/${userId}/todo/${todoId}`)
@@ -376,5 +374,28 @@ export const getDataBimbingan = (userId, todoId) => {
             reject(error)
           }
       })
+  })
+}
+
+export const updateStatusAndCreateDataBimbingan = (status,userId,todoId, data) =>  {
+  return new Promise((resolve , reject) => {
+      const dbRealtime = getDatabase()
+      const db = getFirestore();
+      update(ref(dbRealtime, `users/${userId}/todo/${todoId}`),{
+          status: status,
+          deskripsi: data.deskripsi
+      }).then(() => {
+        addDoc(collection(db, `data_bimbingan/${userId}/bimbingan`), data)
+          .then(() => {
+            resolve(true)
+            console.log("data update");
+          }).catch((error) => {
+            console.log(error, "kedua");
+          });
+      })
+      .catch((error => {
+        console.log(error, "pertama")
+          reject(error)
+      }))
   })
 }

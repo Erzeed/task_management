@@ -1,7 +1,7 @@
 import "../../../styles/review.css";
 import pdfObject from 'pdfobject';
 import UrlParser from '../../routes/url-parser';
-import {getDataBimbingan} from "../../globals/api-endpoint.js";
+import {getDataBimbingan, updateStatusAndCreateDataBimbingan} from "../../globals/api-endpoint.js";
 const Review = {
   async render() {
     return `
@@ -19,8 +19,8 @@ const Review = {
               <div class="header__button">
                 <h1>...</h1>
                 <div class="card__nav" >
-                    <button class="move" >Revisi</button>
-                    <button class="back">Selesai</button>
+                    <button class="revisi" >Revisi</button>
+                    <button class="selesai">Selesai</button>
                 </div>
               </div>
             </div>
@@ -44,19 +44,63 @@ const Review = {
   },
 
   async afterRender() {
-    
+    let dataBimbingan = {}
     const url = UrlParser.parseActiveUrlWithoutCombiner();
     const resp = await getDataBimbingan(url.id,url.idTodo);
     const header__button = document.querySelector(".header__button");
     const card__nav = document.querySelector(".card__nav");
+    const revisi = document.querySelector(".revisi");
+    const selesai = document.querySelector(".selesai");
+    const kirim = document.querySelector(".kirim");
+    const catatan = document.querySelector("#catatan");
+
 
     if(resp){
-      console.log(resp)
+      dataBimbingan = {
+        ...dataBimbingan,
+        ...resp
+      } 
       pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
+      console.log(dataBimbingan);
     }
+
+    revisi.addEventListener("click", () => {
+      dataBimbingan = {
+        ...dataBimbingan,
+        status: "revisi"
+      }
+    })
+    
+    selesai.addEventListener("click", () => {
+      dataBimbingan = {
+        ...dataBimbingan,
+        status: "selesai"
+      }
+    })
 
     header__button.addEventListener("click", () => {
       card__nav.classList.toggle("active");
+    })
+
+    catatan.addEventListener("change", (el) => {
+      dataBimbingan = {
+        ...dataBimbingan,
+        deskripsi: el.target.value
+      }
+    })
+
+    kirim.addEventListener("click", async () => {
+      if(dataBimbingan.status !== "selesai" && dataBimbingan.status !== "revisi"){
+        console.log(dataBimbingan)
+        alert("status harus jelas jangan digantung")
+      }else {
+        dataBimbingan = {
+          ...dataBimbingan,
+          tgl_selesai: + new Date()
+        }
+        const resp = await updateStatusAndCreateDataBimbingan(dataBimbingan.status, url.id, url.idTodo, dataBimbingan);
+        console.log(resp);
+      }
     })
   }
 };
