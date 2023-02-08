@@ -1,15 +1,20 @@
+
 .content__DetailBimbingann {
     display: flex;
-    background-color: #F8FAFC;
+    width: 100vw;
+    /* background-color: #F8FAFC; */
+    background-color: #fff;
     min-height: 100vh;
-    overflow: scroll;
+    margin-bottom: 20px;
 }
 
 .detail__content {
-    max-width: 85% ;
+    min-width: 90% ;
+    height: 100%;
     margin: 30px auto;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     padding: 10px;
+    padding-left: 6vw;
     border-radius: 5px;
 }
 
@@ -31,10 +36,104 @@
 .detail__main {
     display: flex;
     width: 100%;
+    min-height: 70vh;
     margin-top: 20px;
-    /* border: 1px solid rgba(0, 0, 0, 0.1); */
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
     padding-top: 30px;
+}
+
+.detail__bimbingan,
+.detail__user {
+    width: 70%;
+    min-height: 90%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bimbingan__container {
+    margin: 10px;;
+    padding: 10px;
+}
+
+.card__bimbingan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 10px 5px;
+    margin-bottom: 8px;
+}
+
+.card__number {
+    width: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.card__status,
+.card__file,
+.card_judul {
+    width: 11%;
+    display: flex;
+    justify-content: center;
+}
+
+.card__file {
+    cursor: pointer;
+}
+
+.card__file > p > a {
+    color: #000;
+    text-decoration: none;
+}
+
+.card__file:hover {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.card__tgl {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+}
+
+.card__desk {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    line-height: 20px;
+}
+
+.detail__user {
+    width: 30% !important;
+    padding: 10px;
+}
+
+.detail__user > h2 {
+    text-align: center;
+}
+
+.detail__user > .tabel__user {
+    display: flex;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* .user__label > p , 
+.user__data > p {
+    margin: 5px 0;
+} */
+
+tbody > tr {
+    height: 30px;
+    font-size: .97em;
+    vertical-align: top
+}
+
+.tg-data {
+    padding-left: 5px;
 }

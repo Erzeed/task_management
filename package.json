@@ -30,6 +30,7 @@
   "dependencies": {
     "autosize": "^5.0.2",
     "firebase": "^9.14.0",
+    "pdfmake": "^0.2.7",
     "pdfobject": "^2.2.8",
     "regenerator-runtime": "^0.13.9",
     "sweetalert2": "^11.6.14",
