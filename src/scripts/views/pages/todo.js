@@ -235,14 +235,14 @@ const Todo = {
     const openMenu = (elements) => {
       const footer__link = document.querySelectorAll(".footer__link");
       const footer__uploads = document.querySelectorAll(".footer__upload");
-      const footer__comment = document.querySelectorAll(".footer__comment");
+      const footer__img = document.querySelectorAll(".footer__img");
 
       if (elements.target.classList == "btnLinks") {
-        activatedMenu(footer__link, footer__uploads, footer__comment, elements.target.id)
+        activatedMenu(footer__link, footer__uploads, footer__img, elements.target.id)
       } else if (elements.target.classList == "btnLampiran") {
-        activatedMenu(footer__uploads, footer__link, footer__comment, elements.target.id);
+        activatedMenu(footer__uploads, footer__link, footer__img, elements.target.id);
       } else if (elements.target.classList == "btnKoment") {
-        activatedMenu(footer__comment, footer__link, footer__uploads, elements.target.id);
+        activatedMenu(footer__img, footer__link, footer__uploads, elements.target.id);
       }
     }
 
@@ -279,12 +279,17 @@ const Todo = {
     })
 
 
-    window.addEventListener("click", async (e) => {
+    window.addEventListener("click",(e) => {
       const idMhs = e.target.parentElement.dataset.id_mhs;
       const idCard = e.target.parentElement.id;
-
+      console.log(e.target.classList)
       if (e.target.classList == "menu") {
-        e.target.nextElementSibling.classList.toggle("active");
+        console.log(e.target.nextElementSibling.classList)
+        if(e.target.nextElementSibling.classList == "card__nav active"){
+          e.target.nextElementSibling.classList.remove("active");
+        }else {
+          e.target.nextElementSibling.classList.add("active");
+        }
       } else if (e.target.classList == "move todo") {
         moveCard("doing", idMhs, idCard);
       } else if (e.target.classList == "move doing") {

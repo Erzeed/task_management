@@ -1,18 +1,20 @@
 @import  "tabulator-tables";
 
+*{
+    box-sizing: border-box;
+}
 
 .content__dashboard {
     display: flex;
-    background-color: #F8FAFC;
-    min-height: 100vh;
-    overflow: scroll;
+    height: 100%;
     position: relative;
+    margin-bottom: 30px ;
 }
 
 .dashboard__menu {
-    width: 90% ;
+    width: 75% ;
     margin: 30px auto;
-    padding-left: 35px;
+    padding-left: 60px;
 }
 
 .menu__title {
@@ -73,14 +75,90 @@
 }
 
 
-/* MYTASK */
-/* .dashboard__mytask {
+/* notifikasi */
+.dashboard__notifikasi{
     width: 20%;
     background-color: #fff;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, .05);
-    border-radius: 15px 0 0 15px ;
-} */
+    box-shadow: 0 0 15px rgba(0, 0, 0, .07);
+    border-radius: 5px;
+    /* border: 1px solid rgba(0, 0, 0, .1); */
+    position: sticky;
+    height: 85vh;
+    top: 13vh;
+    margin-right: 15px;
+    bottom: auto;
+}
 
+.container__notifikasi {
+    padding: 20px;   
+}
+
+.notifikasi__header {
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.card__notif {
+    margin: 10px 0;
+}
+
+.bodyNotif {
+    padding: 5px 20px;
+    width: 100%;
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.bodyNotif:hover {
+    background-color:rgba(0, 0, 0, .05) ;
+}
+
+.bodyNotif > .cardNotif {
+    display: flex;
+    align-items: center;
+}
+
+.cardNotif > .iconNotif {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: blue;
+    box-shadow: 0 0 5px blue;
+}
+
+.bodyNotif__desk {
+    margin-left: 20px;
+}
+
+.desk__title > p {
+    font-weight: bold;
+    margin: 5px 0;
+    border: none;
+}
+
+.desk__title > p > a {
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+}
+
+span.textReview {
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+.desk__desc > p {
+    margin: 0;
+    font-size: .9em;
+}
+
+.desk__name > p{
+    margin: 5px 0;
+    font-size: .8em;
+    color: rgba(0, 0, 0, .8);   
+}
+
+/* menustatistik */
 .menu__statistik {
     width: 100%;
     height: 45%;

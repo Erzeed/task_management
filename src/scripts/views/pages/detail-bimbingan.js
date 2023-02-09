@@ -28,7 +28,7 @@ const DetailBimbingann = {
                         
                     </div>
                     <div class="bimbingan__button">
-                        <button>Export </button>
+                        <button>Export data</button>
                     </div>
                 </div>
                 <div class="detail__user">
@@ -339,6 +339,7 @@ const DetailBimbingann = {
       // console.log(dataUser);
       pdfMake.createPdf(docDefinition).open();
     };
+
     const getDataReview = async () => {
       const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       const respDataUser = await getDataUser(url.id);

@@ -10,13 +10,17 @@ import SortModule from "tabulator-tables/src/js/modules/Sort/Sort";
 import { cekUser } from "../../utils/cekUser";
 import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
 import { loading } from "../../utils/customToast";
+import {notifElement} from "../components/notifElement/notifelement";
 import {
   createNewUser,
   getDataUser,
   getAllDataMhsBmbngan,
+  getDataTodo
 } from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
+
+
 
 const Dashboard = {
   async render() {
@@ -114,9 +118,14 @@ const Dashboard = {
               </div>
             </div>
         </div>
-        <div class="dashboard__mytask">
-            <div class="mytask__progres">
+        <div class="dashboard__notifikasi">
+            <div class="container__notifikasi">
+              <div class="notifikasi__header">
+                <h2>Notifikasi</h2>
+              </div>
+              <div class="card__notif">
             
+              </div>
             </div>
         
         </div>
@@ -152,8 +161,36 @@ const Dashboard = {
         loadingToast.style.display = "none";
         user = data;
         changeTitle(data.nama);
+        getDataNotif(user)
       }
     };
+
+    const getDataNotif = async (dataUser) => {
+      try {
+        const dataTodo = []
+        dataUser.id_mhs_bimbingan.forEach(async (idMhs) => {
+          const resp = await getDataTodo(idMhs);
+          if(resp) {
+            dataTodo.push(...resp);
+          }
+          showNotif(dataTodo);
+        })  
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const showNotif = (data) => {
+      const cardNotif = document.querySelector(".card__notif");
+      cardNotif.innerHTML = "";
+      if(data !== undefined) {
+        data.forEach(e => {
+          if(e.status == "review"){
+            cardNotif.innerHTML += notifElement(e)
+          }
+        })
+      }
+    }
 
     const changeTitle = (title) => {
       document.getElementById("username").innerHTML = title;
@@ -202,6 +239,7 @@ const Dashboard = {
         }
       }
     });
+
 
     const data = {
       labels: ["Bab 1", "Bab 2", "Bab 3", "Bab 4", "Bab 5"],
