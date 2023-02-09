@@ -94,13 +94,12 @@
 .popUp__container {
     display: block;
     position: fixed;
-    min-height: 550px;
-    top: 10%;
+    min-height: 480px;
+    top: calc(50vh - 240px);
     left: 20%;
     width: 60%;
-    height: 60%;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
     font-family: 'Poppins', sans-serif;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease-in-out; 
@@ -149,7 +148,7 @@
 
 .popUp__container  > .actionForm {
     display: flex;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     justify-content: flex-end;
 }

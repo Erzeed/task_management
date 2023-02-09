@@ -31,8 +31,6 @@ const Todo = {
                     <p>5</p>
                 </div>
                 <div class="todo__card todo">
-                    <p>Data kosong</p>
-        
                 </div>
             </div>
             <div class="todo doing">
@@ -41,7 +39,6 @@ const Todo = {
                     <p>5</p>
                 </div>
                 <div class="todo__card doing">
-                    <p>Data kosong</p>
                 </div>
             </div>
             <div class="todo review">
@@ -50,7 +47,6 @@ const Todo = {
                     <p>5</p>
                 </div>
                 <div class="todo__card review">
-                    <p>Data kosong</p>
                 </div>
             </div>
             <div class="todo revisi">
@@ -248,14 +244,15 @@ const Todo = {
 
     const uploadFileBimbingan = async (element, nim, idMhs, idCard) => {
       const file = element.target.previousElementSibling.files[0];
-      if(file == undefined){
-        loading(true, "File tidak ada")
-      }else{
-        const resp = await uploadFile(nim, "file-pdf",file, idMhs, idCard )
-        if(resp){
-          cekRoleUser()
-        }
-      }
+      console.log(nim);
+      // if(file == undefined){
+      //   loading(true, "File tidak ada")
+      // }else{
+      //   const resp = await uploadFile(nim, "file-pdf",file, idMhs, idCard )
+      //   if(resp){
+      //     cekRoleUser()
+      //   }
+      // }
     }
 
     const addUrlBimbingan = async (idMhs, idCard) => {
@@ -282,7 +279,6 @@ const Todo = {
     window.addEventListener("click",(e) => {
       const idMhs = e.target.parentElement.dataset.id_mhs;
       const idCard = e.target.parentElement.id;
-      console.log(e.target.classList)
       if (e.target.classList == "menu") {
         console.log(e.target.nextElementSibling.classList)
         if(e.target.nextElementSibling.classList == "card__nav active"){

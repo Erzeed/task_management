@@ -10,14 +10,17 @@ const Review = {
       <div class="content__review">
       <side-bar class="home"></side-bar>
         <div id="review__page" class="review__page">
+        <loading-roll></loading-roll>
           <div class="container__detail">
               <div class="detail_judul">
                 <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, enim.</h1>
               </div>
               <div class="detail_name">
-                <p>19.11.2877</p>
-                <p>Feizal Reza</p>
+                <p class="nimMhs">19.11.2877</p>
               </div>
+          </div>
+          <div class="container__urlFile">
+            <a href="#">File bimbingan</a>
           </div>
           <div class="container_pdf">
             <div id="pdfViewer"></div>
@@ -65,17 +68,20 @@ const Review = {
     const catatan = document.querySelector("#catatan");
     const container__detail = document.querySelector(".container__detail");
     const statusEl = document.querySelector(".status");
+    const pdfViewer = document.querySelector("#pdfViewer");
+    const container_pdf = document.querySelector(".container_pdf");
+    const container__urlFile = document.querySelector(".container__urlFile");
+    const loadingToast = document.querySelector("loading-roll");
+
 
 
     const showDetalEl = (data) => {
-      console.log(data)
       return `
         <div class="detail_judul">
           <h1>${data.judul}</h1>
         </div>
         <div class="detail_name">
           <p>${data.nim}</p>
-          <p>${data.nama}</p>
         </div>
       `
     }
@@ -94,11 +100,20 @@ const Review = {
     const getDataForReview = async () => {
       const resp = await getDataBimbingan(url.id,url.idTodo);
       if(resp){
+        loadingToast.style.display = "none";
         dataBimbingan = {
           ...dataBimbingan,
           ...resp
         } 
-        pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
+        if(resp.link_file !== undefined){
+          pdfViewer.classList.add("active");
+          container_pdf.classList.add("active");
+          pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
+
+        } else if(resp.url_file !== undefined){
+          container__urlFile.classList.add("active")
+          container__urlFile.innerHTML = `<a href=${resp.url_file} target="_blank">File bimbingan</a>`
+        }
         container__detail.innerHTML = showDetalEl(dataBimbingan);
       }
     }

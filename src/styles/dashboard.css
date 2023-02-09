@@ -78,13 +78,12 @@
 /* notifikasi */
 .dashboard__notifikasi{
     width: 20%;
-    background-color: #fff;
+    background-color: #fefefe;
     box-shadow: 0 0 15px rgba(0, 0, 0, .07);
     border-radius: 5px;
-    /* border: 1px solid rgba(0, 0, 0, .1); */
     position: sticky;
-    height: 85vh;
-    top: 13vh;
+    height: 90vh;
+    top: 10vh;
     margin-right: 15px;
     bottom: auto;
 }
@@ -96,6 +95,7 @@
 .notifikasi__header {
     text-align: center;
     letter-spacing: 2px;
+    border-bottom: 1px solid rgba(0,0,0,.1)
 }
 
 .card__notif {

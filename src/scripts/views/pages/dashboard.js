@@ -15,7 +15,8 @@ import {
   createNewUser,
   getDataUser,
   getAllDataMhsBmbngan,
-  getDataTodo
+  getDataTodo,
+  getAllMhsData
 } from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
@@ -39,7 +40,7 @@ const Dashboard = {
                         <img src=${userIcon} alt="user" />
                     </div>
                     <div class="card__count">
-                        <h1>10</h1>
+                        <h1 class="jmlhMhs">0</h1c>
                     </div>
                     <div class="card__title">
                         <p>Jumlah Mahasiswa</p>
@@ -50,7 +51,7 @@ const Dashboard = {
                         <img src=${proggresIcon} alt="user" />
                     </div>
                     <div class="card__count">
-                        <h1>10</h1>
+                        <h1 class="jmlhReview">0</h1>
                     </div>
                     <div class="card__title">
                         <p>Review</p>
@@ -61,7 +62,7 @@ const Dashboard = {
                         <img src=${revisiIcon} alt="user" />
                     </div>
                     <div class="card__count">
-                        <h1>10</h1>
+                        <h1 class="jmlhRevisi">0</h1>
                     </div>
                     <div class="card__title">
                         <p>Jumlah Mahasiswa Revisi</p>
@@ -72,7 +73,7 @@ const Dashboard = {
                         <img src=${doneIcon} alt="user" />
                     </div>
                     <div class="card__count">
-                        <h1>10</h1>
+                        <h1 class="jmlhSelesai">0</h1>
                     </div>
                     <div class="card__title">
                         <p>Jumlah Mahasiswa Selesai</p>
@@ -154,6 +155,10 @@ const Dashboard = {
     const button__refresh = document.querySelector(".button__refresh button");
     const form = document.querySelectorAll(".inputForm");
     const loadingToast = document.querySelector("loading-roll");
+    const jmlhMhs = document.querySelector(".jmlhMhs");
+    const jmlhReview = document.querySelector(".jmlhReview");
+    const jmlhRevisi = document.querySelector(".jmlhRevisi");
+    const jmlhSelesai = document.querySelector(".jmlhSelesai");
 
     const getData = async () => {
       const data = await getDataUser(id);
@@ -162,8 +167,14 @@ const Dashboard = {
         user = data;
         changeTitle(data.nama);
         getDataNotif(user)
+        showDataCard(data);
       }
     };
+
+    const showDataCard = (data) => {
+      jmlhMhs.innerText = data.id_mhs_bimbingan.length;
+
+    }
 
     const getDataNotif = async (dataUser) => {
       try {
@@ -183,13 +194,24 @@ const Dashboard = {
     const showNotif = (data) => {
       const cardNotif = document.querySelector(".card__notif");
       cardNotif.innerHTML = "";
+      let countReview = 0;
+      let countRevisi = 0;
+      let countSelesai = 0;
       if(data !== undefined) {
         data.forEach(e => {
           if(e.status == "review"){
+            countReview++
             cardNotif.innerHTML += notifElement(e)
+          }else if(e.status == "revisi"){
+            countRevisi++
+          }else if(e.status == "done"){
+            countSelesai++
           }
         })
       }
+      jmlhReview.innerText = countReview
+      jmlhRevisi.innerText = countRevisi
+      jmlhSelesai.innerText = countSelesai
     }
 
     const changeTitle = (title) => {
@@ -215,16 +237,12 @@ const Dashboard = {
       if (nim == "" || email == "" || password == "") {
         alert("Semua data harus di isi");
       } else {
-        const dataMhs = await getAllDataMhsBmbngan(id);
-        let nimAda = false;
-        if (dataMhs) {
-          dataMhs.forEach((data) => {
-            if (data.nim == dataNewAccount.nim) {
-              nimAda = true;
-              return;
-            }
-          });
-          if (!nimAda) {
+        const nimMhs = await getAllMhsData();
+        if (nimMhs != dataNewAccount.nim) {
+              dataNewAccount = {
+                ...dataNewAccount,
+                dosen_pembimbing: user.nama
+              }
             const resp = await createNewUser(dataNewAccount, id);
             if (resp) {
               loading(false, "Berhasil membuat akun mahasiswa");
@@ -232,10 +250,7 @@ const Dashboard = {
               validasiFormRegisLogin(resp);
             }
           } else {
-            loading(true, "Nim sudah terdaftar");
-          }
-        } else {
-          loading(true, dataMhs);
+          loading(true, "Nim sudah terdaftar");
         }
       }
     });

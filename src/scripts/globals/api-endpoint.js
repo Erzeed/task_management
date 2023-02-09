@@ -137,7 +137,9 @@ export const createNewUser = (data, id) => {
             nim: data.nim,
             email: user.email,
             id_dosen: data.idDosen,
-            role_status: data.role
+            role_status: data.role,
+            createdAt: + new Date(),
+            dosen_pembimbing: data.dosen_pembimbing
           }).then(() => {
             getDoc(doc(db, "Dosen", id))
             .then(docSnap => {
@@ -185,7 +187,6 @@ export const getDataUser = (id) => {
           getDoc(doc(db, "Dosen", id))
           .then(docSnap => {
             if (docSnap.exists()) {
-              console.log("hai")
               resolve(docSnap.data())
             } else {
               resolve("Data Kosong");
@@ -308,6 +309,7 @@ export const deleteCard = (idMhs, idCard) =>  {
 }
 
 export const uploadFile = (nim, namaFolder, filePdf, idMhs, idCard) =>  {
+  console.log(nim)
   return new Promise((resolve, reject) => {
     const storage = getStorage(app);
     const uploadTask = uploadBytesResumable(refStorage(storage, `${nim}/${namaFolder}/${filePdf.name}`), filePdf )
@@ -331,7 +333,6 @@ export const uploadFile = (nim, namaFolder, filePdf, idMhs, idCard) =>  {
     () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
         const db = getDatabase()
         update(ref(db, `users/${idMhs}/todo/${idCard}`),{
             link_file: downloadURL
@@ -423,3 +424,18 @@ export const getDataRiwayatBimbingan = (userId) => {
       });
   });
 };
+
+export const getAllMhsData = () => {
+  return new Promise((resolve, reject) => {
+    const db = getFirestore();
+    getDocs(collection(db, "Mahasiswa"))
+      .then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          resolve(doc.data().nim)
+        });  
+      })
+      .catch((error) => {
+        reject(error)
+      });
+  })
+}

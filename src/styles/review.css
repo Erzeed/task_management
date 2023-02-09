@@ -21,6 +21,7 @@
     background-color: #E5E5E5;
     padding-top: 20px;
     border-radius: 5px;
+    display: none;
 }
 
 .container__detail {
@@ -45,6 +46,12 @@
     width: 95%;
     height: 100%;
     margin: 0 auto;
+    display: none;
+}
+
+.container_pdf > #pdfViewer.active,
+.review__page > .container_pdf.active {
+    display: block;
 }
 
 .body_review {
@@ -166,5 +173,26 @@
     color: #fff;
     border-radius: 5px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.container__urlFile {
+    width: 80%;
+    height: 10%;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 5px;
+    display:none;
+}
+
+.container__urlFile.active {
+    display: block;
+}
+
+.container__urlFile > a {
+    text-decoration: none;
+    color: #000;
     cursor: pointer;
 }
