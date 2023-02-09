@@ -417,6 +417,7 @@ export const getDataRiwayatBimbingan = (userId) => {
           });
         }else {
           console.log("data kosong")
+          resolve(false)
         }
       })
       .catch((error) => {

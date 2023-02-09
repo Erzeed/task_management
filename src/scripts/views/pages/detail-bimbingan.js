@@ -7,7 +7,6 @@ import {
 } from "../../globals/api-endpoint.js";
 import { tabelUserBimbingan } from "../components/tabelDataUser/detaildatabimbingan";
 import { cardBimbingan } from "../components/cardBimbingan/cardBimbingan";
-import logo_amikom from "../../../asset/img/logo_amikom.png";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -18,14 +17,14 @@ const DetailBimbingann = {
       <div class="content__DetailBimbingann">
         <side-bar class="active"></side-bar>
         <div class="detail__content">
+        <loading-roll></loading-roll>
             <div class="detail__title">
                 <h1>Data Bimbingan</h1>
-                <p>Feizal Reza</p>
             </div>
             <div class="detail__main">
                 <div class="detail__bimbingan">
                     <div class="bimbingan__container">
-                        
+                        <h3>Belum ada bimbingan</h3>
                     </div>
                     <div class="bimbingan__button">
                         <button>Export data</button>
@@ -49,6 +48,7 @@ const DetailBimbingann = {
     let dataUser = {};
     const tabelUser = document.querySelector(".tabel__user");
     const exportPdf = document.querySelector(".bimbingan__button button");
+    const loadingToast = document.querySelector("loading-roll");
     const bimbingan__container = document.querySelector(
       ".bimbingan__container"
     );
@@ -141,7 +141,7 @@ const DetailBimbingann = {
           {
             columns: [
               {
-                width: '30%',
+                width: "30%",
                 table: {
                   // widths: ["50%","50%","50%","50%"],
                   body: [
@@ -175,7 +175,7 @@ const DetailBimbingann = {
                 layout: "noBorders",
               },
               {
-                width: '2%',
+                width: "2%",
                 table: {
                   body: [
                     [
@@ -208,7 +208,7 @@ const DetailBimbingann = {
                 layout: "noBorders",
               },
               {
-                width: '50% ',
+                width: "50% ",
                 table: {
                   body: [
                     [
@@ -241,7 +241,7 @@ const DetailBimbingann = {
                 layout: "noBorders",
               },
             ],
-            margin: [0, 20, 0 ,20]
+            margin: [0, 20, 0, 20],
           },
           {
             table: {
@@ -269,14 +269,14 @@ const DetailBimbingann = {
             pageBreakBefore: true,
           },
         ],
-        footer: function(currentPage, pageCount) {
+        footer: function (currentPage, pageCount) {
           return {
             columns: [
               {
                 width: "70%",
-                text: '',
+                text: "",
               },
-              { 
+              {
                 width: "30%",
                 table: {
                   widths: "100%",
@@ -284,42 +284,43 @@ const DetailBimbingann = {
                   body: [
                     [
                       {
-                        text: 'Sleman, '+ new Date().toLocaleDateString(),
-                        style: 'footerSignature'
-                      }
+                        text: "Sleman, " + new Date().toLocaleDateString(),
+                        style: "footerSignature",
+                      },
                     ],
                     [
                       {
                         text: "Dosen Pembimbing",
-                        style: 'footerSignature'
-                      }
+                        style: "footerSignature",
+                      },
                     ],
                     [
                       {
                         text: "",
-                        style: 'footerSignature'
-                      }
+                        style: "footerSignature",
+                      },
                     ],
                     [
                       {
                         text: "Nuri Cahyo, M.kom",
                         decoration: "underline",
-                        style: 'footerSignature'
-                      }
+                        style: "footerSignature",
+                      },
                     ],
                     [
                       {
                         text: "Nip.87686",
-                        style: 'footerSignature'
-                      }
-                    ]
-                  ]
+                        style: "footerSignature",
+                      },
+                    ],
+                  ],
                 },
-                alignment: 'left',
+                alignment: "left",
                 layout: "noBorders",
               },
             ],
-          }},
+          };
+        },
         styles: {
           tableHeader: {
             bold: true,
@@ -330,9 +331,8 @@ const DetailBimbingann = {
           },
           footerSignature: {
             fontSize: 10,
-          }
-        }
-
+          },
+        },
       };
       // const pdf = pdfMake.createPdf(docDefinition);
       // pdf.open('report.pdf');
@@ -341,8 +341,10 @@ const DetailBimbingann = {
     };
 
     const getDataReview = async () => {
-      const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       const respDataUser = await getDataUser(url.id);
+      respDataUser ? loadingToast.style.display = "none" : "";
+      tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
+      const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       if (respDataRiwayat && respDataUser) {
         dataUser = {
           ...respDataUser,
@@ -351,8 +353,8 @@ const DetailBimbingann = {
         respDataRiwayat.forEach((data) => {
           bimbingan__container.innerHTML += cardBimbingan(data);
         });
-        tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
-        console.log(dataUser);
+      } else {
+        exportPdf.classList.add("not_allowed")
       }
     };
 

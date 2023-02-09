@@ -1,4 +1,15 @@
-export const tabelUserBimbingan = ({nama, angkatan, email, judul_skripsi, jurusan, nim, nomor_telepon, role_status, fakultas}) => {
+export const tabelUserBimbingan = ({
+  nama,
+  angkatan,
+  email,
+  judul_skripsi,
+  jurusan,
+  nim,
+  nomor_telepon,
+  role_status,
+  fakultas,
+  dosen_pembimbing,
+}) => {
   return `
     <table class="tg">
         <tbody>
@@ -16,6 +27,11 @@ export const tabelUserBimbingan = ({nama, angkatan, email, judul_skripsi, jurusa
                 <td class="tg-0pky">Angkatan</td>
                 <td class="tg-0lax">:</td>
                 <td class="tg-data">${angkatan}</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky">Dosen</td>
+                <td class="tg-0lax">:</td>
+                <td class="tg-data">${dosen_pembimbing}</td>
             </tr>
             <tr>
                 <td class="tg-0lax">Judul skripsi</td>
