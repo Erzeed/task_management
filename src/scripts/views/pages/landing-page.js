@@ -69,12 +69,15 @@ const LandingPage = {
     `;
   },
 
-  //   async afterRender() {
-  //     const landingContainer = document.querySelector('#landing__page');
-  //     movies.forEach((movie) => {
-  //       landingContainer.innerHTML += createMovieItemTemplate(movie);
-  //     });
-  //   },
+    async afterRender() {
+        const id = localStorage.getItem("id");
+        if(id === null){
+            window.location.href = "/#/"
+        }else {
+            window.location.href = "/#/todo"
+
+        }
+    },
 };
 
 export default LandingPage;

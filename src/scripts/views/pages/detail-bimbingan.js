@@ -24,7 +24,9 @@ const DetailBimbingann = {
             <div class="detail__main">
                 <div class="detail__bimbingan">
                     <div class="bimbingan__container">
-                        <h3>Belum ada bimbingan</h3>
+                        <div class="bimbingan_kosong">
+                          <h3>Data bimbingan kosong</h3>
+                        </div>
                     </div>
                     <div class="bimbingan__button">
                         <button>Export data</button>
@@ -49,6 +51,7 @@ const DetailBimbingann = {
     const tabelUser = document.querySelector(".tabel__user");
     const exportPdf = document.querySelector(".bimbingan__button button");
     const loadingToast = document.querySelector("loading-roll");
+    const bimbingan_kosong = document.querySelector(".bimbingan_kosong");
     const bimbingan__container = document.querySelector(
       ".bimbingan__container"
     );
@@ -346,6 +349,7 @@ const DetailBimbingann = {
       tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
       const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       if (respDataRiwayat && respDataUser) {
+        bimbingan_kosong.classList.style.display = "none";
         dataUser = {
           ...respDataUser,
           riwayat: respDataRiwayat,

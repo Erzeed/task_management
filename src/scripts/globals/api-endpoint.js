@@ -30,7 +30,6 @@ export const registerPage = (data) => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // cekRoleUser(user);
         setDoc(doc(db, "Dosen", user.uid), {
           nama: data.username,
           iddosen: user.uid,
@@ -129,7 +128,6 @@ export const createNewUser = (data, id) => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // resolve(user);
         const db = getFirestore(app);
         const userId = user.uid;
         setDoc(doc(db, "Mahasiswa", userId),{
@@ -378,7 +376,8 @@ export const getDataBimbingan = (userId, todoId) => {
   })
 }
 
-export const updateStatusAndCreateDataBimbingan = (status,userId,todoId, data) =>  {
+export const updateStatusAndCreateDataBimbingan = (status,
+  userId,todoId, data) =>  {
   return new Promise((resolve , reject) => {
       const dbRealtime = getDatabase()
       const db = getFirestore();
@@ -389,13 +388,11 @@ export const updateStatusAndCreateDataBimbingan = (status,userId,todoId, data) =
         addDoc(collection(db, `data_bimbingan/${userId}/bimbingan`), data)
           .then(() => {
             resolve(true)
-            console.log("data update");
           }).catch((error) => {
-            console.log(error, "kedua");
+            reject(error);
           });
       })
       .catch((error => {
-        console.log(error, "pertama")
           reject(error)
       }))
   })

@@ -28,7 +28,7 @@ const Todo = {
             <div class="todo planning">
                 <div class="todo__title">
                     <p>Todo</p>
-                    <p>5</p>
+                    <p class="countTodo">5</p>
                 </div>
                 <div class="todo__card todo">
                 </div>
@@ -105,6 +105,7 @@ const Todo = {
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
     const loadingToast = document.querySelector('loading-roll');
+    const countTodo = document.querySelector('.countTodo');
     
     let inputUrlUser = "";
 
@@ -244,15 +245,14 @@ const Todo = {
 
     const uploadFileBimbingan = async (element, nim, idMhs, idCard) => {
       const file = element.target.previousElementSibling.files[0];
-      console.log(nim);
-      // if(file == undefined){
-      //   loading(true, "File tidak ada")
-      // }else{
-      //   const resp = await uploadFile(nim, "file-pdf",file, idMhs, idCard )
-      //   if(resp){
-      //     cekRoleUser()
-      //   }
-      // }
+      if(file == undefined){
+        loading(true, "File tidak ada")
+      }else{
+        const resp = await uploadFile(nim, "file-pdf",file, idMhs, idCard )
+        if(resp){
+          cekRoleUser()
+        }
+      }
     }
 
     const addUrlBimbingan = async (idMhs, idCard) => {
@@ -297,6 +297,7 @@ const Todo = {
       } else if (e.target.classList == "delete") {
         delCard(idMhs, idCard);
       }  else if (e.target.classList == "btn__file") {
+        console.log(dataUser);
         uploadFileBimbingan(e, dataUser.nim, idMhs, idCard);
       }  else if (e.target.classList == "btn__url") {
         addUrlBimbingan(idMhs, idCard);

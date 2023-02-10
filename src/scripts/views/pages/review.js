@@ -75,16 +75,16 @@ const Review = {
 
 
 
-    const showDetalEl = (data) => {
-      return `
-        <div class="detail_judul">
-          <h1>${data.judul}</h1>
-        </div>
-        <div class="detail_name">
-          <p>${data.nim}</p>
-        </div>
-      `
-    }
+    // const showDetalEl = (data) => {
+    //   return `
+    //     <div class="detail_judul">
+    //       <h1>${data.judul}</h1>
+    //     </div>
+    //     <div class="detail_name">
+    //       <p>${data.nim}</p>
+    //     </div>
+    //   `
+    // }
 
     const getDataUserBimbingan = async () => {
       const resp = await getDataUser(url.id);
@@ -114,7 +114,7 @@ const Review = {
           container__urlFile.classList.add("active")
           container__urlFile.innerHTML = `<a href=${resp.url_file} target="_blank">File bimbingan</a>`
         }
-        container__detail.innerHTML = showDetalEl(dataBimbingan);
+        // container__detail.innerHTML = showDetalEl(dataBimbingan);
       }
     }
 
@@ -149,7 +149,7 @@ const Review = {
     })
 
     kirim.addEventListener("click", async () => {
-      if(dataBimbingan.status !== "selesai" && dataBimbingan.status !== "revisi"){
+      if(dataBimbingan.status !== "done" && dataBimbingan.status !== "revisi"){
         console.log(dataBimbingan)
         alert("status harus jelas jangan digantung")
       }else {
