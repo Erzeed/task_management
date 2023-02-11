@@ -19,38 +19,45 @@ const Review = {
                 <p class="nimMhs">19.11.2877</p>
               </div>
           </div>
-          <div class="container__urlFile">
-            <a href="#">File bimbingan</a>
-          </div>
-          <div class="container_pdf">
-            <div id="pdfViewer"></div>
-          </div>
-          <div class="body_review">
-            <div class="review__header">
-              <div class="header__title">
-                <h2>Catatan</h2>
-              </div>
-              <div class="header__button">
-                <p class="status">review</p>
-                <h1>...</h1>
-                <div class="card__nav" >
-                    <button class="revisi" >Revisi</button>
-                    <button class="selesai">Selesai</button>
-                </div>
+          <div class="container__review">
+            <div class="document__review">
+              <h2>File bimbingan</h2>
+              <div class="container__urlFile">
+                <p class="btnPdf">File pdf</p>
+                <a href="#">File lainnya</a>
               </div>
             </div>
-            <div class="review__body">
-              <form>
-                <textarea ="catatan" id="catatan" cols="30" rows="10" placeholder="Tulis Catatan"></textarea>
-              </form>
-              <div class="body__footer">
-                <div class="footer__tgl">
+            <div class="container_pdf">
+              <div id="pdfViewer"></div>
+            </div>
+            <div class="body_review">
+              <div class="review__header">
+                <div class="header__title">
+                  <h2>Catatan</h2>
                 </div>
-                <div class="btn__footer">
-                <button class="kirim">Kirim</button>
+                <div class="header__button">
+                  <p class="status">review</p>
+                  <h1>...</h1>
+                  <div class="card__nav" >
+                      <button class="revisi" >Revisi</button>
+                      <button class="selesai">Selesai</button>
+                  </div>
                 </div>
               </div>
-            </div>
+              <div class="review__body">
+                <form>
+                  <textarea ="catatan" id="catatan" placeholder="Tulis Catatan"></textarea>
+                </form>
+                <div class="body__footer">
+                  <div class="footer__tgl">
+                  </div>
+                  <div class="btn__footer">
+                  <button class="kirim">Kirim</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+
           </div>
         </div>
       </div>
@@ -72,6 +79,7 @@ const Review = {
     const container_pdf = document.querySelector(".container_pdf");
     const container__urlFile = document.querySelector(".container__urlFile");
     const loadingToast = document.querySelector("loading-roll");
+    const btnPdf = document.querySelector(".btnPdf");
 
 
 
@@ -112,7 +120,7 @@ const Review = {
           // pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
 
         } else if(resp.url_file !== undefined){
-          container__urlFile.classList.add("active")
+          // container__urlFile.classList.add("active")
           container__urlFile.innerHTML = `<a href=${resp.url_file} target="_blank">File bimbingan</a>`
         }
         container__detail.innerHTML = showDetalEl(dataBimbingan);
@@ -124,6 +132,10 @@ const Review = {
     }
 
     getDataUserBimbingan()
+
+    btnPdf.addEventListener("click", () => {
+      console.log("hai");
+    })
 
 
     revisi.addEventListener("click", () => {
