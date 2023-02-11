@@ -15,6 +15,7 @@ class navbar extends HTMLElement {
     if(id) {
       isLogin = true
     }
+    console.log(isLogin)
     return isLogin;
   }
 

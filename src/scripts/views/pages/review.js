@@ -75,16 +75,18 @@ const Review = {
 
 
 
-    // const showDetalEl = (data) => {
-    //   return `
-    //     <div class="detail_judul">
-    //       <h1>${data.judul}</h1>
-    //     </div>
-    //     <div class="detail_name">
-    //       <p>${data.nim}</p>
-    //     </div>
-    //   `
-    // }
+    const showDetalEl = (data) => {
+      return `
+        <div class="element">
+          <div class="detail_judul">
+            <h1>${data.judul}</h1>
+          </div>
+          <div class="detail_name">
+            <p>${data.nim}</p>
+          </div>
+        </div>
+      `
+    }
 
     const getDataUserBimbingan = async () => {
       const resp = await getDataUser(url.id);
@@ -106,16 +108,19 @@ const Review = {
           ...resp
         } 
         if(resp.link_file !== undefined){
-          pdfViewer.classList.add("active");
-          container_pdf.classList.add("active");
-          pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
+          // container_pdf.classList.add("active");
+          // pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
 
         } else if(resp.url_file !== undefined){
           container__urlFile.classList.add("active")
           container__urlFile.innerHTML = `<a href=${resp.url_file} target="_blank">File bimbingan</a>`
         }
-        // container__detail.innerHTML = showDetalEl(dataBimbingan);
+        container__detail.innerHTML = showDetalEl(dataBimbingan);
       }
+    }
+
+    const showtPdfViewer = () => {
+
     }
 
     getDataUserBimbingan()
@@ -150,7 +155,6 @@ const Review = {
 
     kirim.addEventListener("click", async () => {
       if(dataBimbingan.status !== "done" && dataBimbingan.status !== "revisi"){
-        console.log(dataBimbingan)
         alert("status harus jelas jangan digantung")
       }else {
         dataBimbingan = {
