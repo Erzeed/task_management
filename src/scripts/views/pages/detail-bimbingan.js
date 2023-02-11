@@ -57,6 +57,10 @@ const DetailBimbingann = {
     );
     const url = UrlParser.parseActiveUrlWithoutCombiner();
 
+    const changeTimestamp = (data) => {
+      return new Date(data).toLocaleString().slice(0 , 8).replace(/[/]/g, "-")
+    }
+
     const generatePdf = () => {
       console.log(dataUser);
       const docDefinition = {
@@ -146,7 +150,6 @@ const DetailBimbingann = {
               {
                 width: "30%",
                 table: {
-                  // widths: ["50%","50%","50%","50%"],
                   body: [
                     [
                       {
@@ -262,7 +265,7 @@ const DetailBimbingann = {
                 dataUser.riwayat.map((data, index) => {
                   return [
                     { text: `${index + 1}`, alignment: "center" },
-                    { text: `${data.tgl_selesai}`, alignment: "center" },
+                    { text: `${changeTimestamp(data.tgl_selesai)}`, alignment: "center" },
                     { text: `${data.deskripsi}`, alignment: "center" },
                     "",
                   ];
@@ -272,7 +275,7 @@ const DetailBimbingann = {
             pageBreakBefore: true,
           },
         ],
-        footer: function (currentPage, pageCount) {
+        footer: function () {
           return {
             columns: [
               {
@@ -287,7 +290,7 @@ const DetailBimbingann = {
                   body: [
                     [
                       {
-                        text: "Sleman, " + new Date().toLocaleDateString(),
+                        text: "Sleman, " + new Date().toLocaleDateString().replace(/[/]/g, "-"),
                         style: "footerSignature",
                       },
                     ],
@@ -345,11 +348,11 @@ const DetailBimbingann = {
 
     const getDataReview = async () => {
       const respDataUser = await getDataUser(url.id);
-      respDataUser ? loadingToast.style.display = "none" : "";
+      respDataUser ? (loadingToast.style.display = "none") : "";
       tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
       const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       if (respDataRiwayat && respDataUser) {
-        bimbingan_kosong.classList.style.display = "none";
+        bimbingan_kosong.style.display = "none";
         dataUser = {
           ...respDataUser,
           riwayat: respDataRiwayat,
@@ -358,7 +361,7 @@ const DetailBimbingann = {
           bimbingan__container.innerHTML += cardBimbingan(data);
         });
       } else {
-        exportPdf.classList.add("not_allowed")
+        exportPdf.classList.add("not_allowed");
       }
     };
 
