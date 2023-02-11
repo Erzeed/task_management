@@ -20,9 +20,9 @@
 
 .review__page > .container__review > .container_pdf {
     width: 90vw;
-    height: 70vh;
+    height: 85vh;
     background-color: #fff;
-    display: none;
+    visibility: hidden;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -31,6 +31,8 @@
     z-index: 15;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, .1);
     padding-top: 30px;
+    transform: translateY(85vh);
+    transition: .5s ease-out;
 }
 
 .container__detail {
@@ -69,8 +71,9 @@
 }
 
 
-.review__page > .container_pdf.active {
-    display: block;
+.review__page > .container__review > .container_pdf.active {
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .body_review {
@@ -221,5 +224,9 @@
 
 .document__review {
     text-align: center;
+}
+
+.btnPdf {
+    display: none;
 }
 

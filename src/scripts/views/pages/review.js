@@ -24,7 +24,7 @@ const Review = {
               <h2>File bimbingan</h2>
               <div class="container__urlFile">
                 <p class="btnPdf">File pdf</p>
-                <a href="#">File lainnya</a>
+                
               </div>
             </div>
             <div class="container_pdf">
@@ -80,6 +80,7 @@ const Review = {
     const container__urlFile = document.querySelector(".container__urlFile");
     const loadingToast = document.querySelector("loading-roll");
     const btnPdf = document.querySelector(".btnPdf");
+    let filePdf = ""
 
 
 
@@ -116,27 +117,35 @@ const Review = {
           ...resp
         } 
         if(resp.link_file !== undefined){
-          // container_pdf.classList.add("active");
-          // pdfObject.embed(`${resp.link_file}`, "#pdfViewer");
-
-        } else if(resp.url_file !== undefined){
-          // container__urlFile.classList.add("active")
-          container__urlFile.innerHTML = `<a href=${resp.url_file} target="_blank">File bimbingan</a>`
+          btnPdf.style.display = "block"
+          filePdf = resp.link_file
+        
+        } if(resp.url_file !== undefined){
+          container__urlFile.innerHTML += `<a href=${resp.url_file} target="_blank">File lainnya</a>`
         }
         container__detail.innerHTML = showDetalEl(dataBimbingan);
       }
     }
 
-    const showtPdfViewer = () => {
-
-    }
-
     getDataUserBimbingan()
 
-    btnPdf.addEventListener("click", () => {
-      console.log("hai");
-    })
+    const showPdfFile = () => {
+      pdfObject.embed(`${filePdf}`, "#pdfViewer");
+    }
 
+    
+    btnPdf.addEventListener("click", () => {
+      container_pdf.classList.add("active");
+      showPdfFile()
+    })
+    
+    window.addEventListener("click", (el) => {
+      if(el.target.classList.value !== "btnPdf"){
+        if(el.target.classList.value !== "container_pdf active" || el.target.id !== "pdfViewer"){
+          container_pdf.classList.remove("active");
+        }
+      }
+    })
 
     revisi.addEventListener("click", () => {
       statusEl.innerText = "revisi";
