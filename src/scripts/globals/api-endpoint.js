@@ -147,7 +147,6 @@ export const createNewUser = (data, id) => {
                     id_mhs_bimbingan: arrayUnion(userId) 
                   }, { merge: true })
                   .then(() => {
-                    console.log("haii")
                     validasiCreateUser("succes");
                   }).catch((error) => {
                     reject(error.code);

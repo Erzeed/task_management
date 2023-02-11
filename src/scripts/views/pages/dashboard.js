@@ -326,6 +326,15 @@ const Dashboard = {
       },
     });
 
+    const changeTimestamp = (data) => {
+      const tanggal = new Date(data);
+      const tgl = tanggal.getDate();
+      const bln = tanggal.getMonth() + 1;
+      const thn = tanggal.getFullYear();
+
+      return tgl + "-" + bln + "-" + thn;
+    }
+
     //define table
     const defaultValue = (cell) => {
       if (!cell.getValue()) {
@@ -334,8 +343,7 @@ const Dashboard = {
       return cell.getValue();
     };
 
-    const getAllDataMhs = async () => {
-      const dataMhs = await getAllDataMhsBmbngan(id);
+    const showTable = (dataMhs) => {
       const table = new Tabulator("#data-table", {
         //   minHeight: 300,
         rowHeight: 40,
@@ -395,7 +403,7 @@ const Dashboard = {
           },
           {
             title: "Mulai Bimbingan",
-            field: "mulai_bimbingan",
+            field: "createdAt",
             hozAlign: "center",
             vertAlign: "middle",
             formatter: defaultValue,
@@ -420,13 +428,29 @@ const Dashboard = {
       table.on("rowClick", (e, row) => {
         window.location.href = `/#/detailbimbingan/${row.getIndex()}`;
       });
+
+    }
+
+    const getAllDataMhs = async () => {
+      let dataMhs = []
+      const resp = await getAllDataMhsBmbngan(id);
+      if(resp){
+        resp.forEach(data => {
+          dataMhs.push({
+            ...data,
+            createdAt: changeTimestamp(data.createdAt)
+          })
+        })
+        showTable(dataMhs);
+      }
+
     };
 
     getAllDataMhs();
 
     button__refresh.addEventListener("click", () => {
       getAllDataMhs();
-      table.redraw(true);
+      // table.redraw(true);
     });
 
     const randomPass = () => {
