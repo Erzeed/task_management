@@ -7,9 +7,19 @@ import autosize from 'autosize';
 
 export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file, url_file, createdAt}) =>  {
     const textarea = document.querySelector("textarea");
+
+
     autosize(textarea)
     const date = new Date(createdAt);
     const tglBuat = date.toLocaleString().slice(0 , 8).replace(/[/]/g, "-");
+
+    window.addEventListener("click", (e) => {
+        if(e.target.classList == "menu__active") {
+            console.log("haii2")
+            e.target.nextElementSibling.classList.remove("active");
+            e.target.classList = "menu"
+        }
+    })
 
     return `
         <style>

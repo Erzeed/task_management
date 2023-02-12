@@ -211,6 +211,20 @@ const Todo = {
       }
     }
 
+    const forwardCard = (elements) => {
+      const idMhs = elements.target.parentElement.dataset.id_mhs;
+      const idCard = elements.target.parentElement.id;
+      if (elements.target.classList == "move todo") {
+        moveCard("doing", idMhs, idCard);
+      } else if (elements.target.classList == "move doing") {
+        moveCard("review", idMhs, idCard);
+      } else if (elements.target.classList == "move review") {
+        moveCard("revisi", idMhs, idCard);
+      } else if (elements.target.classList == "move revisi") {
+        moveCard("done", idMhs, idCard);
+      } 
+    }
+
     const cekOpenMenuActive = (elements, idCard) => {
       if(elements.id == idCard){
         if(elements.classList.value.includes("active")){
@@ -224,7 +238,7 @@ const Todo = {
         cekOpenMenuActive(unActivatedElement[i], idCard);
         cekOpenMenuActive(unActivatedElement2[i], idCard);
         if(el.id == idCard) {
-          el.classList.toggle("active")
+          el.classList.add("active")
         }
       })
     }
@@ -269,6 +283,7 @@ const Todo = {
       }
     }
 
+
     window.addEventListener("change", el => {
       if(el.target.classList == "input_url"){
         inputUrlUser = el.target.value;
@@ -276,33 +291,28 @@ const Todo = {
     })
 
 
+
     window.addEventListener("click",(e) => {
       const idMhs = e.target.parentElement.dataset.id_mhs;
       const idCard = e.target.parentElement.id;
+      
       if (e.target.classList == "menu") {
-        console.log(e.target.nextElementSibling.classList)
-        if(e.target.nextElementSibling.classList == "card__nav active"){
-          e.target.nextElementSibling.classList.remove("active");
-        }else {
-          e.target.nextElementSibling.classList.add("active");
-        }
-      } else if (e.target.classList == "move todo") {
-        moveCard("doing", idMhs, idCard);
-      } else if (e.target.classList == "move doing") {
-        moveCard("review", idMhs, idCard);
-      } else if (e.target.classList == "move review") {
-        moveCard("revisi", idMhs, idCard);
-      } else if (e.target.classList == "move revisi") {
-        moveCard("done", idMhs, idCard);
-      } else if (e.target.classList == "delete") {
+        e.target.nextElementSibling.classList.add("active");
+      }  else if (e.target.classList == "delete") {
         delCard(idMhs, idCard);
       }  else if (e.target.classList == "btn__file") {
-        console.log(dataUser);
         uploadFileBimbingan(e, dataUser.nim, idMhs, idCard);
       }  else if (e.target.classList == "btn__url") {
         addUrlBimbingan(idMhs, idCard);
-    
-      }  
+      } else if(e.target.classList != "menu"){
+        const card__nav = document.querySelectorAll(".card__nav")
+        card__nav.forEach(el => {
+          if(el.classList.contains("active")){
+            el.classList.remove("active")
+          }
+        })
+      } 
+      forwardCard(e);
       backCard(e)
       openMenu(e)
     });
@@ -327,6 +337,7 @@ const Todo = {
         [e.target.id]: e.target.value,
       };
     });
+
 
     [...userInput].forEach((e) => {
       e.addEventListener("change", (data) => {
