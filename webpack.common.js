@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 const path = require('path');
 
 module.exports = {
@@ -54,6 +55,23 @@ module.exports = {
         {
           from: path.resolve(__dirname, 'src/public/'),
           to: path.resolve(__dirname, 'dist/'),
+        },
+      ],
+    }),
+    new WebpackPwaManifest({
+      id: 'wgether-task-management',
+      name: 'wgther',
+      short_name: 'Wgether',
+      description: 'web app to manage skripsi',
+      background_color: '#ffff',
+      crossorigin: null,
+      publicPath: './',
+      filename: 'app.manifest.json',
+      start_url: './index.html',
+      icons: [
+        {
+          src: path.resolve('src/asset/img/logo.png'),
+          sizes: [96, 128, 192, 256, 384, 512],
         },
       ],
     }),
