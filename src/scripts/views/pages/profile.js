@@ -1,6 +1,6 @@
 import "../../../styles/profile.css";
-import banner from "../../../asset/banner/gradienta-banner-unsplash.jpeg";
-import profileimg from "../../../asset/img/profile-default.jpg";
+import banner from "../../../asset/banner/gradienta-banner-unsplash.webp";
+import profileimg from "../../../asset/img/profile-default.webp";
 import { cekUser } from "../../utils/cekUser";
 import { getDataUser, updateProfileUser } from "../../globals/api-endpoint.js";
 import { showDetail } from "../components/showDetail/showDetail";
