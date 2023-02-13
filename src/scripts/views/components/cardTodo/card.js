@@ -1,17 +1,17 @@
 import css from "./card.css";
 import lampiranIcons from "../../../../asset/icons/attach-24.png";
 import linkIcons from "../../../../asset/icons/link-24.png";
-import imageIcons from "../../../../asset/icons/comments-24.png";
-import profileimg from "../../../../asset/img/profile-default.jpg";
-import autosize from 'autosize';
 
 export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file, url_file, createdAt}) =>  {
-    const textarea = document.querySelector("textarea");
 
-
-    autosize(textarea)
-    const date = new Date(createdAt);
-    const tglBuat = date.toLocaleString().slice(0 , 8).replace(/[/]/g, "-");
+    const changeTimestamp = (data) => {
+        const tanggal = new Date(data);
+        const tgl = tanggal.getDate();
+        const bln = tanggal.getMonth() + 1;
+        const thn = tanggal.getFullYear();
+  
+        return tgl + "-" + bln + "-" + thn;
+      }
 
 
     return `
@@ -36,13 +36,12 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file,
                     <p>${nim}</p>
                 </div>
                 <div class="footer__createAt">
-                    <p>${tglBuat}</p>
+                    <p>${changeTimestamp(createdAt)}</p>
                 </div>
                 <div class="footer__menu">
                     <ul>
                         <li><img class="btnLinks" id="${id}" src="${linkIcons}" alt="link file" /></li>
                         <li><img class="btnLampiran" id="${id}" src="${lampiranIcons}" alt="lampiran" /></li>
-                        <li><img class="btnKoment" id="${id}" src="${imageIcons}" alt="comment" /></li>
                     </ul>
                 </div>
             </div>
@@ -72,22 +71,6 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file,
                 <div class="current_file">
                     <p>${link_file == undefined ? "" : `<a target=”_blank” href=${link_file}>file bimbingan</a>`}</p>
                 </div>
-            </div>
-            <div class="footer__img" id="${id}">
-                <div class="footer__img_btn">
-                    <button class="closeImg">X</button>
-                </div>
-                <form data-id_mhs="${id_mhs}" id="${id}">
-                    <input
-                    type="file"
-                    id="img__upoloud"
-                    accept=".jpg, .jpeg, .png" />
-                    <button class="btn__file" type="button">Upload</button>
-                </form>
-                <div class="current_file">
-                    <p>${link_file == undefined ? "" : `<a target=”_blank” href=${link_file}>file bimbingan</a>`}</p>
-                </div
-                
             </div>
         </div>
     

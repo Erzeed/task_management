@@ -132,8 +132,7 @@
 }
 
 .footer__link, 
-.footer__upload,
-.footer__img {
+.footer__upload{
     width: 100%;
     padding: 10px;
     background-color: #f6f5f8;
@@ -143,19 +142,13 @@
     display: none;
 }
 
-.footer__img {
-    flex-direction: column;
-}
-
 .footer__link.active,
-.footer__upload.active,
-.footer__img.active {
+.footer__upload.active{
     display: flex;
 }
 
 .footer__upload,
-.footer__link,
-.footer__img {
+.footer__link{
     flex-direction: column;
 }
 
@@ -174,7 +167,6 @@
 }
 
 .footer__link > form, 
-.footer__img > form, 
 .footer__upload > form {
     width: 100% ;
     height: 40px;
@@ -193,8 +185,7 @@
 
 
 .footer__upload > form > button,
-.footer__link > form > button,
-.footer__img > form > button {
+.footer__link > form > button {
     width: 18%;
     height: 80%;
     border: none;
@@ -206,21 +197,18 @@
     padding: 0 5px;
 }
 
-.footer__upload > form > button,
-.footer__img > form > button {
+.footer__upload > form > button{
     width: 25%;
 }
 
 .footer__link_btn , 
-.footer__upload_btn , 
-.footer__img_btn  {
+.footer__upload_btn {
     width: 100%;
     display: flex;
     justify-content: end;
 } 
 .footer__link_btn > button, 
-.footer__upload_btn > button, 
-.footer__img_btn > button {
+.footer__upload_btn > button {
     border: none;
     background-color: transparent;
     cursor: pointer;

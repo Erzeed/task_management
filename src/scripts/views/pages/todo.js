@@ -233,10 +233,9 @@ const Todo = {
       }
     }
 
-    const activatedMenu = (elementActivate, unActivatedElement, unActivatedElement2, idCard) => {
+    const activatedMenu = (elementActivate, unActivatedElement, idCard) => {
       [...elementActivate].forEach((el,i) => {
         nonActivateElement(unActivatedElement[i], idCard);
-        nonActivateElement(unActivatedElement2[i], idCard);
         if(el.id == idCard) {
           el.classList.add("active")
         }
@@ -246,23 +245,16 @@ const Todo = {
     const openMenu = (elements) => {
       const footer__link = document.querySelectorAll(".footer__link");
       const footer__uploads = document.querySelectorAll(".footer__upload");
-      const footer__img = document.querySelectorAll(".footer__img");
 
       if (elements.target.classList == "btnLinks") {
-        activatedMenu(footer__link, footer__uploads, footer__img, elements.target.id)
+        activatedMenu(footer__link, footer__uploads, elements.target.id)
       } else if (elements.target.classList == "btnLampiran") {
-        activatedMenu(footer__uploads, footer__link, footer__img, elements.target.id);
-      } else if (elements.target.classList == "btnKoment") {
-        activatedMenu(footer__img, footer__link, footer__uploads, elements.target.id);
+        activatedMenu(footer__uploads, footer__link, elements.target.id);
       } else if (elements.target.classList == "closeLink") {
         footer__link.forEach(el => {
           nonActivateElement(el, el.id)
         })
-      } else if (elements.target.classList == "closeImg") {
-        footer__img.forEach(el => {
-          nonActivateElement(el, el.id)
-        })
-      } else if (elements.target.classList == "closeUpload") {
+      }  else if (elements.target.classList == "closeUpload") {
         footer__uploads.forEach(el => {
           nonActivateElement(el, el.id)
         })
@@ -364,7 +356,7 @@ const Todo = {
     simpan.addEventListener("click", () => {
       const { nim, judul } = dataInputForm;
       if (nim == "" || judul == "") {
-        alert("Semua data harus di isi");
+        loading(true, "Nim daan Judul tidak boleh kosong")
       } else {
         let count = 0;
         dataUserBimbingan.forEach(async (data) => {
@@ -383,7 +375,7 @@ const Todo = {
           } else {
             count++;
             if (count == dataUserBimbingan.length) {
-              alert("Nim tidak ditemukan");
+              loading(true, "Nim tidak terdaftar")
             }
           }
         });
