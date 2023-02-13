@@ -225,7 +225,7 @@ const Todo = {
       } 
     }
 
-    const cekOpenMenuActive = (elements, idCard) => {
+    const nonActivateElement = (elements, idCard) => {
       if(elements.id == idCard){
         if(elements.classList.value.includes("active")){
           elements.classList.remove("active")
@@ -235,8 +235,8 @@ const Todo = {
 
     const activatedMenu = (elementActivate, unActivatedElement, unActivatedElement2, idCard) => {
       [...elementActivate].forEach((el,i) => {
-        cekOpenMenuActive(unActivatedElement[i], idCard);
-        cekOpenMenuActive(unActivatedElement2[i], idCard);
+        nonActivateElement(unActivatedElement[i], idCard);
+        nonActivateElement(unActivatedElement2[i], idCard);
         if(el.id == idCard) {
           el.classList.add("active")
         }
@@ -254,6 +254,18 @@ const Todo = {
         activatedMenu(footer__uploads, footer__link, footer__img, elements.target.id);
       } else if (elements.target.classList == "btnKoment") {
         activatedMenu(footer__img, footer__link, footer__uploads, elements.target.id);
+      } else if (elements.target.classList == "closeLink") {
+        footer__link.forEach(el => {
+          nonActivateElement(el, el.id)
+        })
+      } else if (elements.target.classList == "closeImg") {
+        footer__img.forEach(el => {
+          nonActivateElement(el, el.id)
+        })
+      } else if (elements.target.classList == "closeUpload") {
+        footer__uploads.forEach(el => {
+          nonActivateElement(el, el.id)
+        })
       }
     }
 
@@ -289,7 +301,6 @@ const Todo = {
         inputUrlUser = el.target.value;
       }
     })
-
 
 
     window.addEventListener("click",(e) => {

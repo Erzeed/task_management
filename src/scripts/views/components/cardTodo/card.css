@@ -210,3 +210,22 @@
 .footer__img > form > button {
     width: 25%;
 }
+
+.footer__link_btn , 
+.footer__upload_btn , 
+.footer__img_btn  {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+} 
+.footer__link_btn > button, 
+.footer__upload_btn > button, 
+.footer__img_btn > button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2em;
+    color: rgba(0, 0, 0, .5);
+} 

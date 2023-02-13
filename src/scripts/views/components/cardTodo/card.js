@@ -13,13 +13,6 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file,
     const date = new Date(createdAt);
     const tglBuat = date.toLocaleString().slice(0 , 8).replace(/[/]/g, "-");
 
-    window.addEventListener("click", (e) => {
-        if(e.target.classList == "menu__active") {
-            console.log("haii2")
-            e.target.nextElementSibling.classList.remove("active");
-            e.target.classList = "menu"
-        }
-    })
 
     return `
         <style>
@@ -54,6 +47,9 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file,
                 </div>
             </div>
             <div class="footer__link" id="${id}">
+                <div class="footer__link_btn">
+                    <button class="closeLink">X</button>
+                </div>
                 <form data-id_mhs="${id_mhs}" id="${id}">
                     <input class="input_url" type="url" placeHolder="masukkan url">
                     <button class="btn__url" type="button">Ok</button>
@@ -63,6 +59,9 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file,
                 </div>
             </div>
             <div class="footer__upload" id="${id}">
+                <div class="footer__upload_btn">
+                    <button class="closeUpload">X</button>
+                </div>
                 <form data-id_mhs="${id_mhs}" id="${id}">
                     <input
                     type="file"
@@ -75,6 +74,9 @@ export const cardTodo = ({nim, judul, deskripsi, status, id, id_mhs , link_file,
                 </div>
             </div>
             <div class="footer__img" id="${id}">
+                <div class="footer__img_btn">
+                    <button class="closeImg">X</button>
+                </div>
                 <form data-id_mhs="${id_mhs}" id="${id}">
                     <input
                     type="file"
