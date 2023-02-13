@@ -9,5 +9,5 @@ self.addEventListener('install', () => {
 });
 
 self.addEventListener('fetch', async (e) => {
-  console.log(e);
+//   console.log(e);
 });

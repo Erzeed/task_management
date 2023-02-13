@@ -78,6 +78,7 @@ module.exports = {
       ],
     }),
     new WorkboxWebpackPlugin.InjectManifest({
+      maximumFileSizeToCacheInBytes: 26214400,
       swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
       swDest: './sw.bundle.js',
     }),

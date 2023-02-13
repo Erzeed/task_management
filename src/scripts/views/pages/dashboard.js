@@ -11,6 +11,8 @@ import { cekUser } from "../../utils/cekUser";
 import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
 import { loading } from "../../utils/customToast";
 import {notifElement} from "../components/notifElement/notifelement";
+import useridb from '../../utils/user-idb';
+
 import {
   createNewUser,
   getDataUser,
@@ -433,16 +435,20 @@ const Dashboard = {
 
     const getAllDataMhs = async () => {
       let dataMhs = []
+      // let dataIdb = {};
       const resp = await getAllDataMhsBmbngan(id);
       if(resp){
-        resp.forEach(data => {
+        resp.forEach( async (data) => {
           dataMhs.push({
             ...data,
             createdAt: changeTimestamp(data.createdAt)
           })
+          await useridb.putUser(data);
         })
         showTable(dataMhs);
       }
+      // const cntoh = await useridb.getAllUser();
+      // console.log(cntoh)
 
     };
 

@@ -13,6 +13,7 @@ import {
 } from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
 
+
 const Todo = {
   async render() {
     return `
@@ -120,6 +121,7 @@ const Todo = {
     
     let dataUserBimbingan = [];
     const dataUser = await getDataUser(id);
+    console.log(dataUser)
     localStorage.setItem("role", dataUser.role_status)
 
     const getDataInTodo = async  (role) => {
