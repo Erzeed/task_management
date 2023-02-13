@@ -58,11 +58,17 @@ const DetailBimbingann = {
     const url = UrlParser.parseActiveUrlWithoutCombiner();
 
     const changeTimestamp = (data) => {
-      return new Date(data).toLocaleString().slice(0 , 8).replace(/[/]/g, "-")
+      const tanggal = new Date(data);
+      const tgl = tanggal.getDate();
+      const bln = tanggal.getMonth();
+      const thn = tanggal.getFullYear();
+      const dataBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      const bulan = dataBulan[bln];
+
+      return tgl + " " + bulan + " " + thn;
     }
 
     const generatePdf = () => {
-      console.log(dataUser);
       const docDefinition = {
         pageSize: "LETTER",
         pageOrientation: "PORTRAIT",
@@ -90,7 +96,7 @@ const DetailBimbingann = {
                     ],
                     [
                       {
-                        text: "FAKULTAS ILMU KOMPUTER",
+                        text: `${dataUser.fakultas}`,
                         alignment: "center",
                         fontSize: 20,
                         bold: true,
@@ -290,7 +296,7 @@ const DetailBimbingann = {
                   body: [
                     [
                       {
-                        text: "Sleman, " + new Date().toLocaleDateString().replace(/[/]/g, "-"),
+                        text: `Sleman, ${changeTimestamp(new Date())} `,
                         style: "footerSignature",
                       },
                     ],
@@ -341,7 +347,7 @@ const DetailBimbingann = {
         },
       };
       // const pdf = pdfMake.createPdf(docDefinition);
-      // pdf.open('report.pdf');
+      // pdf.download('report.pdf');
       // console.log(dataUser);
       pdfMake.createPdf(docDefinition).open();
     };
@@ -351,6 +357,7 @@ const DetailBimbingann = {
       respDataUser ? (loadingToast.style.display = "none") : "";
       tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
       const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
+      let count = 0;
       if (respDataRiwayat && respDataUser) {
         bimbingan_kosong.style.display = "none";
         dataUser = {
@@ -358,7 +365,8 @@ const DetailBimbingann = {
           riwayat: respDataRiwayat,
         };
         respDataRiwayat.forEach((data) => {
-          bimbingan__container.innerHTML += cardBimbingan(data);
+          count++
+          bimbingan__container.innerHTML += cardBimbingan(count,data);
         });
       } else {
         exportPdf.classList.add("not_allowed");
