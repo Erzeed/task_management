@@ -178,7 +178,10 @@ export const getDataUser = (id) => {
     const db = getFirestore(app);
       getDoc(doc(db, "Mahasiswa", id))
       .then(docSnap => {
+        const source = docSnap.metadata.fromCache ? "local cache" : "server";
+        console.log("Data came from " + source);
         if (docSnap.exists()) {
+          console.log(docSnap.data())
           resolve(docSnap.data())
         } else {
           getDoc(doc(db, "Dosen", id))
@@ -223,6 +226,7 @@ export const getAllDataMhsBmbngan = (id) => {
         if (docSnap.exists()) {
           let dataUser = [];
           const {id_mhs_bimbingan} = docSnap.data();
+          console.log(docSnap.data())
           if(id_mhs_bimbingan !== undefined){
             id_mhs_bimbingan.forEach(e => {
               getDataUser(e).then(e => {

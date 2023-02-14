@@ -20,7 +20,6 @@ const Todo = {
       <div class="content__todo">
       <side-bar class="todo"></side-bar>
       <div class="todo__main">
-      <loading-roll></loading-roll>
         <div class="main__title">
             <h1>Bimbingan Skripsi</h1>
             <button class="openForm">Add Todo</button>
@@ -121,7 +120,7 @@ const Todo = {
     
     let dataUserBimbingan = [];
     const dataUser = await getDataUser(id);
-    console.log(dataUser)
+    console.log("dataUser")
     localStorage.setItem("role", dataUser.role_status)
 
     const getDataInTodo = async  (role) => {
@@ -145,12 +144,13 @@ const Todo = {
       if(dataUser.role_status == "Mahasiswa"){
         openForm.style.display = "none";
         getDataInTodo("mhs");
-        loadingToast.style.display = 'none';
+        // loadingToast.style.display = 'none';
       } else {
         const respDataMhs = await getAllDataMhsBmbngan(id);
+        console.log(respDataMhs)
         dataUserBimbingan = respDataMhs;
         getDataInTodo("dosen");
-        loadingToast.style.display = 'none';
+        // loadingToast.style.display = 'none';
       }
     }
 
