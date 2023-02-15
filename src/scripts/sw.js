@@ -1,8 +1,12 @@
-import { precacheAndRoute } from "workbox-precaching";
+import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 import { Workbox } from "workbox-window";
 // Do precaching
+
+precacheAndRoute(self.__WB_MANIFEST);
+
+cleanupOutdatedCaches();
 
 const firestoreUrl =
   "https://wgther-b4fc3-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -14,7 +18,6 @@ registerRoute(
     cacheName: "static-resources",
   })
 );
-// precacheAndRoute(self.__WB_MANIFEST);
 
 registerRoute(
   ({ url }) => url.origin === firestoreUrl,
@@ -25,16 +28,18 @@ self.addEventListener("install", (event) => {
   console.log("Service worker installed");
   event.waitUntil(
     self.skipWaiting()
-  );
+    );
 });
+
 
 self.addEventListener("activate", (event) => {
   if (event.isUpdate) {
-    console.log("Service worker updated");
+      console.log("Service worker updated");
   } else {
     console.log("Service worker activated");
-  }
+}
 });
+
 
 self.addEventListener("fetch", (event) => {
     event.respondWith(
