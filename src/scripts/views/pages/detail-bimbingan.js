@@ -17,7 +17,7 @@ const DetailBimbingann = {
       <div class="content__DetailBimbingann">
         <side-bar class="active"></side-bar>
         <div class="detail__content">
-        <loading-roll></loading-roll>
+        
             <div class="detail__title">
                 <h1>Data Bimbingan</h1>
             </div>
@@ -50,7 +50,6 @@ const DetailBimbingann = {
     let dataUser = {};
     const tabelUser = document.querySelector(".tabel__user");
     const exportPdf = document.querySelector(".bimbingan__button button");
-    const loadingToast = document.querySelector("loading-roll");
     const bimbingan_kosong = document.querySelector(".bimbingan_kosong");
     const bimbingan__container = document.querySelector(
       ".bimbingan__container"
@@ -354,7 +353,6 @@ const DetailBimbingann = {
 
     const getDataReview = async () => {
       const respDataUser = await getDataUser(url.id);
-      respDataUser ? (loadingToast.style.display = "none") : "";
       tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
       const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       let count = 0;

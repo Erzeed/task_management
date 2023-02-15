@@ -7,7 +7,6 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    https: true,
     static: path.resolve(__dirname, 'dist'),
     compress: true,
     port: 9000,
@@ -18,7 +17,7 @@ module.exports = merge(common, {
       },
     },
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-  ],
+  // plugins: [
+  //   new CleanWebpackPlugin(),
+  // ],
 });

@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest')
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -75,6 +76,11 @@ module.exports = {
           sizes: [96, 128, 192, 256, 384, 512],
         },
       ],
+    }),
+    new WorkboxWebpackPlugin.InjectManifest({
+      maximumFileSizeToCacheInBytes: 26214400,
+      swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
+      swDest: './sw.bundle.js',
     }),
   ],
 };

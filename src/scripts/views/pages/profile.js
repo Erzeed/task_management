@@ -4,7 +4,6 @@ import profileimg from "../../../asset/img/profile-default.webp";
 import { cekUser } from "../../utils/cekUser";
 import { getDataUser, updateProfileUser } from "../../globals/api-endpoint.js";
 import { showDetail } from "../components/showDetail/showDetail";
-import { loading } from "../../utils/customToast";
 
 const profile = {
   async render() {
@@ -12,7 +11,7 @@ const profile = {
       <div class="content__profile">
          <side-bar class="profile"></side-bar>
         <div class="profile__main"> 
-        <loading-roll></loading-roll>
+        
           <div class="header">
             <div class="header__banner">
               <img src=${banner} alt="" />
@@ -69,7 +68,6 @@ const profile = {
     const form = document.querySelectorAll("#form");
     const header__titleH2 = document.querySelector(".header__title h2");
     const header__titleP = document.querySelector(".header__title p");
-    const loadingToast = document.querySelector('loading-roll');
 
 
     [...form].forEach((e) => {
@@ -92,7 +90,7 @@ const profile = {
         if(resp.role_status == "Mahasiswa"){
           const dataDosen = await getDataUser(resp.id_dosen);
           profile__detail.innerHTML = showDetail(resp, dataDosen);
-          loadingToast.style.display = 'none';
+          
         }else {
           const dataTemp = {
             nama : "",
@@ -100,7 +98,7 @@ const profile = {
             nomor_telepon : "",
           }
           profile__detail.innerHTML = showDetail(resp, dataTemp);
-          loadingToast.style.display = 'none';
+          
         }
       }else {
         console.log(resp)

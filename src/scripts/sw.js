@@ -1,22 +1,51 @@
-import { precacheAndRoute } from 'workbox-precaching';
-// import { registerRoute } from 'workbox-routing';
-// import {StaleWhileRevalidate} from 'workbox-strategies';
+import { precacheAndRoute } from "workbox-precaching";
+import { registerRoute } from "workbox-routing";
+import { StaleWhileRevalidate } from "workbox-strategies";
+import { Workbox } from "workbox-window";
 // Do precaching
 
-// registerRoute(
-//     /\.(?:js|css|html)$/,
-//     new StaleWhileRevalidate({
-//       cacheName: 'static-resources',
-//     })
-//   );
+const firestoreUrl =
+  "https://wgther-b4fc3-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-precacheAndRoute(self.__WB_MANIFEST);
 
-self.addEventListener('install', () => {
-  console.log('Service Worker: Installed');
-  self.skipWaiting();
+registerRoute(
+  ({ url }) => url.origin === location.origin,
+  new StaleWhileRevalidate({
+    cacheName: "static-resources",
+  })
+);
+// precacheAndRoute(self.__WB_MANIFEST);
+
+registerRoute(
+  ({ url }) => url.origin === firestoreUrl,
+  new StaleWhileRevalidate()
+);
+
+self.addEventListener("install", (event) => {
+  console.log("Service worker installed");
+  event.waitUntil(
+    self.skipWaiting()
+  );
 });
- 
-self.addEventListener('push', () => {
-  console.log('Service Worker: Pushed');
-})
+
+self.addEventListener("activate", (event) => {
+  if (event.isUpdate) {
+    console.log("Service worker updated");
+  } else {
+    console.log("Service worker activated");
+  }
+});
+
+self.addEventListener("fetch", (event) => {
+    event.respondWith(
+    caches.match(event.request).then((response) => {
+      if (response) {
+        console.log("Cache hit");
+        return response;
+      }
+
+      console.log("Cache miss");
+      return fetch(event.request);
+    })
+  );
+});

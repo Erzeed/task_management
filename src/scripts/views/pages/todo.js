@@ -104,7 +104,6 @@ const Todo = {
     const reviewCard = document.querySelector(".todo__card.review");
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
-    const loadingToast = document.querySelector('loading-roll');
     const countTodo = document.querySelector('.countTodo');
     
     let inputUrlUser = "";
@@ -119,9 +118,23 @@ const Todo = {
     };
     
     let dataUserBimbingan = [];
-    const dataUser = await getDataUser(id);
-    console.log("dataUser")
-    localStorage.setItem("role", dataUser.role_status)
+    let dataUser = {};
+
+    const getData = async () => {
+      const resp = await getDataUser(id);
+      if(resp) {
+        dataUser = {
+          ...resp
+        }
+        localStorage.setItem("role", resp.role_status)
+      }
+    }
+
+    getData();
+    
+    if(!navigator.onLine){
+      console.log("offline")
+    }
 
     const getDataInTodo = async  (role) => {
       const dataTodo = [];
@@ -144,13 +157,10 @@ const Todo = {
       if(dataUser.role_status == "Mahasiswa"){
         openForm.style.display = "none";
         getDataInTodo("mhs");
-        // loadingToast.style.display = 'none';
       } else {
         const respDataMhs = await getAllDataMhsBmbngan(id);
-        console.log(respDataMhs)
         dataUserBimbingan = respDataMhs;
         getDataInTodo("dosen");
-        // loadingToast.style.display = 'none';
       }
     }
 
