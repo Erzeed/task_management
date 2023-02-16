@@ -77,9 +77,9 @@ module.exports = {
         },
       ],
     }),
-    new WorkboxWebpackPlugin.GenerateSW({
-      // maximumFileSizeToCacheInBytes: 26214400,
-      // swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
+    new WorkboxWebpackPlugin.InjectManifest({
+      maximumFileSizeToCacheInBytes: 26214400,
+      swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
       swDest: './sw.bundle.js',
     }),
   ],

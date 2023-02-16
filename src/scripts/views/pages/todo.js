@@ -200,12 +200,9 @@ const Todo = {
     };
 
     const delCard = async (idMhs, idCard) => {
-        const respUser = confirm("Apakah anda yakin ?")
-        if(respUser) {
-            const resp = await deleteCard(idMhs, idCard);
-            if(resp){
-              cekRoleUser();
-            }
+        const resp = await deleteCard(idMhs, idCard);
+        if(resp){
+          cekRoleUser();
         }
     }
 
