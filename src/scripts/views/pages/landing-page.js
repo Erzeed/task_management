@@ -22,7 +22,7 @@ const LandingPage = {
               <div class="work__txt">
                   <div class="work__txt__desc">
                   <h2>An easy way to organize all your task and work neatly</h2>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt deleniti numquam culpa qui aliquid blanditiis eaque, nihil dolorum reprehenderit voluptas porro voluptates sunt vero quidem fugit ex similique eligendi officia!</p>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt deleniti numquam culpa qui aliquid blanditiis eaque, nihil dolorum reprehenderit volu</p>
                   </div>
               </div>
           </div>

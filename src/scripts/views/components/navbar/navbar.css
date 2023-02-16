@@ -7,7 +7,7 @@
     justify-content: space-between;
     height: 55px;
     background-color: #270082;
-    padding: 0 35px;
+    padding: 0 20px;
     color: #fff;
     width: 100vw;
     position: sticky;
@@ -69,4 +69,17 @@
 .hide,
 .hide {
     display:none;
+}
+
+@media screen and (max-width: 667px) {
+    .navbar {
+        width: 100%;
+    }
+    .navbar__account {
+        display: flex;
+    }
+    .navbar__account > button.started {
+        height: 35px;
+        width: 120px;
+    }
 }

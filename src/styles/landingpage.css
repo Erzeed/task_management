@@ -74,7 +74,7 @@
 
 .landing__page__addTask {
     background-color: #270082;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -98,11 +98,12 @@
     justify-content: space-between;
     width: 80%;
     height: 200px;
+    flex-wrap: wrap;
 }
 
 .addTask__cardPromo > .cardPromo {
     background-color: #F0F0F0;
-    width: 30%;
+    width: 200px;
     height: 100%;
     color: #000;
     display: flex;
@@ -110,6 +111,7 @@
     justify-content: space-evenly;
     padding: 10px;
     border-radius: 10px;
+    
 
 }
 
@@ -139,4 +141,34 @@
     line-height: 18px;
     color: rgba(0, 0, 0, .8);
     font-size: .95em;
+}
+
+@media screen and (max-width: 667px) {
+    .landing__page__tryOurApp > h1 {
+        font-size: 1em;
+    }
+    .landing__page__work {
+        flex-direction: column;
+        margin: 20vh 0 60px 0;
+        padding: 20px;
+        align-items: center;
+        width: 100%;
+    }
+    .container__img > img {
+        width: 300px;
+        height: 300px;
+    }
+    .landing__page__work > .work__img__container {
+        justify-content: center;
+    }
+    .landing__page__work > .work__txt {
+        width: 100%;
+        
+    }
+    .work__txt > .work__txt__desc > h2 {
+        font-size: 2em;
+    }
+    .work__txt > .work__txt__desc {
+        width: 100%;
+    }
 }

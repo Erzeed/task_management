@@ -74,3 +74,12 @@
     z-index: 1;
 
 }
+
+@media screen and (max-width: 667px) {
+    .jumbotron__txt > .txt__headline > h1 {
+        font-size: 2em;
+    }
+    .jumbotron__txt > .txt__desc {
+        font-size: 1.1em;
+    }
+}
