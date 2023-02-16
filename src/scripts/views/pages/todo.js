@@ -126,6 +126,7 @@ const Todo = {
         dataUser = {
           ...resp
         }
+        cekRoleUser();
         localStorage.setItem("role", resp.role_status)
       }
     }
@@ -154,6 +155,7 @@ const Todo = {
     };
 
     const cekRoleUser = async () => {
+      console.log(dataUser.role_status)
       if(dataUser.role_status == "Mahasiswa"){
         openForm.style.display = "none";
         getDataInTodo("mhs");
@@ -163,8 +165,6 @@ const Todo = {
         getDataInTodo("dosen");
       }
     }
-
-    cekRoleUser();
 
     const showDataInTodo = (data) => {
       [...allTodo].forEach((e) => {
