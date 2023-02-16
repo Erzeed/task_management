@@ -74,11 +74,11 @@
         justify-content: center;
     }
     .sidebar__menu {
-        width: 40%;
+        width: 80%;
     }
     .sidebar__menu > ul {
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: space-between;
     }
     .sidebar__menu > ul > li {
         margin: 0 10px;

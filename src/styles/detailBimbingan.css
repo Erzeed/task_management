@@ -177,3 +177,26 @@ tbody > tr {
     color: rgba(0, 0, 0, 0.5);
     font-weight: normal;
 }
+
+@media screen and (max-width: 667px) {
+    .detail__main {
+        flex-direction: column;
+    }
+    .detail__content {
+        width: 100%;
+        padding-left: 0;
+    }
+    .detail__bimbingan,
+    .detail__user {
+        width: 100% !important;
+    }
+    .card__file {
+        justify-content: center;
+    }
+    .card__bimbingan {
+        width: 150vw;
+    }
+    .bimbingan__container {
+        overflow-x: scroll;
+    }
+}

@@ -247,4 +247,7 @@
     .review__page > .container__review > .container_pdf.active {
         width: 100%;
     }
+    .container__detail {
+        height: 20vh;
+    }
 }
