@@ -18,7 +18,8 @@ import {
   getDataUser,
   getAllDataMhsBmbngan,
   getDataTodo,
-  getAllMhsData
+  getAllMhsData,
+  initializPush
 } from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
@@ -172,6 +173,7 @@ const Dashboard = {
         showDataCard(data);
       }
     };
+
 
     const showDataCard = (data) => {
       jmlhMhs.innerText = data.id_mhs_bimbingan.length;

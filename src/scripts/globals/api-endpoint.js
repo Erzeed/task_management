@@ -20,6 +20,8 @@ import { validasiCreateUser } from "../utils/validasiLoginRegister";
 import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
+import { getMessaging, getToken } from "firebase/messaging";
+import CONFIG from './config';
 import app from "./config/firebase";
 
 
@@ -434,5 +436,30 @@ export const getAllMhsData = () => {
       .catch((error) => {
         reject(error)
       });
+  })
+}
+
+export const initializPush = () => {
+  return new Promise((resolve, reject) => {
+    const messaging = getMessaging(app);
+    Notification.requestPermission().then(() => {
+      console.log('Notification permission granted.');
+      // Get an FCM token for the device.
+      getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          // ...
+        } else {
+          // Show permission request UI
+          console.log('No registration token available. Request permission to generate one.');
+          // ...
+        }
+      }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+        // ...
+      });
+    }).catch((err) => {
+      console.error('Unable to get permission to notify.', err);
+    });
   })
 }
