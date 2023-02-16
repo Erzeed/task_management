@@ -28,7 +28,7 @@
     left: 0;
     border-radius: 30px 30px 0 0;
     overflow: hidden;
-    z-index: 15;
+    z-index: 2;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, .1);
     padding-top: 30px;
     transform: translateY(85vh);
@@ -230,3 +230,21 @@
     display: none;
 }
 
+@media screen and (max-width: 667px) {
+    .container__detail {
+        left: 0;
+    }
+    .review__page {
+        margin: 0;
+        width: 100%;
+    }
+    .body_review {
+        height: 20%;
+    }
+    .review__body {
+        height: 100px;
+    }
+    .review__page > .container__review > .container_pdf.active {
+        width: 100%;
+    }
+}

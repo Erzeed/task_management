@@ -22,7 +22,7 @@ const Todo = {
       <div class="todo__main">
         <div class="main__title">
             <h1>Bimbingan Skripsi</h1>
-            <button class="openForm">Add Todo</button>
+            <button class="openForm">Tambah tugas</button>
         </div>
         <div class="main__list">
             <div class="todo planning">

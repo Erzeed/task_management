@@ -62,3 +62,34 @@
     margin-bottom: 10px;
     
 }
+
+@media screen and (max-width: 667px) {
+    .sidebar {
+        position: fixed;
+        width: 100vw;
+        height: 65px;
+        bottom: 0;
+        top: unset;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .sidebar__menu {
+        width: 40%;
+    }
+    .sidebar__menu > ul {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .sidebar__menu > ul > li {
+        margin: 0 10px;
+    }
+    .sidebar__logout {
+        margin-left: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 60%;
+        margin-top: 7px;
+
+    }
+  }

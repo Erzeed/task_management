@@ -1,7 +1,6 @@
 .content__todo {
     display: flex;
     overflow-x: hidden;
-    
 }
 
 .todo__main {
@@ -175,4 +174,20 @@
 .popUp__container  > .actionForm > .cancel {
     margin-left: 10px;
     background-color: rgb(255, 0, 0);
+}
+
+@media screen and (max-width: 667px) {
+    .todo__main {
+        margin: 0;
+        padding: 20px;
+    }
+    .main__title {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .popUp__container {
+        left: unset;
+        width: 90%;
+    }
 }
