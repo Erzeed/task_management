@@ -422,3 +422,21 @@ span.textReview {
     }
 }
 
+@media screen and (max-width: 768px) {
+    .content__dashboard{
+        flex-direction: column;
+    }
+    .dashboard__notifikasi {
+        width: 80%;
+        margin-left: 13vw;
+
+    }
+    .dashboard__menu {
+        width: 90%;
+    }
+    .clients__card {
+        height: 150px;
+        margin: 20px 0;
+    }
+}
+

@@ -166,3 +166,10 @@
         height: 70vh;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .login__page {
+        width: 45%;
+        height: 70vh;
+    }
+}

@@ -68,7 +68,7 @@ const Dashboard = {
                         <h1 class="jmlhRevisi">0</h1>
                     </div>
                     <div class="card__title">
-                        <p>Jumlah Mahasiswa Revisi</p>
+                        <p>Mahasiswa Revisi</p>
                     </div>
                 </div>
                 <div class="clients__card">
@@ -79,7 +79,7 @@ const Dashboard = {
                         <h1 class="jmlhSelesai">0</h1>
                     </div>
                     <div class="card__title">
-                        <p>Jumlah Mahasiswa Selesai</p>
+                        <p>Mahasiswa Selesai</p>
                     </div>
                 </div>
             </div>

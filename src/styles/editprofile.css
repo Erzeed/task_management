@@ -156,3 +156,9 @@
 		margin-right: 0 !important;
 	}
 }
+
+@media screen and (max-width: 768px){
+	.form-style-2 {
+		width: 100%;
+	}
+}

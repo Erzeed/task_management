@@ -251,3 +251,9 @@
         height: 20vh;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .review__page > .container__review > .container_pdf {
+        left: 15px;
+    }
+}

@@ -200,3 +200,13 @@ tbody > tr {
         overflow-x: scroll;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .detail__main {
+        flex-direction: column;
+    }
+    .detail__bimbingan,
+    .detail__user {
+        width: 100% !important;
+    }
+}
