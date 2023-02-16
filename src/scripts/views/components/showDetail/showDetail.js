@@ -13,9 +13,9 @@ export const showDetail = (data, dataDosen) => {
                     <p>Angkatan</p>
                     <p>Jurusan</p>
                     <p>Judul Skripsi</p>
-                    <p>Nama Dosen Pembimbing </p>
-                    <p>Email Dosen Pembimbing</p>
-                    <p>Nomor Tel Dosen Pembimbing</p>
+                    <p>Nama Dosen</p>
+                    <p>Email Dosen</p>
+                    <p>Nomor Tel Dosen</p>
                 </div>
             </div>
             <div class="detail__value">

@@ -135,3 +135,24 @@
 	background-color: red !important;
 	margin-right: 50px !important;
 }
+
+@media screen and (max-width: 667px) {
+	.editprofile__main > .header {
+		height: 30vh;
+	}
+	.form-style-2 {
+		width: 100%;
+		background-color: transparent;
+		box-shadow: none;
+	}
+	.editprofile__main {
+		width: 100%;
+		padding: 5px;
+	}
+	.form-style-2 input.input-field, .form-style-2 .tel-number-field, .form-style-2 .textarea-field, .form-style-2 .select-field {
+		margin-left: 12px;
+	}
+	.profile__input > form > .button > #cancel {
+		margin-right: 0 !important;
+	}
+}

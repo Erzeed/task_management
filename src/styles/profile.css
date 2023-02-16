@@ -218,6 +218,9 @@
     .header__txt > .header__title {
         margin-bottom: 10px;
     }
+    .profile__detail {
+        width: 100%;
+    }
 }
 
 

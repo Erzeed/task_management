@@ -14,12 +14,6 @@ const EditProfile = {
           </div>
           <div class="profile__input form-style-2">
             <form action="#" class="form">
-              <label for="field1"><span>Foto Profile </span>
-              <input
-                type="file"
-                id="img_upload"
-                accept="image/png, image/jpeg" />
-              </label>
               <label for="field1"><span>Nama* </span><input  id="nama" type="text" class="input-field" name="field1" value="" /></label>
               <label for="field2"><span>Nomor Telepon* </span><input  id="nomor_telepon" type="tel" class="input-field" name="field2" value="" /></label>
               <label for="field1"><span>Angkatan* </span><input  id="angkatan" type="number" class="input-field" name="field1" value="" /></label>
