@@ -20,6 +20,7 @@ const Todo = {
       <div class="content__todo">
       <side-bar class="todo"></side-bar>
       <div class="todo__main">
+      <loading-roll></loading-roll>
         <div class="main__title">
             <h1>Bimbingan Skripsi</h1>
             <button class="openForm">Tambah tugas</button>
@@ -105,6 +106,7 @@ const Todo = {
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
     const countTodo = document.querySelector('.countTodo');
+    const loadingToast = document.querySelector("loading-roll");
     const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
     accountBtn.classList.add("hide")
     
@@ -128,6 +130,7 @@ const Todo = {
         dataUser = {
           ...resp
         }
+        loadingToast.style.display = "none";
         cekRoleUser();
       }
     }
@@ -135,7 +138,7 @@ const Todo = {
     getData();
     
     if(!navigator.onLine){
-      console.log("offline")
+      loadingToast.style.display = "none";
     }
 
     const getDataInTodo = async  (role) => {

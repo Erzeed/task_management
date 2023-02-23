@@ -11,7 +11,7 @@ const profile = {
       <div class="content__profile">
          <side-bar class="profile"></side-bar>
         <div class="profile__main"> 
-        
+        <loading-roll></loading-roll>
           <div class="header">
             <div class="header__banner">
               <img src=${banner} alt="" />
@@ -68,6 +68,7 @@ const profile = {
     const form = document.querySelectorAll("#form");
     const header__titleH2 = document.querySelector(".header__title h2");
     const header__titleP = document.querySelector(".header__title p");
+    const loadingToast = document.querySelector("loading-roll");
 
 
     [...form].forEach((e) => {
@@ -82,7 +83,7 @@ const profile = {
     const getData = async () => {
       const resp = await getDataUser(id);
       if (resp){
-
+        loadingToast.style.display = "none";
         header__titleH2.innerHTML = resp.nama !== undefined ? resp.nama : "User";
         header__titleP.innerHTML = resp.role_status;
         onHandleEditProfile(resp);
@@ -106,6 +107,10 @@ const profile = {
     }
 
     getData();
+
+    if(!navigator.onLine){
+      loadingToast.style.display = "none";
+    }
 
     const onHandleEditProfile = (data) => {
       header__btn.addEventListener("click", () => {

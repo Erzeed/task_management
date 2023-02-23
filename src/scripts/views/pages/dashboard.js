@@ -32,7 +32,7 @@ const Dashboard = {
       <div class="content__dashboard">
       <side-bar class="home"></side-bar>
         <div class="dashboard__menu">
-          
+        <loading-roll></loading-roll>
             <div class="menu__title">
                 <h1>Selamat datang <span id="username"></span> .</h1>
                 <button class="create">Create Account</button>
@@ -167,7 +167,7 @@ const Dashboard = {
     const getData = async () => {
       const data = await getDataUser(id);
       if (data) {
-        // loadingToast.style.display = "none";
+        loadingToast.style.display = "none";
         user = data;
         changeTitle(data.nama);
         getDataNotif(user)
@@ -175,6 +175,10 @@ const Dashboard = {
         localStorage.setItem("role", data.role_status)
       }
     };
+
+    if(!navigator.onLine){
+      loadingToast.style.display = "none";
+    }
 
 
     const showDataCard = (data) => {
