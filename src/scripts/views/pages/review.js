@@ -37,7 +37,7 @@ const Review = {
                 </div>
                 <div class="header__button">
                   <p class="status">review</p>
-                  <h1>...</h1>
+                  <h1 class="btn_Review">...</h1>
                   <div class="card__nav" >
                       <button class="revisi" >Revisi</button>
                       <button class="selesai">Selesai</button>
@@ -67,7 +67,7 @@ const Review = {
   async afterRender() {
     let dataBimbingan = {}
     const url = UrlParser.parseActiveUrlWithoutCombiner();
-    const header__button = document.querySelector(".header__button");
+    const header__button = document.querySelector(".header__button h1");
     const card__nav = document.querySelector(".card__nav");
     const revisi = document.querySelector(".revisi");
     const selesai = document.querySelector(".selesai");
@@ -140,7 +140,9 @@ const Review = {
     })
     
     window.addEventListener("click", (el) => {
-      if(el.target.classList.value !== "btnPdf"){
+      if(el.target.classList.value !== "btn_Review"){
+        card__nav.classList.remove("active");
+      }else if(el.target.classList.value !== "btnPdf"){
         if(el.target.classList.value !== "container_pdf active" || el.target.id !== "pdfViewer"){
           container_pdf.classList.remove("active");
         }
@@ -164,7 +166,8 @@ const Review = {
     })
 
     header__button.addEventListener("click", () => {
-      card__nav.classList.toggle("active");
+      console.log("haii")
+      card__nav.classList.add("active");
     })
 
     catatan.addEventListener("change", (el) => {

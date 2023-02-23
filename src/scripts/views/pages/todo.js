@@ -107,8 +107,7 @@ const Todo = {
     const doneCard = document.querySelector(".todo__card.done");
     const countTodo = document.querySelector('.countTodo');
     const loadingToast = document.querySelector("loading-roll");
-    const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
-    accountBtn.classList.add("hide")
+    
     
     let inputUrlUser = "";
 

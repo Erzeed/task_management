@@ -162,6 +162,8 @@ const Dashboard = {
     const jmlhReview = document.querySelector(".jmlhReview");
     const jmlhRevisi = document.querySelector(".jmlhRevisi");
     const jmlhSelesai = document.querySelector(".jmlhSelesai");
+    const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
+    accountBtn.classList.add("hide")
     
 
     const getData = async () => {

@@ -54,6 +54,9 @@ const DetailBimbingann = {
     const bimbingan__container = document.querySelector(
       ".bimbingan__container"
     );
+    const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
+    accountBtn.classList.add("hide")
+    
     const url = UrlParser.parseActiveUrlWithoutCombiner();
 
     const changeTimestamp = (data) => {
