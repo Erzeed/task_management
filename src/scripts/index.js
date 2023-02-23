@@ -7,7 +7,7 @@ import App from './views/app';
 import swRegister from './utils/sw-register';
 
 const app = new App({
-  drawer: document.querySelector('nav-bar').shadowRoot.querySelector('.navbar .navbar__list ul'),
+  drawer: document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account'),
   content: document.querySelector('#mainContent')
 });
 

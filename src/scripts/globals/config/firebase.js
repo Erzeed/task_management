@@ -28,15 +28,9 @@ enableIndexedDbPersistence(db)
     .then(() => console.log("Enabled offline persistence"))
     .catch((error) => {
       if (error.code == "failed-precondition") {
-        // Multiple tabs open, persistence can only be enabled
-        // in one tab at a a time.
-        // ...
-        console.log("eroro")
+        console.log("error")
       } else if (error.code == "unimplemented") {
-        // The current browser does not support all of the
-        // features required to enable persistence
-        // ...
-        console.log("eror guys ")
+        console.log("browser tidak support")
       }
     });
 

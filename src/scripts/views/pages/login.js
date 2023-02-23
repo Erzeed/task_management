@@ -7,6 +7,7 @@ import {
   registerPageWithGogle,
 } from "../../globals/api-endpoint";
 import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
+import { getDataUser } from "../../globals/api-endpoint";
 
 const Login = {
   async render() {
@@ -57,6 +58,8 @@ const Login = {
     const password = document.querySelector("#password");
     const button = document.querySelector(".form__input button");
     const btn__goggle = document.querySelector(".btn__goggle");
+    const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
+    accountBtn.classList.remove("hide")
     email.addEventListener("change", (e) => {
       data = {
         ...data,
@@ -74,8 +77,13 @@ const Login = {
       if (response.uid !== undefined) {
         validasiFormRegisLogin(response);
         localStorage.setItem("id", response.uid);
+        const resp = await getDataUser(response.uid);
         setTimeout(() => {
-          window.location.href = '/#/todo';
+          if(resp.role_status == "dosen"){
+            window.location.href = "/#/dashboard"
+          }else {
+            window.location.href = `/#/detailbimbingan/${response.uid}`;
+          }
         }, 1610);
       } else {
         validasiFormRegisLogin(response);

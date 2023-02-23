@@ -105,6 +105,8 @@ const Todo = {
     const revisiCard = document.querySelector(".todo__card.revisi");
     const doneCard = document.querySelector(".todo__card.done");
     const countTodo = document.querySelector('.countTodo');
+    const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
+    accountBtn.classList.add("hide")
     
     let inputUrlUser = "";
 
@@ -127,7 +129,6 @@ const Todo = {
           ...resp
         }
         cekRoleUser();
-        localStorage.setItem("role", resp.role_status)
       }
     }
 

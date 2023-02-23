@@ -162,6 +162,7 @@ const Dashboard = {
     const jmlhReview = document.querySelector(".jmlhReview");
     const jmlhRevisi = document.querySelector(".jmlhRevisi");
     const jmlhSelesai = document.querySelector(".jmlhSelesai");
+    
 
     const getData = async () => {
       const data = await getDataUser(id);
@@ -171,6 +172,7 @@ const Dashboard = {
         changeTitle(data.nama);
         getDataNotif(user)
         showDataCard(data);
+        localStorage.setItem("role", data.role_status)
       }
     };
 

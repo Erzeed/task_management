@@ -17,6 +17,7 @@ class sidebar extends HTMLElement {
 
   cekRole() {
     const role = localStorage.getItem("role");
+    console.log(role)
     return role;
   }
 
@@ -24,6 +25,7 @@ class sidebar extends HTMLElement {
     const btnLogOut = this.shadowDOM.querySelector('.sidebar__logout img');
     btnLogOut.addEventListener("click", () => {
       localStorage.removeItem("id");
+      localStorage.removeItem("role");
       window.location.href = "/#/login";
     })
   }

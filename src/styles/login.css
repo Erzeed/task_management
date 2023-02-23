@@ -12,8 +12,8 @@
 
 .login__page {
     background-color: #fff;
-    width: 30%;
-    height: 60vh;
+    width: 85%;
+    height: 500px;
     padding: 25px 20px;
     border-radius: 20px;
     box-shadow: 0 0 25px rgba(0, 0, 0, .2);
@@ -160,16 +160,20 @@
     color: #000;
 }
 
-@media screen and (max-width: 667px) {
+@media screen and (min-width: 375px) {
     .login__page {
-        width: 90%;
-        height: 70vh;
+        width: 300px;
     }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 667px) {
     .login__page {
-        width: 45%;
-        height: 70vh;
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 820px) {
+    .login__page {
+        width: 400px;
     }
 }

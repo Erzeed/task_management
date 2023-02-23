@@ -6,18 +6,11 @@ const DrawerInitiator = {
       // this._closeDrawer(event, drawer);
       // console.log(drawer);
     });
-    // console.log(content, drawer);
+    const checkUser = localStorage.getItem("role");
+    if(checkUser) {
+      drawer.classList.add("hide")
+    }
   },
-
-  // _toggleDrawer(event, drawer) {
-  //   event.stopPropagation();
-  //   drawer.classList.toggle('open');
-  // },
-
-  // _closeDrawer(event, drawer) {
-  //   event.stopPropagation();
-  //   drawer.classList.remove('open');
-  // },
 };
 
 export default DrawerInitiator;

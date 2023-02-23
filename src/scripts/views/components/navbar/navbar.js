@@ -30,8 +30,8 @@ class navbar extends HTMLElement {
               <p>Wgether</p>
           </div>
           <div class="navbar__account">
-              <button class=${this.cekLoginOrNot() == true ? "hide" : "login"}><a href="/#/login">Login</a></button>
-              <button class=${this.cekLoginOrNot() == true ? "hide" : "started"}>Get Started</button>
+              <button class="login"><a href="/#/login">Login</a></button>
+              <button class="started">Get Started</button>
           </div>
       </div>
     `;
