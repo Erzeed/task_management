@@ -140,12 +140,10 @@ const Review = {
     })
     
     window.addEventListener("click", (el) => {
-      if(el.target.classList.value !== "btn_Review"){
+      if(el.target.classList.value == "container__review"){
         card__nav.classList.remove("active");
-      }else if(el.target.classList.value !== "btnPdf"){
-        if(el.target.classList.value !== "container_pdf active" || el.target.id !== "pdfViewer"){
-          container_pdf.classList.remove("active");
-        }
+      }else if(el.target.classList == "container__detail"){
+        container_pdf.classList.remove("active");
       }
     })
 
