@@ -2,7 +2,7 @@ import "../../../styles/profile.css";
 import banner from "../../../asset/banner/gradienta-banner-unsplash.png";
 import profileimg from "../../../asset/img/profile-default.jpg";
 import { cekUser } from "../../utils/cekUser";
-import { getDataUser, updateProfileUser } from "../../globals/api-endpoint.js";
+import { getDataUser, updateProfileUser, getDataDosen } from "../../globals/api-endpoint.js";
 import { showDetail } from "../components/showDetail/showDetail";
 
 const profile = {
@@ -69,6 +69,7 @@ const profile = {
     const header__titleH2 = document.querySelector(".header__title h2");
     const header__titleP = document.querySelector(".header__title p");
     const loadingToast = document.querySelector("loading-roll");
+    const role = localStorage.getItem("role");
 
 
     [...form].forEach((e) => {
@@ -81,9 +82,25 @@ const profile = {
     });
 
     const getData = async () => {
-      const resp = await getDataUser(id);
-      if (resp){
+      if(role == "dosen") {
+        const data = await getDataDosen(id);
         loadingToast.style.display = "none";
+        showData(data)
+      }else {
+        const data = await getDataUser(id);
+        loadingToast.style.display = "none";
+        showData(data)
+      }
+    }
+
+    getData();
+
+    if(!navigator.onLine){
+      loadingToast.style.display = "none";
+    }
+
+    const showData = async (resp) => {
+      if (resp){
         header__titleH2.innerHTML = resp.nama !== undefined ? resp.nama : "User";
         header__titleP.innerHTML = resp.role_status;
         onHandleEditProfile(resp);
@@ -104,12 +121,6 @@ const profile = {
       }else {
         console.log(resp)
       }
-    }
-
-    getData();
-
-    if(!navigator.onLine){
-      loadingToast.style.display = "none";
     }
 
     const onHandleEditProfile = (data) => {
