@@ -178,22 +178,15 @@ export const createNewUser = (data, id) => {
 export const getDataUser = (id) => {
   return new Promise((resolve , reject) => {
     const db = getFirestore(app);
-      getDoc(doc(db, "Mahasiswa", id))
-      .then(docSnap => {
-        if (docSnap.exists()) {
+    getDoc(doc(db, "Mahasiswa", id))
+    .then(docSnap => {
+      if (docSnap.exists()) {
           resolve(docSnap.data())
-        } else {
-          getDoc(doc(db, "Dosen", id))
-          .then(docSnap => {
-            if (docSnap.exists()) {
-              resolve(docSnap.data())
-            } else {
-              resolve("Data Kosong");
-            }
+        }else {
+          getDataDosen(id).
+          then(data => {
+            resolve(data)
           })
-          .catch((error) => {
-            reject(error)
-          });
         }
       })
       .catch((error) => {
@@ -201,6 +194,25 @@ export const getDataUser = (id) => {
       });
   });
 };
+
+export const getDataDosen = (id) => {
+  return new Promise((resolve, reject) => {
+    const db = getFirestore(app);
+    console.log("docSnap")
+    getDoc(doc(db, "Dosen", id))
+    .then(docSnap => {
+      if (docSnap.exists()) {
+        console.log(docSnap.data())
+        resolve(docSnap.data())
+      } else {
+        resolve("Data Kosong");
+      }
+    })
+    .catch((error) => {
+      reject(error)
+    });
+  })
+}
 
 export const updateProfileUser = (id, data, role) => {
   return new Promise((resolve , reject) => {

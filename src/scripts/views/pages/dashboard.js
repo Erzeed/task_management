@@ -19,6 +19,7 @@ import {
   getAllDataMhsBmbngan,
   getDataTodo,
   getAllMhsData,
+  getDataDosen,
   initializPush
 } from "../../globals/api-endpoint.js";
 
@@ -167,7 +168,7 @@ const Dashboard = {
     
 
     const getData = async () => {
-      const data = await getDataUser(id);
+      const data = await getDataDosen(id);
       if (data) {
         loadingToast.style.display = "none";
         user = data;
@@ -229,8 +230,6 @@ const Dashboard = {
     const changeTitle = (title) => {
       document.getElementById("username").innerHTML = title;
     };
-
-    getData();
 
     [...form].forEach((e) => {
       e.addEventListener("change", (e) => {
@@ -447,13 +446,14 @@ const Dashboard = {
       let dataMhs = []
       // let dataIdb = {};
       const resp = await getAllDataMhsBmbngan(id);
+      console.log(resp)
       if(resp){
         resp.forEach( async (data) => {
           dataMhs.push({
             ...data,
             createdAt: changeTimestamp(data.createdAt)
           })
-          await useridb.putUser(data);
+          // await useridb.putUser(data);
         })
         showTable(dataMhs);
       }
@@ -461,6 +461,7 @@ const Dashboard = {
       // console.log(cntoh)
 
     };
+    getData();
 
     getAllDataMhs();
 

@@ -124,12 +124,13 @@ const Todo = {
     let dataUser = {};
 
     const getData = async () => {
+      loadingToast.style.display = "none";
       const resp = await getDataUser(id);
+      console.log(resp)
       if(resp) {
         dataUser = {
           ...resp
         }
-        loadingToast.style.display = "none";
         cekRoleUser();
       }
     }
@@ -141,6 +142,7 @@ const Todo = {
     }
 
     const getDataInTodo = async  (role) => {
+      console.log("haii")
       const dataTodo = [];
       if(role == "mhs"){
         const resp = await getDataTodo(id);
