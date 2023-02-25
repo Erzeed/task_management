@@ -17,7 +17,6 @@ class sidebar extends HTMLElement {
 
   cekRole() {
     const role = localStorage.getItem("role");
-    console.log(role)
     return role;
   }
 

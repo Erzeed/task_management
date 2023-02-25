@@ -78,13 +78,17 @@ const Login = {
         validasiFormRegisLogin(response);
         localStorage.setItem("id", response.uid);
         const resp = await getDataUser(response.uid);
-        setTimeout(() => {
-          if(resp.role_status == "dosen"){
-            window.location.href = "/#/dashboard"
-          }else {
+        if(resp){
+          localStorage.setItem("role", "mahasiswa")
+          setTimeout(() => {
             window.location.href = `/#/detailbimbingan/${response.uid}`;
-          }
-        }, 1610);
+          }, 1610);
+        }else {
+          localStorage.setItem("role", "dosen")
+          setTimeout(() => {
+            window.location.href = "/#/dashboard"
+          }, 1610);
+        }
       } else {
         validasiFormRegisLogin(response);
       }

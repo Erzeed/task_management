@@ -96,7 +96,6 @@ export const registerPageWithGogle = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        cekRoleUser(user)
         resolve(user, token);
       })
       .catch((error) => {
@@ -183,10 +182,7 @@ export const getDataUser = (id) => {
       if (docSnap.exists()) {
           resolve(docSnap.data())
         }else {
-          getDataDosen(id).
-          then(data => {
-            resolve(data)
-          })
+          resolve(false)
         }
       })
       .catch((error) => {
@@ -198,11 +194,9 @@ export const getDataUser = (id) => {
 export const getDataDosen = (id) => {
   return new Promise((resolve, reject) => {
     const db = getFirestore(app);
-    console.log("docSnap")
     getDoc(doc(db, "Dosen", id))
     .then(docSnap => {
       if (docSnap.exists()) {
-        console.log(docSnap.data())
         resolve(docSnap.data())
       } else {
         resolve("Data Kosong");

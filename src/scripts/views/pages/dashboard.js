@@ -175,7 +175,6 @@ const Dashboard = {
         changeTitle(data.nama);
         getDataNotif(user)
         showDataCard(data);
-        localStorage.setItem("role", data.role_status)
       }
     };
 

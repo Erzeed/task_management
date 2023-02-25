@@ -9,6 +9,7 @@ import {
   deleteCard,
   uploadFile,
   getDataUser,
+  getDataDosen,
   addLinkBimbingan
 } from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
@@ -122,16 +123,27 @@ const Todo = {
     
     let dataUserBimbingan = [];
     let dataUser = {};
+    const role = localStorage.getItem("role")
 
     const getData = async () => {
-      loadingToast.style.display = "none";
-      const resp = await getDataUser(id);
-      console.log(resp)
-      if(resp) {
-        dataUser = {
-          ...resp
+      if(role == "dosen") {
+          const resp = await getDataDosen(id);
+          if(resp) {
+            loadingToast.style.display = "none";
+            dataUser = {
+              ...resp
+            }
+            cekRoleUser();
+          }
+      }else {
+        const resp = await getDataUser(id);
+        if(resp) {
+          loadingToast.style.display = "none";
+          dataUser = {
+            ...resp
+          }
+          cekRoleUser();
         }
-        cekRoleUser();
       }
     }
 
@@ -141,10 +153,9 @@ const Todo = {
       loadingToast.style.display = "none";
     }
 
-    const getDataInTodo = async  (role) => {
-      console.log("haii")
+    const getDataInTodo = async  (roleUser) => {
       const dataTodo = [];
-      if(role == "mhs"){
+      if(roleUser == "mhs"){
         const resp = await getDataTodo(id);
         dataTodo.push(...resp);
         showDataInTodo(dataTodo);
@@ -160,7 +171,6 @@ const Todo = {
     };
 
     const cekRoleUser = async () => {
-      console.log(dataUser.role_status)
       if(dataUser.role_status == "Mahasiswa"){
         openForm.style.display = "none";
         getDataInTodo("mhs");
