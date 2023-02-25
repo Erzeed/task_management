@@ -39,6 +39,9 @@ const Review = {
                   <p class="status">review</p>
                   <h1 class="btn_Review">...</h1>
                   <div class="card__nav" >
+                      <div class="close__el">
+                        <button class="closeBtn">X</button>
+                      </div>
                       <button class="revisi" >Revisi</button>
                       <button class="selesai">Selesai</button>
                   </div>
@@ -79,6 +82,7 @@ const Review = {
     const container_pdf = document.querySelector(".container_pdf");
     const container__urlFile = document.querySelector(".container__urlFile");
     const loadingToast = document.querySelector("loading-roll");
+    const closeBtn = document.querySelector(".closeBtn");
     const btnPdf = document.querySelector(".btnPdf");
     let filePdf = ""
 
@@ -144,9 +148,7 @@ const Review = {
     })
     
     window.addEventListener("click", (el) => {
-      if(el.target.classList.value == "container__review"){
-        card__nav.classList.remove("active");
-      }else if(el.target.classList == "container__detail"){
+      if(el.target.classList == "container__detail"){
         container_pdf.classList.remove("active");
       }
     })
@@ -170,7 +172,10 @@ const Review = {
     header__button.addEventListener("click", () => {
       card__nav.classList.add("active");
     })
-
+    
+    closeBtn.addEventListener("click", () => {
+      card__nav.classList.remove("active");
+    })
     catatan.addEventListener("change", (el) => {
       dataBimbingan = {
         ...dataBimbingan,
@@ -180,7 +185,7 @@ const Review = {
 
     kirim.addEventListener("click", async () => {
       if(dataBimbingan.status !== "done" && dataBimbingan.status !== "revisi"){
-        alert("status harus jelas jangan digantung")
+        loading(true, "Status belum diubah");
       }else {
         dataBimbingan = {
           ...dataBimbingan,

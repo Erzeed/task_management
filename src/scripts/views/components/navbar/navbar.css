@@ -75,9 +75,6 @@
     .navbar {
         width: 100%;
     }
-    .navbar__account {
-        display: flex;
-    }
     .navbar__account > button.started {
         height: 35px;
         width: 120px;
