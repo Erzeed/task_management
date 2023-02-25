@@ -428,7 +428,9 @@ span.textReview {
     }
     .dashboard__notifikasi {
         width: 80%;
-        margin-left: 13vw;
+        margin-left: 11vw;
+        height: fit-content;
+        margin-bottom: 20px;
 
     }
     .dashboard__menu {

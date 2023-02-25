@@ -108,6 +108,10 @@ const Review = {
       }
     }
 
+    if(!navigator.onLine){
+      loadingToast.style.display = "none";
+    }
+
     const getDataForReview = async () => {
       const resp = await getDataBimbingan(url.id,url.idTodo);
       if(resp){
@@ -164,7 +168,6 @@ const Review = {
     })
 
     header__button.addEventListener("click", () => {
-      console.log("haii")
       card__nav.classList.add("active");
     })
 

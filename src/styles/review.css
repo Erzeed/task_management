@@ -111,6 +111,9 @@
     height: 50px;
     justify-content: space-between;
     position: relative;
+}
+
+.review__header > .header__button > h1 {
     cursor: pointer;
 }
 
