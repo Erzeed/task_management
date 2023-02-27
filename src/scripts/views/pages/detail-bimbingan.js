@@ -399,7 +399,6 @@ const DetailBimbingann = {
     notifikasi.addEventListener("click", async () => {
       let token = {}
       const test = await initializPush();
-      alert(test)
       if (test){
         token = {
           token_notif: test,

@@ -462,9 +462,11 @@ export const initializPush = () => {
       }).catch((err) => {
         console.log('An error occurred while retrieving token. ', err);
         // ...
+        alert(err)
       });
     }).catch((err) => {
       console.error('Unable to get permission to notify.', err);
+      alert(err)
     });
   })
 }
