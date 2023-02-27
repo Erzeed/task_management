@@ -403,7 +403,7 @@ const DetailBimbingann = {
         token = {
           token_notif: test,
         }
-        await updateProfileUser(user.iddosen,token, "Mahasiswa")
+        await updateProfileUser(dataUser.id,token, "Mahasiswa")
       }
     })
 
