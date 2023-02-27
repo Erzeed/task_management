@@ -5,6 +5,7 @@ import './views/components/sidebar/sidebar';
 import './views/components/loading/loading';
 import App from './views/app';
 import swRegister from './utils/sw-register';
+import firebaseRegister from './utils/firebaseSw-register';
 
 const app = new App({
   drawer: document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account'),
@@ -18,6 +19,7 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('load', async () => {
   app.renderPage();
   swRegister();
+  firebaseRegister();
 });
 
 export default app;

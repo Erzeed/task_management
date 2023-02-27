@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-enableIndexedDbPersistence(db, { forceOwnership: !globalThis.localStorage }) // forceOwnership for web worker
+enableIndexedDbPersistence(db, { forceOwnership: true }) // forceOwnership for web worker
 .then(() => console.log("Offline persistence enabled"))
 .catch(error => {
     switch (error.code) {
