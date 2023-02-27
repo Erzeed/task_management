@@ -4,6 +4,8 @@ import { cekUser } from "../../utils/cekUser";
 import {
   getDataRiwayatBimbingan,
   getDataUser,
+  initializPush,
+  updateProfileUser,
 } from "../../globals/api-endpoint.js";
 import { tabelUserBimbingan } from "../components/tabelDataUser/detaildatabimbingan";
 import { cardBimbingan } from "../components/cardBimbingan/cardBimbingan";
@@ -19,7 +21,12 @@ const DetailBimbingann = {
         <div class="detail__content">
         
             <div class="detail__title">
-                <h1>Data Bimbingan</h1>
+                <div class="title__header">
+                  <h1>Data Bimbingan</h1>
+                </div>
+                <div class="btn__notifikasi">
+                  <button class="notifikasi">Aktifkan Notifikasi</button>
+                </div>
             </div>
             <div class="detail__main">
                 <div class="detail__bimbingan">
@@ -53,6 +60,12 @@ const DetailBimbingann = {
     const bimbingan_kosong = document.querySelector(".bimbingan_kosong");
     const bimbingan__container = document.querySelector(
       ".bimbingan__container"
+    );
+    const notifikasi = document.querySelector(
+      ".notifikasi"
+    );
+    const btn__notifikasi = document.querySelector(
+      ".btn__notifikasi"
     );
     const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
     accountBtn.classList.add("hide")
@@ -354,6 +367,15 @@ const DetailBimbingann = {
       pdfMake.createPdf(docDefinition).open();
     };
 
+    const cekRole = () => {
+      const role = localStorage.getItem("role");
+      if(role == "dosen"){
+        btn__notifikasi.style.display = "none"
+      }
+    }
+
+    cekRole();
+
     const getDataReview = async () => {
       const respDataUser = await getDataUser(url.id);
       tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
@@ -373,6 +395,17 @@ const DetailBimbingann = {
         exportPdf.classList.add("not_allowed");
       }
     };
+
+    notifikasi.addEventListener("click", async () => {
+      let token = {}
+      const test = await initializPush();
+      if (test){
+        token = {
+          token_notif: test,
+        }
+        await updateProfileUser(user.iddosen,token, "Mahasiswa")
+      }
+    })
 
     exportPdf.addEventListener("click", () => {
       generatePdf();

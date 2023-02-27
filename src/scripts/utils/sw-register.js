@@ -8,8 +8,11 @@ const swRegister = async () => {
       const wb = new WorkboxWindow.Workbox("./sw.bundle.js");
     
       try {
-        
         await wb.register();
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./swFirebase.bundle.js");
+        });
+         console.log("registered")
     } catch (error) {
       console.log("Failed to register service worker", error);
     }

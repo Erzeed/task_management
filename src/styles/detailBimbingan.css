@@ -19,7 +19,30 @@
 }
 
 .detail__title {
-    text-align: center;
+    width: 100vw;
+    display: flex;
+}
+
+.title__header {
+    width: 50%;
+    text-align: right;
+}
+
+.btn__notifikasi {
+    width: 40%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn__notifikasi > .notifikasi {
+    height: 30px;
+    padding: 5px 7px;
+    border: none;
+    background-color: #270082;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
 }
 
 .detail__title > h1 {
@@ -198,6 +221,20 @@ tbody > tr {
     }
     .bimbingan__container {
         overflow-x: scroll;
+    }
+    .detail__title {
+        display: block;
+    }
+    .title__header {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .btn__notifikasi {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 20px;
+        margin-top: 20px;
     }
 }
 

@@ -20,7 +20,9 @@ import {
   getDataTodo,
   getAllMhsData,
   getDataDosen,
-  initializPush
+  initializPush,
+  updateProfileUser,
+  unRegisterToken
 } from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
@@ -36,7 +38,10 @@ const Dashboard = {
         <loading-roll></loading-roll>
             <div class="menu__title">
                 <h1>Selamat datang <span id="username"></span> .</h1>
-                <button class="create">Create Account</button>
+                <div class="btn_container">
+                  <button class="create">Create Account</button>
+                  <button class="notifikasi">Aktifkan Notifikasi</button>
+                </div>
             </div>
             <div class="menu__card__clients">
                 <div class="clients__card">
@@ -163,6 +168,7 @@ const Dashboard = {
     const jmlhReview = document.querySelector(".jmlhReview");
     const jmlhRevisi = document.querySelector(".jmlhRevisi");
     const jmlhSelesai = document.querySelector(".jmlhSelesai");
+    const Btnnotifikasi = document.querySelector(".notifikasi");
     const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
     accountBtn.classList.add("hide")
     
@@ -173,6 +179,7 @@ const Dashboard = {
         loadingToast.style.display = "none";
         user = data;
         changeTitle(data.nama);
+        changeBtnNotif(data)
         getDataNotif(user)
         showDataCard(data);
       }
@@ -230,6 +237,12 @@ const Dashboard = {
       document.getElementById("username").innerHTML = title;
     };
 
+    const changeBtnNotif = (data) => {
+      if (data.token_notif) {
+        Btnnotifikasi.innerText = "Notifikasi Aktif";
+      }
+    }
+
     [...form].forEach((e) => {
       e.addEventListener("change", (e) => {
         const id = localStorage.getItem("id");
@@ -264,6 +277,29 @@ const Dashboard = {
         }
       }
     });
+
+    Btnnotifikasi.addEventListener("click", async () => {
+      let token = {};
+      // if(user.token_notif){
+      //   token = {
+      //     token_notif: undefined,
+      //   }
+      //   const resp = await unRegisterToken();
+      //   if(resp){
+      //     await updateProfileUser(user.iddosen,token, "Dosen")
+      //     getData();
+      //   }
+      // }else{
+      // }
+      const test = await initializPush();
+      if (test){
+        token = {
+          token_notif: test,
+        }
+        await updateProfileUser(user.iddosen,token, "Dosen")
+        getData();
+      }
+    })
 
 
     const data = {

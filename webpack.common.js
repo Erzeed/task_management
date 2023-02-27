@@ -7,10 +7,12 @@ const path = require('path');
 module.exports = {
   entry: {
     app: path.resolve(__dirname, './src/app.js'),
-    // sw: path.resolve(__dirname, './src/scripts/sw.js'),
+    swFirebase: path.join(__dirname, './src/scripts/firebase-messaging-sw.js'),
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: pathData => {
+      return pathData === 'swFirebase' ? 'firebase-messaging-sw.js' : '[name].bundle.js';
+    },
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
@@ -80,7 +82,7 @@ module.exports = {
     new WorkboxWebpackPlugin.InjectManifest({
       maximumFileSizeToCacheInBytes: 26214400,
       swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
-      swDest: './sw.bundle.js',
+      swDest: './sw.bundle.js'
     }),
   ],
 };

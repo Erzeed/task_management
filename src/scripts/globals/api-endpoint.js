@@ -20,7 +20,7 @@ import { validasiCreateUser } from "../utils/validasiLoginRegister";
 import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
-import { getMessaging, getToken } from "firebase/messaging";
+import { deleteToken, getMessaging, getToken } from "firebase/messaging";
 import CONFIG from './config';
 import app from "./config/firebase";
 
@@ -453,12 +453,11 @@ export const initializPush = () => {
       // Get an FCM token for the device.
       getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
         if (currentToken) {
-          // Send the token to your server and update the UI if necessary
-          // ...
+          resolve(currentToken)
         } else {
           // Show permission request UI
           console.log('No registration token available. Request permission to generate one.');
-          // ...
+          resolve("Belum registrasi")
         }
       }).catch((err) => {
         console.log('An error occurred while retrieving token. ', err);
@@ -467,5 +466,21 @@ export const initializPush = () => {
     }).catch((err) => {
       console.error('Unable to get permission to notify.', err);
     });
+  })
+}
+
+export const unRegisterToken = () => {
+  return new Promise((resolve,reject) => {
+    const messaging = getMessaging(app);
+    getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
+      console.log(currentToken)
+      deleteToken(messaging, currentToken).then(() => {
+        resolve(true)
+      }).catch((err) => {
+        console.log('Unable to delete token. ', err);
+      })
+    }).catch((err) => {
+      console.log('Error retrieving registration token. ', err);
+    })
   })
 }
