@@ -7,11 +7,11 @@ const path = require('path');
 module.exports = {
   entry: {
     app: path.resolve(__dirname, './src/app.js'),
-    swFirebase: path.join(__dirname, './src/scripts/firebase-messaging-sw.js'),
+    firebaseSw: path.join(__dirname, './src/scripts/firebase-messaging-sw.js'),
   },
   output: {
     filename: pathData => {
-      return pathData === 'swFirebase' ? 'firebase-messaging-sw.js' : '[name].bundle.js';
+      return pathData.chunk.name == "firebaseSw" ? 'firebase-messaging-sw.js' : '[name].bundle.js';
     },
     path: path.resolve(__dirname, 'dist'),
     clean: true,

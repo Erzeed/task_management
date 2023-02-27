@@ -10,7 +10,7 @@ const swRegister = async () => {
       try {
         await wb.register();
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("./swFirebase.bundle.js");
+          navigator.serviceWorker.register("./firebase-messaging-sw.js");
         });
          console.log("registered")
     } catch (error) {

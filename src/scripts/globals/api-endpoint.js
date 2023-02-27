@@ -448,26 +448,26 @@ export const getAllMhsData = () => {
 export const initializPush = () => {
   return new Promise((resolve, reject) => {
     const messaging = getMessaging(app);
-    Notification.requestPermission().then(() => {
-      console.log('Notification permission granted.');
-      // Get an FCM token for the device.
-      getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
-        if (currentToken) {
-          resolve(currentToken)
-        } else {
-          // Show permission request UI
-          console.log('No registration token available. Request permission to generate one.');
-          resolve("Belum registrasi")
-        }
-      }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
-        // ...
-        alert(err)
-      });
+    getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
+      if (currentToken) {
+        console.log(currentToken)
+        resolve(currentToken)
+      } else {
+        // Show permission request UI
+          Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                console.log('Notification permission granted.');
+            } else {
+              console.log('Unable to get permission to notify.');
+            }
+          }).catch((err) => {
+            console.error('Unable to get permission to notify.', err);
+          });
+        resolve("Belum registrasi")
+      }
     }).catch((err) => {
-      console.error('Unable to get permission to notify.', err);
-      alert(err)
-    });
+      console.log('An error occurred while retrieving token. ', err);
+    });;
   })
 }
 
