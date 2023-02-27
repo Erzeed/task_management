@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "firebase/analytics";
 import {
   getFirestore,
   enableIndexedDbPersistence,
@@ -21,24 +21,25 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-if ((typeof window !== 'undefined')) {
-  const analytics = getAnalytics(app);
-}
+// if ((typeof window !== 'undefined')) {
+//   const analytics = getAnalytics(app);
+// }
 
 const db = getFirestore(app);
 
-enableIndexedDbPersistence(db, { synchronizeTabs: true })
-  .then(() =>
-    console.log("Enabled offline persistence with multi-tab synchronization")
-  )
-  .catch((error) => {
-    if (error.code == "failed-precondition") {
-      console.log("Multiple tabs open, offline persistence disabled");
-    } else if (error.code == "unimplemented") {
-      console.log(
-        "The current browser does not support all of the features required to enable offline persistence"
-      );
+enableIndexedDbPersistence(db, { forceOwnership: !globalThis.localStorage }) // forceOwnership for web worker
+.then(() => console.log("Offline persistence enabled"))
+.catch(error => {
+    switch (error.code) {
+        case 'failed-precondition':
+            console.log("Offline persistence already enabled in another tab")
+            break
+        case 'unimplemented':
+            console.log("Offline persistence not supported by browser")
+            break
+        default:
+            console.error(error)
     }
-  });
+})
 
 export default app;

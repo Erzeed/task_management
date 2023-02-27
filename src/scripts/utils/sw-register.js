@@ -9,10 +9,10 @@ const swRegister = async () => {
     
       try {
         await wb.register();
-        window.addEventListener("load", function () {
+        self.addEventListener("load", function () {
           navigator.serviceWorker.register("./firebase-messaging-sw.js");
+          console.log("registered")
         });
-         console.log("registered")
     } catch (error) {
       console.log("Failed to register service worker", error);
     }
