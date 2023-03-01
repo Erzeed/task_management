@@ -18,7 +18,7 @@ window.addEventListener('hashchange', () => {
 
 window.addEventListener('load', async () => {
   app.renderPage();
-  swRegister();
+  await swRegister();
   firebaseRegister();
 });
 

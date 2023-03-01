@@ -23,6 +23,8 @@ import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToas
 import { deleteToken, getMessaging, getToken } from "firebase/messaging";
 import CONFIG from './config';
 import app from "./config/firebase";
+import axios from "axios";
+import QueryString from "qs";
 
 
 export const registerPage = (data) => {
@@ -96,6 +98,7 @@ export const registerPageWithGogle = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        cekRoleUser(user)
         resolve(user, token);
       })
       .catch((error) => {
@@ -484,5 +487,24 @@ export const unRegisterToken = () => {
     }).catch((err) => {
       console.log('Error retrieving registration token. ', err);
     })
+  })
+}
+
+export const sendNotif = (token, message) => {
+  return new Promise((resolve,reject) => {
+    // Send the HTTP request to the FCM server
+    axios.post(`https://firebase-push-message-git-main-erzeed.vercel.app/api/send`, QueryString.stringify(message), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+    .then(response => {
+      console.log('Notification sent successfully:', response);
+      resolve(true)
+    })
+    .catch(error => {
+      console.error('Error sending notification:', error.response.data.error);
+      reject(error)
+    });
   })
 }

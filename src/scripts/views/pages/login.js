@@ -72,10 +72,9 @@ const Login = {
         password: e.target.value,
       };
     });
-    button.addEventListener("click", async () => {
-      const response = await loginByEmailPass(data).catch((err) => err);
-      if (response.uid !== undefined) {
-        validasiFormRegisLogin(response);
+
+    const navigateByRole = async (response) => {
+      validasiFormRegisLogin(response);
         localStorage.setItem("id", response.uid);
         const resp = await getDataUser(response.uid);
         if(resp){
@@ -89,6 +88,11 @@ const Login = {
             window.location.href = "/#/dashboard"
           }, 1610);
         }
+    }
+    button.addEventListener("click", async () => {
+      const response = await loginByEmailPass(data).catch((err) => err);
+      if (response.uid !== undefined) {
+        navigateByRole(response)
       } else {
         validasiFormRegisLogin(response);
       }
@@ -96,13 +100,8 @@ const Login = {
     btn__goggle.addEventListener("click", async () => {
       const responseGogle = await registerPageWithGogle().catch((err) => err);
     if (responseGogle) {
-      validasiFormRegisLogin(responseGogle);
-      if (responseGogle.uid !== undefined) {
-        localStorage.setItem("id", responseGogle.uid);
-        setTimeout(() => {
-          window.location.href = '/#/todo';
-        }, 1610)
-      }
+      localStorage.setItem("accessToken", responseGogle.accessToken)
+      navigateByRole(responseGogle)
     }
     })
   },

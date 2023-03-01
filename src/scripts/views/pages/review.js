@@ -1,7 +1,7 @@
 import "../../../styles/review.css";
 import pdfObject from 'pdfobject';
 import UrlParser from '../../routes/url-parser';
-import {getDataBimbingan, updateStatusAndCreateDataBimbingan,  getDataUser} from "../../globals/api-endpoint.js";
+import {getDataBimbingan, updateStatusAndCreateDataBimbingan,  getDataUser, sendNotif} from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
 
 const Review = {
@@ -101,6 +101,12 @@ const Review = {
       `
     }
 
+    const message = {
+      'token': 'f3lxt7SimGVnEXD-WBXTf8:APA91bFSc3J9VEN2-EmOcgkPp9rsDDaIJeg6SX2G25X_nHPkr_nfMh1a0ZnancQ83nm8RH2Rx8F5Et5VD0AW5ihnW63kS3RSL9al_dEnP5B0p1lgT92QTgUNUqXBDDwtqX9TINXucdoZ',
+      "title": "Background Message Title",
+      "body": "/src/asset/img/logo.png",
+    };
+
     const getDataUserBimbingan = async () => {
       const resp = await getDataUser(url.id);
       if(resp) {
@@ -193,6 +199,8 @@ const Review = {
         }
         const resp = await updateStatusAndCreateDataBimbingan(dataBimbingan.status, url.id, url.idTodo, dataBimbingan);
         if(resp) {
+          const respNotif = await sendNotif(message.token,message);
+          console.log(respNotif)
           loading(false,"Data berhasil di kirim");
         }else {
           loading(true, resp);

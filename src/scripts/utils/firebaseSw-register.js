@@ -4,12 +4,11 @@ const firebaseRegister = async () => {
     console.log("Service Worker not supported in the browser");
     return;
   }else {
-
-    try {
-        await navigator.serviceWorker.register("./firebase-messaging-sw.js");
-    } catch (error) {
-      console.log("Failed to register service worker", error);
-    }
+    navigator.serviceWorker.register('/firebase-messaging-sw.js').then((registration) => {
+      console.log('SW registered: ', registration);
+    }, (err) => {
+      console.log('SW registration failed: ', err);
+    });
   }
 
 };
