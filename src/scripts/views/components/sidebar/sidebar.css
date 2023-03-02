@@ -67,7 +67,7 @@
     .sidebar {
         position: fixed;
         width: 100vw;
-        height: 65px;
+        height: 45px;
         bottom: 0;
         top: unset;
         flex-direction: row;
@@ -90,6 +90,10 @@
         justify-content: flex-start;
         width: 60%;
         margin-top: 7px;
-
+    }
+    .sidebar__menu > ul > li > a > img,
+    .sidebar__logout > img {
+        width: 20px;
+        height: 20px;
     }
   }

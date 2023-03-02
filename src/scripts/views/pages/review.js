@@ -173,7 +173,6 @@ const Review = {
 
     header__button.addEventListener("click", () => {
       btn_nav.classList.add("active");
-      console.log(btn_nav.classList.value)
     })
     
     closeBtn.addEventListener("click", () => {
