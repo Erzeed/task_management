@@ -274,6 +274,7 @@
     }
     .container__detail {
         height: 20vh;
+        border-radius: 0;
     }
 }
 

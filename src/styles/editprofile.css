@@ -139,6 +139,7 @@
 @media screen and (max-width: 667px) {
 	.editprofile__main > .header {
 		height: 20vh;
+		border-radius: 0;
 	}
 	.form-style-2 {
 		width: 100%;
