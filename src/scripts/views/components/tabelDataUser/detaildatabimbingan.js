@@ -18,7 +18,6 @@ export const tabelUserBimbingan = ({
         const hariIni = new Date();
         const _MS_PER_DAY = 1000 * 60 * 60 * 24;
         const lamaBimbingan = Math.floor((hariIni - dataTgl) / _MS_PER_DAY)
-        if (lamaBimbingan > 30)
         return lamaBimbingan
       }
 
