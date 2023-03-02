@@ -113,8 +113,13 @@
     position: relative;
 }
 
-.review__header > .header__button > h1 {
+.review__header > .header__button > .btn_Review {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
+    height: 30px;
+    width: 30px;
+    font-size: 28px;
 }
 
 .container__review {
@@ -122,7 +127,7 @@
     width: 100%;
 }
 
-.header__button > .card__nav {
+.header__button > .card__navigate {
     position: absolute;
     top: 40px;
     right: -35px;
@@ -140,29 +145,29 @@
     display: none;
 }
 
-.header__button > .card__nav > .close__el {
+.header__button > .card__navigate > .close__el {
     display: flex;
     justify-content: flex-end;
     width: 100%;
 }
 
-.card__nav > .close__el > .closeBtn {
+.card__navigate > .close__el > .closeBtn {
     border: none;
     background-color: transparent;
     cursor: pointer;
     color: rgba(0, 0, 0, .5);
 }
 
-.card__nav > .close__el > .closeBtn:hover {
+.card__navigate > .close__el > .closeBtn:hover {
     color: #000;
 }
 
-.header__button > .card__nav.active {
+.header__button > .card__navigate.active {
     display: flex;
     transform: scale(1);
 }
 
-.header__button > .card__nav > button {
+.header__button > .card__navigate > button {
     border: none;
     background-color: transparent;
     letter-spacing: .5px;
@@ -173,7 +178,7 @@
     height: 100%;
 }
 
-.header__button > .card__nav > button:hover {
+.header__button > .card__navigate > button:hover {
     background-color: rgba(0, 0, 0, .1);
 }
 

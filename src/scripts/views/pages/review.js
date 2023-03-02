@@ -37,8 +37,8 @@ const Review = {
                 </div>
                 <div class="header__button">
                   <p class="status">review</p>
-                  <h1 class="btn_Review">...</h1>
-                  <div class="card__nav" >
+                  <button class="btn_Review">...</button>
+                  <div class="card__navigate" >
                       <div class="close__el">
                         <button class="closeBtn">X</button>
                       </div>
@@ -70,8 +70,8 @@ const Review = {
   async afterRender() {
     let dataBimbingan = {}
     const url = UrlParser.parseActiveUrlWithoutCombiner();
-    const header__button = document.querySelector(".header__button h1");
-    const card__nav = document.querySelector(".card__nav");
+    const header__button = document.querySelector(".btn_Review");
+    const btn_nav = document.querySelector(".card__navigate");
     const revisi = document.querySelector(".revisi");
     const selesai = document.querySelector(".selesai");
     const kirim = document.querySelector(".kirim");
@@ -84,7 +84,8 @@ const Review = {
     const loadingToast = document.querySelector("loading-roll");
     const closeBtn = document.querySelector(".closeBtn");
     const btnPdf = document.querySelector(".btnPdf");
-    let filePdf = ""
+    let filePdf = "";
+    let acces_token = undefined
 
 
 
@@ -105,9 +106,10 @@ const Review = {
       const resp = await getDataUser(url.id);
       if(resp) {
         getDataForReview();
+        acces_token = resp.token_notif
         dataBimbingan = {
           ...dataBimbingan,
-          nama: resp.nama
+          nama: resp.nama,
         } 
       }
     }
@@ -170,11 +172,12 @@ const Review = {
     })
 
     header__button.addEventListener("click", () => {
-      card__nav.classList.add("active");
+      btn_nav.classList.add("active");
+      console.log(btn_nav.classList.value)
     })
     
     closeBtn.addEventListener("click", () => {
-      card__nav.classList.remove("active");
+      btn_nav.classList.remove("active");
     })
     catatan.addEventListener("change", (el) => {
       dataBimbingan = {
@@ -193,9 +196,9 @@ const Review = {
         }
         const resp = await updateStatusAndCreateDataBimbingan(dataBimbingan.status, url.id, url.idTodo, dataBimbingan);
         if(resp) {
-          if(dataBimbingan.acces_token !== undefined){
+          if(acces_token !== undefined){
             const message = {
-              'token': dataBimbingan.acces_token,
+              'token': acces_token,
               "title": "Hasil Review",
               "body": `Hasil Review ${dataBimbingan.judul} Sudah Keluar`,
             };
