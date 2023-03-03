@@ -12,6 +12,7 @@ import { cardBimbingan } from "../components/cardBimbingan/cardBimbingan";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { loading } from "../../utils/customToast";
 
 const DetailBimbingann = {
   async render() {
