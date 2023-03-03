@@ -453,7 +453,6 @@ export const initializPush = () => {
     const messaging = getMessaging(app);
     getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
       if (currentToken) {
-        console.log(currentToken)
         resolve(currentToken)
       } else {
         // Show permission request UI

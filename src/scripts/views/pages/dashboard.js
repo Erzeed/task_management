@@ -282,17 +282,6 @@ const Dashboard = {
 
     Btnnotifikasi.addEventListener("click", async () => {
       let token = {};
-      // if(user.token_notif){
-      //   token = {
-      //     token_notif: undefined,
-      //   }
-      //   const resp = await unRegisterToken();
-      //   if(resp){
-      //     await updateProfileUser(user.iddosen,token, "Dosen")
-      //     getData();
-      //   }
-      // }else{
-      // }
       const test = await initializPush();
       if (test){
         token = {
@@ -300,6 +289,9 @@ const Dashboard = {
         }
         await updateProfileUser(user.iddosen,token, "Dosen")
         getData();
+        loading(true, "Notifikasi sudah aktif");
+      }else {
+        loading(false, "Reload dan aktifkan lagi");
       }
     })
 
