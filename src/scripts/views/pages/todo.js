@@ -10,7 +10,8 @@ import {
   uploadFile,
   getDataUser,
   getDataDosen,
-  addLinkBimbingan
+  addLinkBimbingan,
+  sendNotif
 } from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
 
@@ -228,6 +229,7 @@ const Todo = {
         moveCard("todo", idMhs, idCard);
       } else if (elements.target.classList == "back review"){
         moveCard("doing", idMhs, idCard);
+        sendNotifikasi()
       } else if (elements.target.classList == "back revisi"){
         moveCard("review", idMhs, idCard);
       } else if (elements.target.classList == "back done"){
@@ -242,11 +244,24 @@ const Todo = {
         moveCard("doing", idMhs, idCard);
       } else if (elements.target.classList == "move doing") {
         moveCard("review", idMhs, idCard);
+        sendNotifikasi()
       } else if (elements.target.classList == "move review") {
         moveCard("revisi", idMhs, idCard);
       } else if (elements.target.classList == "move revisi") {
         moveCard("done", idMhs, idCard);
       } 
+    }
+
+    const sendNotifikasi = async () => {
+      if(dataUser.token_notif !== undefined){
+        const message = {
+          'token': dataUser.token_notif,
+          "title": "Perlu Review",
+          "body": `Ada File Bimbingang Baru Yang Perlu Direview`,
+        };
+        const respNotif = await sendNotif(message);
+        console.log(respNotif)
+      }
     }
 
     const nonActivateElement = (elements, idCard) => {

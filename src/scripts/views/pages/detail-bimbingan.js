@@ -404,6 +404,9 @@ const DetailBimbingann = {
           token_notif: test,
         }
         await updateProfileUser(dataUser.id,token, "Mahasiswa")
+        loading(false, "Notifikasi sudah aktif");
+      }else {
+        loading(true, "Reload dan aktifkan lagi");
       }
     })
 

@@ -489,7 +489,7 @@ export const unRegisterToken = () => {
   })
 }
 
-export const sendNotif = (token, message) => {
+export const sendNotif = (message) => {
   return new Promise((resolve,reject) => {
     // Send the HTTP request to the FCM server
     axios.post(`https://firebase-push-message-git-main-erzeed.vercel.app/api/send`, QueryString.stringify(message), {

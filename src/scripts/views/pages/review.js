@@ -201,7 +201,7 @@ const Review = {
               "title": "Hasil Review",
               "body": `Hasil Review ${dataBimbingan.judul} Sudah Keluar`,
             };
-            const respNotif = await sendNotif(message.token,message);
+            const respNotif = await sendNotif(message);
             console.log(respNotif)
           }
           loading(false,"Data berhasil di kirim");
