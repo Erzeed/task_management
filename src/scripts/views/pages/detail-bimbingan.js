@@ -111,7 +111,7 @@ const DetailBimbingann = {
                     ],
                     [
                       {
-                        text: `${dataUser.fakultas}`,
+                        text: `${dataUser.fakultas.toUpperCase()}`,
                         alignment: "center",
                         fontSize: 20,
                         bold: true,
@@ -255,7 +255,7 @@ const DetailBimbingann = {
                     ],
                     [
                       {
-                        text: "Dosen Pembimbing",
+                        text: dataUser.dosen_pembimbing,
                       },
                     ],
                     [
@@ -329,7 +329,7 @@ const DetailBimbingann = {
                     ],
                     [
                       {
-                        text: "Nuri Cahyo, M.kom",
+                        text: dataUser.dosen_pembimbing,
                         decoration: "underline",
                         style: "footerSignature",
                       },

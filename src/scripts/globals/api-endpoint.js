@@ -17,7 +17,7 @@ import {
   update
 } from "firebase/database";
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
-import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs} from "firebase/firestore"; 
+import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs, orderBy, query} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
 import { deleteToken, getMessaging, getToken } from "firebase/messaging";
@@ -412,7 +412,7 @@ export const getDataRiwayatBimbingan = (userId) => {
   return new Promise((resolve , reject) => {
     const db = getFirestore(app);
     const data = []
-    getDocs(collection(db, `data_bimbingan/${userId}/bimbingan`))
+    getDocs(query(collection(db, `data_bimbingan/${userId}/bimbingan`), orderBy('tgl_selesai', 'asc')))
       .then(querySnapshot => {
         if(!querySnapshot.empty){
           querySnapshot.forEach(doc => {

@@ -22,7 +22,8 @@ import {
   getDataDosen,
   initializPush,
   updateProfileUser,
-  unRegisterToken
+  unRegisterToken,
+  getDataRiwayatBimbingan
 } from "../../globals/api-endpoint.js";
 
 Tabulator.registerModule([SortModule]);
@@ -171,6 +172,7 @@ const Dashboard = {
     const Btnnotifikasi = document.querySelector(".notifikasi");
     const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
     accountBtn.classList.add("hide")
+    let dataMhs = []
     
 
     const getData = async () => {
@@ -375,10 +377,12 @@ const Dashboard = {
     const changeTimestamp = (data) => {
       const tanggal = new Date(data);
       const tgl = tanggal.getDate();
-      const bln = tanggal.getMonth() + 1;
+      const bln = tanggal.getMonth();
       const thn = tanggal.getFullYear();
+      const dataBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      const bulan = dataBulan[bln];
 
-      return tgl + "-" + bln + "-" + thn;
+      return tgl + " " + bulan + " " + thn;
     }
 
     //define table
@@ -460,14 +464,7 @@ const Dashboard = {
             hozAlign: "center",
             vertAlign: "middle",
             formatter: defaultValue,
-          },
-          {
-            title: "Bab",
-            field: "bab_skripsi",
-            hozAlign: "center",
-            vertAlign: "middle",
-            formatter: defaultValue,
-          },
+          }
         ],
       });
 
@@ -478,23 +475,16 @@ const Dashboard = {
     }
 
     const getAllDataMhs = async () => {
-      let dataMhs = []
-      // let dataIdb = {};
       const resp = await getAllDataMhsBmbngan(id);
-      console.log(resp)
       if(resp){
         resp.forEach( async (data) => {
           dataMhs.push({
             ...data,
-            createdAt: changeTimestamp(data.createdAt)
+            createdAt: changeTimestamp(data.createdAt),
           })
-          // await useridb.putUser(data);
-        })
-        showTable(dataMhs);
+        });
+        showTable(dataMhs)
       }
-      // const cntoh = await useridb.getAllUser();
-      // console.log(cntoh)
-
     };
     getData();
 

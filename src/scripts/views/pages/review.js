@@ -205,6 +205,9 @@ const Review = {
             console.log(respNotif)
           }
           loading(false,"Data berhasil di kirim");
+          setTimeout(() => {
+            window.location.href = "/#/dashboard"
+          }, 1610);
         }else {
           loading(true, resp);
         }
