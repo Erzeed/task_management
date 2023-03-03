@@ -289,9 +289,9 @@ const Dashboard = {
         }
         await updateProfileUser(user.iddosen,token, "Dosen")
         getData();
-        loading(true, "Notifikasi sudah aktif");
+        loading(false, "Notifikasi sudah aktif");
       }else {
-        loading(false, "Reload dan aktifkan lagi");
+        loading(true, "Reload dan aktifkan lagi");
       }
     })
 
