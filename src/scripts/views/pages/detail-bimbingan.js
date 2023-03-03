@@ -68,6 +68,9 @@ const DetailBimbingann = {
     const btn__notifikasi = document.querySelector(
       ".btn__notifikasi"
     );
+    const btn__notifikasiTxt = document.querySelector(
+      ".btn__notifikasi .notifikasi"
+    );
     const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
     accountBtn.classList.add("hide")
     
@@ -388,6 +391,7 @@ const DetailBimbingann = {
           ...respDataUser,
           riwayat: respDataRiwayat,
         };
+        changeBtnNotif(dataUser)
         respDataRiwayat.forEach((data) => {
           count++
           bimbingan__container.innerHTML += cardBimbingan(count,data);
@@ -396,6 +400,12 @@ const DetailBimbingann = {
         exportPdf.classList.add("not_allowed");
       }
     };
+
+    const changeBtnNotif = (data) => {
+      if (data.token_notif) {
+        btn__notifikasiTxt.innerText = "Notifikasi Aktif";
+      }
+    }
 
     notifikasi.addEventListener("click", async () => {
       let token = {}
