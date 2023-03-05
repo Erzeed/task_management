@@ -186,7 +186,6 @@ const Todo = {
       [...allTodo].forEach((e) => {
         e.innerHTML = "";
       });
-      // console.log(data)
       if (data.length == 0) {
         todo__card.innerHTML = "<p>Data kosong</p>";
       } else {
@@ -229,9 +228,9 @@ const Todo = {
         moveCard("todo", idMhs, idCard);
       } else if (elements.target.classList == "back review"){
         moveCard("doing", idMhs, idCard);
-        sendNotifikasi()
       } else if (elements.target.classList == "back revisi"){
         moveCard("review", idMhs, idCard);
+        sendNotifikasi("Mahasiswa")
       } else if (elements.target.classList == "back done"){
         moveCard("revisi", idMhs, idCard);
       }
@@ -244,7 +243,7 @@ const Todo = {
         moveCard("doing", idMhs, idCard);
       } else if (elements.target.classList == "move doing") {
         moveCard("review", idMhs, idCard);
-        sendNotifikasi()
+        sendNotifikasi("Mahasiswa")
       } else if (elements.target.classList == "move review") {
         moveCard("revisi", idMhs, idCard);
       } else if (elements.target.classList == "move revisi") {
@@ -252,9 +251,8 @@ const Todo = {
       } 
     }
 
-    const sendNotifikasi = async () => {
-      if(dataUser.role_status == "Mahasiswa") {
-        const resp = await getDataDosen(dataUser.id_dosen);
+    const sendNotifToDosen = async () => {
+      const resp = await getDataDosen(dataUser.id_dosen);
         if(resp.token_notif !== undefined){
           const message = {
             'token': resp.token_notif,
@@ -263,6 +261,25 @@ const Todo = {
           };
           const respNotif = await sendNotif(message);
           console.log(respNotif)
+        }
+    }
+
+    const sendNotifToMhs = async (token) => {
+      const message = {
+          'token': token,
+          "title": "Tugas Baru",
+          "body": "Adata Tugas Baru Yang Perlu Dikerjakan",
+        };
+        const respNotif = await sendNotif(message);
+        console.log(respNotif)
+    }
+
+    const sendNotifikasi = async (role, tokenMhs) => {
+      if(role == "Mahasiswa") {
+        sendNotifToDosen()
+      }else {
+        if(tokenMhs!== undefined){
+          sendNotifToMhs(tokenMhs)
         }
       }
     }
@@ -409,6 +426,7 @@ const Todo = {
             };
             const resp = await saveDataInTodo(dataInputForm, data.id);
             if (resp) {
+              sendNotifikasi("Dosen",data.token_notif)
               cekRoleUser();
               loading(false, "Data berhasil ditambahkan");
             }else {
