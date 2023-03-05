@@ -253,14 +253,17 @@ const Todo = {
     }
 
     const sendNotifikasi = async () => {
-      if(dataUser.token_notif !== undefined){
-        const message = {
-          'token': dataUser.token_notif,
-          "title": "Perlu Review",
-          "body": `Ada File Bimbingang Baru Yang Perlu Direview`,
-        };
-        const respNotif = await sendNotif(message);
-        console.log(respNotif)
+      if(dataUser.role_status == "Mahasiswa") {
+        const resp = await getDataDosen(dataUser.id_dosen);
+        if(resp.token_notif !== undefined){
+          const message = {
+            'token': resp.token_notif,
+            "title": "Perlu Review",
+            "body": `Ada File Bimbingang Baru Yang Perlu Direview`,
+          };
+          const respNotif = await sendNotif(message);
+          console.log(respNotif)
+        }
       }
     }
 
