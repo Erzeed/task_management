@@ -166,7 +166,10 @@ span.textReview {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    display: none;
+    /* display: none; */
+}
+.statistik__donut {
+    display: none !important;
 }
 
 .statistik__donut,
@@ -182,7 +185,11 @@ span.textReview {
     flex-direction: column;
     position: relative;
     padding: 10px;
+}
 
+.statistik__lineChart {
+    width: 60% !important;
+    height: 100% !important;
 }
 
 .statistik__donut > h1 {
@@ -197,11 +204,6 @@ span.textReview {
     color: rgba(0, 0, 0, .7);
     letter-spacing: 1px;
 }
-
-.statistik__lineChart {
-    width: 52% !important;
-}
-
 
 /* table */
 

@@ -1,7 +1,7 @@
 import "../../../styles/review.css";
 import pdfObject from 'pdfobject';
 import UrlParser from '../../routes/url-parser';
-import {getDataBimbingan, updateStatusAndCreateDataBimbingan,  getDataUser, sendNotif} from "../../globals/api-endpoint.js";
+import {getDataBimbingan, updateStatusAndCreateDataBimbingan,  getDataUser, sendNotif, updateProfileUser} from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
 
 const Review = {
@@ -186,12 +186,13 @@ const Review = {
     })
 
     kirim.addEventListener("click", async () => {
+      const dataTglBimbingan = + new Date();
       if(dataBimbingan.status !== "done" && dataBimbingan.status !== "revisi"){
         loading(true, "Status belum diubah");
       }else {
         dataBimbingan = {
           ...dataBimbingan,
-          tgl_selesai: + new Date()
+          tgl_selesai: dataTglBimbingan
         }
         const resp = await updateStatusAndCreateDataBimbingan(dataBimbingan.status, url.id, url.idTodo, dataBimbingan);
         if(resp) {
@@ -205,6 +206,10 @@ const Review = {
             console.log(respNotif)
           }
           loading(false,"Data berhasil di kirim");
+          const dataTerakhirBimbingan = {
+            terakhir_bimbingan: dataTglBimbingan
+          }
+          await updateProfileUser(url.id, dataTerakhirBimbingan, "Mahasiswa")
           setTimeout(() => {
             window.location.href = "/#/dashboard"
           }, 1610);

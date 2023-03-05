@@ -96,7 +96,7 @@ const Dashboard = {
                     <canvas id="myChart" ></canvas>
                 </div>
                 <div class="statistik__lineChart">
-                    <h1>Data Proggres Mahasiswa</h1>
+                    <h1>Data Lama Bimbingan</h1>
                     <canvas id="lineChart" ></canvas>
                 </div>
             </div>
@@ -295,6 +295,9 @@ const Dashboard = {
       }
     })
 
+    const labelsBar = [];
+    const dataBar = [];
+
 
     const data = {
       labels: ["Bab 1", "Bab 2", "Bab 3", "Bab 4", "Bab 5"],
@@ -346,24 +349,38 @@ const Dashboard = {
       },
     });
     new Chart(lineChart, {
-      type: "line",
-      data: dataLineChart,
+      type: "bar",
+      data: {
+        labels: labelsBar,
+        datasets: [{
+          label: 'Lama Bimbingan',
+          data: dataBar,
+          backgroundColor: 'rgba(43,36,130, .8)',
+          borderColor: 'rgb(43,36,130)',
+          borderWidth: 1
+        }]
+      },
       options: {
-        responsive: true,
-        layout: {
-          padding: {
-            left: 20,
-            bottom: 20,
-          },
-        },
         scales: {
           y: {
             beginAtZero: true,
-            max: 20,
-            min: 0,
+            title: {
+              display: true,
+              text: 'Lama Bimbingan (hari)',
+            },
+            ticks: {
+              callback: function(value) {if (value % 1 === 0) {return value;}}
+            }
+          },
+          x: {
+            ticks: {
+              autoSkip: true, // mengaktifkan fitur otomatis skip label
+              minRotation: 45 // minimum rotasi label (dalam derajat)
+            }
           },
         },
-      },
+        barThickness: 30,
+      }  
     });
 
     const changeTimestamp = (data) => {
@@ -466,13 +483,23 @@ const Dashboard = {
 
     }
 
+    const lamaBimbingan = (dataTgl) => {
+      const hariIni = new Date();
+      const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+      const lamaBimbingan = Math.floor((hariIni - dataTgl) / _MS_PER_DAY)
+      return lamaBimbingan
+    }
+
     const getAllDataMhs = async () => {
       const resp = await getAllDataMhsBmbngan(id);
       if(resp){
         resp.forEach( async (data) => {
+          labelsBar.push(data.nim)
+          dataBar.push(lamaBimbingan(data.createdAt))
           dataMhs.push({
             ...data,
             createdAt: changeTimestamp(data.createdAt),
+            terakhir_bimbingan: changeTimestamp(data.terakhir_bimbingan)
           })
         });
         showTable(dataMhs)
