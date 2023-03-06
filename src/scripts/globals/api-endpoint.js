@@ -17,7 +17,7 @@ import {
   update
 } from "firebase/database"; 
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
-import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs, orderBy, query, deleteDoc, arrayRemove} from "firebase/firestore"; 
+import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs, orderBy, query, deleteDoc, arrayRemove, deleteField} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
 import { deleteToken, getMessaging, getToken } from "firebase/messaging";
@@ -511,7 +511,6 @@ export const sendNotif = (message) => {
 export const deleteAccountBimbingan = (userId, idDosen) => {
   return new Promise((resolve,reject) => {
     const db = getFirestore();
-    const dbRealtime = getDatabase();
     updateDoc(doc(db, "Dosen", idDosen), {
       id_mhs_bimbingan: arrayRemove(userId) 
     }, { merge: true })
@@ -528,5 +527,19 @@ export const deleteAccountBimbingan = (userId, idDosen) => {
     }).catch((error) => {
       reject(error.code);
     });
+  })
+}
+
+export const deleteFieldToken = (role,id) => {
+  return new Promise((resolve, reject) => {
+    const db = getFirestore();
+    updateDoc(doc(db, `${role}`, id), {
+      token_notif: deleteField()
+    }, { merge: true })
+    .then(() => {
+      resolve(true)
+    }).catch(error => {
+      console.log(error)
+    })
   })
 }

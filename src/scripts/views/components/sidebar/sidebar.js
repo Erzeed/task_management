@@ -3,6 +3,7 @@ import logoHome from "../../../../asset/icons/icons8-home.png";
 import logoTask from "../../../../asset/icons/icons8-task.png";
 import logoSetting from "../../../../asset/icons/icons8-setting.png";
 import logoLogout from "../../../../asset/icons/icons8-log-out.png";
+import { deleteFieldToken } from "../../../globals/api-endpoint";
 
 class sidebar extends HTMLElement {
   constructor() {
@@ -20,9 +21,15 @@ class sidebar extends HTMLElement {
     return role;
   }
 
-  logOut() {
+  async logOut() {
     const btnLogOut = this.shadowDOM.querySelector('.sidebar__logout img');
-    btnLogOut.addEventListener("click", () => {
+    const role = localStorage.getItem("role");
+    const id = localStorage.getItem("id");
+    const firstLetter = role.charAt(0).toUpperCase();
+    const restOfWord = role.slice(1);
+    const result = firstLetter + restOfWord;
+    btnLogOut.addEventListener("click", async () => {
+      await deleteFieldToken(result, id)
       localStorage.removeItem("id");
       localStorage.removeItem("role");
       window.location.href = "/#/login";

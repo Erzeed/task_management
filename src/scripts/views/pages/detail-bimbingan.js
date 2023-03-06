@@ -421,7 +421,6 @@ const DetailBimbingann = {
       const respAlert = await customAlert("Setelah Dihapus Data Tidak Bisa Dipulihkan")
       if(respAlert !== false) {
         const resp = await deleteAccountBimbingan(url.id, dataUserBim.id_dosen)
-        console.log(resp)
         if(resp){
           loading(false, "Data Berhasil Dihapus")
           setTimeout(() => {

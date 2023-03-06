@@ -499,10 +499,10 @@ const Dashboard = {
 
     getAllDataMhs();
 
-    button__refresh.addEventListener("click", () => {
-      getAllDataMhs();
-      // table.redraw(true);
-    });
+    // button__refresh.addEventListener("click", () => {
+    //   getAllDataMhs();
+    //   // table.redraw(true);
+    // });
 
     const randomPass = () => {
       const chars =

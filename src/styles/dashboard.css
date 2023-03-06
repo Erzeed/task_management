@@ -277,6 +277,7 @@ canvas {
     display: flex;
     justify-content: end;
     margin: 10px;
+    display: none;
 }
 
 .button__refresh > button {
