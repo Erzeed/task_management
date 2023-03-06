@@ -170,12 +170,13 @@ span.textReview {
 }
 .statistik__donut {
     display: none !important;
+    transform: scale(0);
 }
 
 .statistik__donut,
 .statistik__lineChart {
     width: 45%;
-    height: 90%;
+    height: 100%;
     background-color: #fff;
     box-shadow: 0 0 18px rgba(0, 0, 0, .05);
     border-radius: 15px;
@@ -189,8 +190,13 @@ span.textReview {
 
 .statistik__lineChart {
     width: 60% !important;
-    height: 100% !important;
+    height: 350px !important;
 }
+
+canvas {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
 .statistik__donut > h1 {
     position: absolute;
@@ -421,6 +427,11 @@ span.textReview {
     }
     .create__form {
         left: 10px;
+    }
+    .statistik__lineChart {
+        width: 100% !important;
+        height: 350px !important;
+        overflow-x: scroll;
     }
 }
 

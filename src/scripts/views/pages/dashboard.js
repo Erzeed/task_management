@@ -97,7 +97,7 @@ const Dashboard = {
                 </div>
                 <div class="statistik__lineChart">
                     <h1>Data Lama Bimbingan</h1>
-                    <canvas id="lineChart" ></canvas>
+                    <canvas id="lineChart"  ></canvas>
                 </div>
             </div>
             <div class="menu__table">
@@ -333,7 +333,7 @@ const Dashboard = {
         },
       },
     });
-    new Chart(lineChart, {
+    const myBarChart = new Chart(lineChart, {
       type: "bar",
       data: {
         labels: labelsBar,
@@ -348,6 +348,7 @@ const Dashboard = {
         }],
       },
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales: {
           y: {
@@ -490,6 +491,7 @@ const Dashboard = {
             terakhir_bimbingan: data.terakhir_bimbingan !== undefined ? changeTimestamp(data.terakhir_bimbingan) : "-",
           })
         });
+        myBarChart.update();
         showTable(dataMhs)
       }
     };
