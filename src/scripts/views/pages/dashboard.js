@@ -317,21 +317,6 @@ const Dashboard = {
       ],
     };
 
-    const dataLineChart = {
-      labels: ["Bab 1", "Bab 2", "Bab 3", "Bab 4", "Bab 5"],
-      datasets: [
-        {
-          label: "Mahasiswa",
-          data: [1, 5, 10, 3, 0],
-          // borderColor: Utils.CHART_COLORS.red,
-          borderColor: "rgb(43,36,130)",
-          pointStyle: "circle",
-          pointRadius: 10,
-          pointHoverRadius: 15,
-        },
-      ],
-    };
-
     new Chart(ctx, {
       type: "doughnut",
       data: data,
@@ -502,7 +487,7 @@ const Dashboard = {
           dataMhs.push({
             ...data,
             createdAt: changeTimestamp(data.createdAt),
-            terakhir_bimbingan: changeTimestamp(data.terakhir_bimbingan)
+            terakhir_bimbingan: data.terakhir_bimbingan !== undefined ? changeTimestamp(data.terakhir_bimbingan) : "-",
           })
         });
         showTable(dataMhs)
