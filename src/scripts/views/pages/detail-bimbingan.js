@@ -6,6 +6,7 @@ import {
   getDataUser,
   initializPush,
   updateProfileUser,
+  deleteAccountBimbingan
 } from "../../globals/api-endpoint.js";
 import { tabelUserBimbingan } from "../components/tabelDataUser/detaildatabimbingan";
 import { cardBimbingan } from "../components/cardBimbingan/cardBimbingan";
@@ -13,6 +14,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { loading } from "../../utils/customToast";
+import { customAlert } from "../../utils/customPromp";
 
 const DetailBimbingann = {
   async render() {
@@ -38,6 +40,7 @@ const DetailBimbingann = {
                     </div>
                     <div class="bimbingan__button">
                         <button>Export data</button>
+                        <button class="deleteAccount">Delete Account</button>
                     </div>
                 </div>
                 <div class="detail__user">
@@ -56,6 +59,7 @@ const DetailBimbingann = {
   async afterRender() {
     cekUser();
     let dataUser = {};
+    let dataUserBim = {};
     const tabelUser = document.querySelector(".tabel__user");
     const exportPdf = document.querySelector(".bimbingan__button button");
     const bimbingan_kosong = document.querySelector(".bimbingan_kosong");
@@ -70,6 +74,9 @@ const DetailBimbingann = {
     );
     const btn__notifikasiTxt = document.querySelector(
       ".btn__notifikasi .notifikasi"
+    );
+    const deleteAccount = document.querySelector(
+      ".deleteAccount"
     );
     const accountBtn = document.querySelector('nav-bar').shadowRoot.querySelector('.navbar__account');
     accountBtn.classList.add("hide")
@@ -397,6 +404,9 @@ const DetailBimbingann = {
           bimbingan__container.innerHTML += cardBimbingan(count,data);
         });
       } else {
+        dataUserBim = {
+          ...respDataUser
+        }
         exportPdf.classList.add("not_allowed");
       }
     };
@@ -407,11 +417,26 @@ const DetailBimbingann = {
       }
     }
 
+    deleteAccount.addEventListener('click', async () => {
+      const respAlert = await customAlert("Setelah Dihapus Data Tidak Bisa Dipulihkan")
+      if(respAlert !== false) {
+        const resp = await deleteAccountBimbingan(url.id, dataUserBim.id_dosen)
+        console.log(resp)
+        if(resp){
+          loading(false, "Data Berhasil Dihapus")
+          setTimeout(() => {
+            window.location.href = "/#/dashboard"
+          }, 1610);
+        }else {
+          loading(true, resp)
+        }
+      }
+    })
+
     notifikasi.addEventListener("click", async () => {
       let token = {}
       const test = await initializPush();
       if (test){
-        console.log(dataUser)
         token = {
           token_notif: test,
         }

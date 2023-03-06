@@ -192,6 +192,12 @@ tbody > tr {
     color: #fff;
 }
 
+.bimbingan__button > .deleteAccount {
+    background-color: red;
+    width: 100px;
+    margin-left: 10px;
+}
+
 .bimbingan__button > button.not_allowed{
     cursor: not-allowed;
 }
@@ -200,6 +206,11 @@ tbody > tr {
     text-align: center;
     color: rgba(0, 0, 0, 0.5);
     font-weight: normal;
+}
+
+.swal2-container.swal2-center > .swal2-popup {
+    width: 400px !important;
+    height: 250px !important;
 }
 
 @media screen and (max-width: 667px) {

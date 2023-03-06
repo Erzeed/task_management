@@ -15,9 +15,9 @@ import {
   set,
   remove,
   update
-} from "firebase/database";
+} from "firebase/database"; 
 import { validasiCreateUser } from "../utils/validasiLoginRegister";
-import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs, orderBy, query} from "firebase/firestore"; 
+import { doc, setDoc , getFirestore, getDoc, updateDoc, arrayUnion, addDoc,collection, getDocs, orderBy, query, deleteDoc, arrayRemove} from "firebase/firestore"; 
 import { getStorage, ref as refStorage, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {loadingProggresUploadFile, loadingUploadError} from "../utils/customToast.js";
 import { deleteToken, getMessaging, getToken } from "firebase/messaging";
@@ -504,6 +504,29 @@ export const sendNotif = (message) => {
     .catch(error => {
       console.error('Error sending notification:', error.response.data.error);
       reject(error)
+    });
+  })
+}
+
+export const deleteAccountBimbingan = (userId, idDosen) => {
+  return new Promise((resolve,reject) => {
+    const db = getFirestore();
+    const dbRealtime = getDatabase();
+    updateDoc(doc(db, "Dosen", idDosen), {
+      id_mhs_bimbingan: arrayRemove(userId) 
+    }, { merge: true })
+    .then(() => {
+      deleteDoc(doc(db, "Mahasiswa", userId)).then(() => {
+        getDataTodo(userId).then((resp) => {
+          remove(ref(db, `users`, userId ))
+          .then(() => {
+            resolve(true)
+          })
+        })
+        resolve(true)
+      })
+    }).catch((error) => {
+      reject(error.code);
     });
   })
 }
