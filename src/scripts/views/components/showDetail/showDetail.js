@@ -1,6 +1,5 @@
 
 export const showDetail = (data, dataDosen) => {
-    
     return `
         <div class="detail">
             <div class="detail__name">

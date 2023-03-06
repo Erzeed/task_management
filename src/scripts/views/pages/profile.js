@@ -107,7 +107,7 @@ const profile = {
         onHandleEditProfile(resp);
 
         if(resp.role_status == "Mahasiswa"){
-          const dataDosen = await getDataUser(resp.id_dosen);
+          const dataDosen = await getDataDosen(resp.id_dosen);
           profile__detail.innerHTML = showDetail(resp, dataDosen);
           
         }else {
