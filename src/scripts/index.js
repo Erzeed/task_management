@@ -18,8 +18,8 @@ window.addEventListener('hashchange', () => {
 
 window.addEventListener('load', async () => {
   app.renderPage();
+  await firebaseRegister();
   await swRegister();
-  firebaseRegister();
 });
 
 export default app;

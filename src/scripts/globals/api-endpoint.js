@@ -453,22 +453,14 @@ export const initializPush = () => {
     const messaging = getMessaging(app);
     getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
       if (currentToken) {
+        console.log(currentToken)
         resolve(currentToken)
       } else {
-        // Show permission request UI
-          Notification.requestPermission().then((permission) => {
-            if (permission === 'granted') {
-                console.log('Notification permission granted.');
-            } else {
-              console.log('Unable to get permission to notify.');
-            }
-          }).catch((err) => {
-            console.error('Unable to get permission to notify.', err);
-          });
         resolve("Belum registrasi")
       }
     }).catch((err) => {
       console.log('An error occurred while retrieving token. ', err);
+      reject(err)
     });;
   })
 }

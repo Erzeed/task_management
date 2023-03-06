@@ -25,10 +25,10 @@ class sidebar extends HTMLElement {
     const btnLogOut = this.shadowDOM.querySelector('.sidebar__logout img');
     const role = localStorage.getItem("role");
     const id = localStorage.getItem("id");
-    const firstLetter = role.charAt(0).toUpperCase();
-    const restOfWord = role.slice(1);
-    const result = firstLetter + restOfWord;
     btnLogOut.addEventListener("click", async () => {
+      const firstLetter = role.charAt(0).toUpperCase();
+      const restOfWord = role.slice(1);
+      const result = firstLetter + restOfWord;
       await deleteFieldToken(result, id)
       localStorage.removeItem("id");
       localStorage.removeItem("role");
