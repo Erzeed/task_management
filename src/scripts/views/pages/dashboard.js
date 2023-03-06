@@ -355,12 +355,15 @@ const Dashboard = {
         datasets: [{
           label: 'Lama Bimbingan',
           data: dataBar,
-          backgroundColor: 'rgba(43,36,130, .8)',
-          borderColor: 'rgb(43,36,130)',
-          borderWidth: 1
-        }]
+          backgroundColor: 'rgba(54, 162, 235, .5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          borderRadius: 5,
+          borderSkipped: false,
+        }],
       },
       options: {
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,

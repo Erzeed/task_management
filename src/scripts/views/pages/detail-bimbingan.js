@@ -411,10 +411,11 @@ const DetailBimbingann = {
       let token = {}
       const test = await initializPush();
       if (test){
+        console.log(dataUser)
         token = {
           token_notif: test,
         }
-        await updateProfileUser(dataUser.id,token, "Mahasiswa")
+        await updateProfileUser(url.id,token, "Mahasiswa")
         loading(false, "Notifikasi sudah aktif");
       }else {
         loading(true, "Reload dan aktifkan lagi");

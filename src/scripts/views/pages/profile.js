@@ -4,6 +4,7 @@ import profileimg from "../../../asset/img/profile-default.jpg";
 import { cekUser } from "../../utils/cekUser";
 import { getDataUser, updateProfileUser, getDataDosen } from "../../globals/api-endpoint.js";
 import { showDetail } from "../components/showDetail/showDetail";
+import { loading } from "../../utils/customToast";
 
 const profile = {
   async render() {

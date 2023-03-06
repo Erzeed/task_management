@@ -4,7 +4,7 @@ export const showDetail = (data, dataDosen) => {
     return `
         <div class="detail">
             <div class="detail__name">
-                <p>${data.role_status == "dosen" ? "Nik" : "Nim"}</p>
+                <p>${data.role_status == "dosen" ? "NIK" : "Nim"}</p>
                 <p>Nama</p>
                 <p>Email</p>
                 <p>Nomor Telepon</p>
