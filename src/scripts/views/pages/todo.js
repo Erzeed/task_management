@@ -14,6 +14,7 @@ import {
   sendNotif
 } from "../../globals/api-endpoint.js";
 import { loading } from "../../utils/customToast";
+import { customAlert } from "../../utils/customPromp";
 
 
 const Todo = {
@@ -139,6 +140,7 @@ const Todo = {
       }else {
         const resp = await getDataUser(id);
         if(resp) {
+          cekUserProfile(resp)
           loadingToast.style.display = "none";
           dataUser = {
             ...resp
@@ -152,6 +154,15 @@ const Todo = {
     
     if(!navigator.onLine){
       loadingToast.style.display = "none";
+    }
+
+    const cekUserProfile = (data) => {
+      if(data.nama == undefined) {
+        loading(true, "Lengkapi Profile Terlebih Dahulu")
+        setTimeout(() => {
+          window.location.href = `/#/profile`;
+        }, 1610);
+      }
     }
 
     const getDataInTodo = async  (roleUser) => {

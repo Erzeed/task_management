@@ -25,25 +25,3 @@ self.addEventListener("install", () => {
   console.log("Service Worker: Installed");
   self.skipWaiting();
 });
-
-// self.addEventListener("push", (event) => {
-//   console.log(event);
-//   onBackgroundMessage(messaging, (payload) => {
-//     console.log(
-//       "[firebase-messaging-sw.js] Received background message ",
-//       payload
-//     );
-//     // Customize notification here
-//     console.log(messaging);
-//     const notificationTitle = "Title";
-//     const notificationOptions = {
-//       body: "Haii",
-//       //   icon: '/firebase-logo.png'
-//     };
-  
-//     return self.registration.showNotification(
-//       notificationTitle,
-//       notificationOptions
-//     );
-//   });
-// });

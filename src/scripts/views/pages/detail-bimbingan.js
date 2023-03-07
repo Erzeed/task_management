@@ -382,6 +382,8 @@ const DetailBimbingann = {
       const role = localStorage.getItem("role");
       if(role == "dosen"){
         btn__notifikasi.style.display = "none"
+      }else {
+        deleteAccount.style.display = "none"
       }
     }
 

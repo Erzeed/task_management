@@ -6,6 +6,9 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider
 } from "firebase/auth";
 import {
   getDatabase,
@@ -533,5 +536,34 @@ export const deleteFieldToken = (role,id) => {
     }).catch(error => {
       console.log(error)
     })
+  })
+}
+
+export const updatePasswordUser = (data) => {
+  return new Promise ((resolve,reject) => {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(
+      data.email, 
+      data.password_lama
+    );
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        reauthenticateWithCredential(user, credential).then(() => {
+          // User re-authenticated.
+            updatePassword(user, data.password_baru).then((resp) => {
+              // Update successful.
+              resolve("succes")
+            }).catch((error) => {
+              console.log(error)
+            });
+        }).catch((error) => {
+          const errorCode = error.code;
+          reject(errorCode);
+        });
+      } else {
+        console.log("signout")
+      }
+    });
   })
 }

@@ -2,9 +2,10 @@ import "../../../styles/profile.css";
 import banner from "../../../asset/banner/gradienta-banner-unsplash.png";
 import profileimg from "../../../asset/img/profile-default.jpg";
 import { cekUser } from "../../utils/cekUser";
-import { getDataUser, updateProfileUser, getDataDosen } from "../../globals/api-endpoint.js";
+import { getDataUser, updateProfileUser, getDataDosen, updatePasswordUser } from "../../globals/api-endpoint.js";
 import { showDetail } from "../components/showDetail/showDetail";
 import { loading } from "../../utils/customToast";
+import { validasiFormRegisLogin } from "../../utils/validasiLoginRegister";
 
 const profile = {
   async render() {
@@ -27,6 +28,7 @@ const profile = {
                 </div>
                 <div class="header__btn">
                     <button>Edit Profile</button>
+                    <button class="changePass">Update Password</button>
                 </div>
             </div>
           </div>
@@ -49,6 +51,19 @@ const profile = {
               </div>
             </div>
           </div>
+        <div class="edit__password">
+            <div class="form__edit">
+              <h1>Update Password</h1>
+              <form id="form_editpassword">
+                  <input type='password' id='password_lama' class="inputForm" placeholder="Password Lama" /><br/>
+                  <input type='password' id='password_baru' class="inputForm" placeholder="Password Baru" /><br/>
+              </form>
+              <div class="btn__create">
+                <button class="simpan_password" type='button'>Simpan</button>
+                <button class="cancel_password" type='button'>Cancel</button>
+              </div>
+            </div>
+          </div>
       </div>
     `;
   },
@@ -60,16 +75,28 @@ const profile = {
       nama: "",
       nomor_telepon: "",
     };
+
+    let dataUpdatePass = {
+      email: '',
+      password_lama: '',
+      password_baru: ''
+    }
+    
     const id = localStorage.getItem("id");
     const header__btn = document.querySelector(".header__btn button");
     const profile__detail = document.querySelector(".profile__detail");
     const cancel = document.querySelector(".cancel");
+    const cancel_password = document.querySelector(".cancel_password");
     const simpan = document.querySelector(".simpan");
     const formUp = document.querySelector(".edit__profileDosen");
+    const edit__password = document.querySelector(".edit__password");
     const form = document.querySelectorAll("#form");
+    const form_editpassword = document.querySelectorAll("#form_editpassword");
     const header__titleH2 = document.querySelector(".header__title h2");
     const header__titleP = document.querySelector(".header__title p");
     const loadingToast = document.querySelector("loading-roll");
+    const changePass = document.querySelector(".changePass");
+    const simpan_password = document.querySelector(".simpan_password");
     const role = localStorage.getItem("role");
 
 
@@ -81,15 +108,32 @@ const profile = {
         };
       });
     });
+    
+    [...form_editpassword].forEach((e) => {
+      e.addEventListener("change", (e) => {
+        dataUpdatePass = {
+          ...dataUpdatePass,
+          [e.target.id]: e.target.value,
+        };
+      });
+    });
 
     const getData = async () => {
       if(role == "dosen") {
         const data = await getDataDosen(id);
         loadingToast.style.display = "none";
+        dataUpdatePass = {
+          ...dataUpdatePass,
+          email: data.email
+        };
         showData(data)
       }else {
         const data = await getDataUser(id);
         loadingToast.style.display = "none";
+        dataUpdatePass = {
+          ...dataUpdatePass,
+          email: data.email
+        };
         showData(data)
       }
     }
@@ -149,8 +193,30 @@ const profile = {
       }
     });
 
+    simpan_password.addEventListener("click", async () => {
+      const {email, password_lama, password_baru} = dataUpdatePass;
+      if(password_lama != '' || password_baru != ''){
+        const resp = await updatePasswordUser(dataUpdatePass).catch((err) => err)
+        if(resp == "succes") {
+          loading(false, "Update Succes")
+        }else {
+          validasiFormRegisLogin(resp)
+        }
+      }else {
+        loading(true, "Semua Data Harus Terisi")
+      }
+    })
+
+    changePass.addEventListener("click", () => {
+      edit__password.classList.add("active")
+    })
+
     cancel.addEventListener("click", () => {
       formUp.classList.remove("active");
+    });
+
+    cancel_password.addEventListener("click", () => {
+      edit__password.classList.remove("active")
     });
   },
 };
