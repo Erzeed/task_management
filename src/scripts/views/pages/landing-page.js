@@ -21,8 +21,8 @@ const LandingPage = {
               </div>
               <div class="work__txt">
                   <div class="work__txt__desc">
-                  <h2>An easy way to organize all your task and work neatly</h2>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt deleniti numquam culpa qui aliquid blanditiis eaque, nihil dolorum reprehenderit volu</p>
+                  <h2>Memudahkan Dalam Monitoring Proggres Skripsi</h2>
+                  <p>Membantu memudahkan proses monitoring progress skripsi bagi mahasiswa dan dosen pembimbing. Dengan aplikasi Ini, mahasiswa dapat memantau perkembangan tugas secara lebih terstruktur dan efektif</p>
                   </div>
               </div>
           </div>

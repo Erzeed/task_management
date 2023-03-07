@@ -19,10 +19,10 @@ class jumbotron extends HTMLElement {
         <div class="jumbotron">
             <div class="jumbotron__txt">
                 <div class="txt__headline">
-                    <h1>Are silos making teamwork more painful?</h1>
+                    <h1>Wgether</h1>
                 </div>
                 <div class="txt__desc">
-                    <p>Asana helps you manage projects, focus on what’s important, and organize work in one place for seamless collaboration.</p>
+                    <p>Aplikasi yang dikhususkan untuk membantu dalam melakukan bimbingan skripsi agar lebih mudah dalam monitoring proggres dan manage user</p>
                 </div>
                 <div class="txt__img">
                     <img src=${callender} alt="calender" />
