@@ -415,7 +415,6 @@ const DetailBimbingann = {
     };
 
     const changeBtnNotif = (data) => {
-      console.log(data)
       if (data.token_notif) {
         btn__notifikasiTxt.innerText = "Notifikasi Aktif";
       }
@@ -446,7 +445,6 @@ const DetailBimbingann = {
           token_notif: test,
         }
         await updateProfileUser(url.id,token, "Mahasiswa")
-        getData();
         loading(false, "Notifikasi sudah aktif");
       }
     })
