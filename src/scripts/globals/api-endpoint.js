@@ -456,14 +456,11 @@ export const initializPush = () => {
     const messaging = getMessaging(app);
     getToken(messaging, { vapidKey: CONFIG.VAPIDKEY }).then((currentToken) => {
       if (currentToken) {
-        console.log(currentToken)
         resolve(currentToken)
-      } else {
-        resolve("Belum registrasi")
-      }
+      } 
     }).catch((err) => {
       console.log('An error occurred while retrieving token. ', err);
-      reject(err)
+      reject(err.code)
     });;
   })
 }

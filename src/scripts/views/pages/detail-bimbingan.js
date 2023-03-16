@@ -438,15 +438,16 @@ const DetailBimbingann = {
 
     notifikasi.addEventListener("click", async () => {
       let token = {}
-      const test = await initializPush();
-      if (test){
+      const test = await initializPush().catch((err) => err);
+      if (test == "messaging/permission-blocked"){
+        loading(true, test);
+      }else {
         token = {
           token_notif: test,
         }
-        await updateProfileUser(url.id,token, "Mahasiswa")
+        await updateProfileUser(user.iddosen,token, "Dosen")
+        getData();
         loading(false, "Notifikasi sudah aktif");
-      }else {
-        loading(true, "Reload dan aktifkan lagi");
       }
     })
 
