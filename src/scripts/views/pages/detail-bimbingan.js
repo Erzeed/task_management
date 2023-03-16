@@ -445,7 +445,7 @@ const DetailBimbingann = {
         token = {
           token_notif: test,
         }
-        await updateProfileUser(user.iddosen,token, "Dosen")
+        await updateProfileUser(url.id,token, "Mahasiswa")
         getData();
         loading(false, "Notifikasi sudah aktif");
       }
