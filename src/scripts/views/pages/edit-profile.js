@@ -66,6 +66,9 @@ const EditProfile = {
           const resp = await updateProfileUser(id, dataUser, "Mahasiswa")
           if(resp){
             loading(false,"Data berhasil di update");
+            setTimeout(() => {
+              window.location.href = "/#/profile"
+            }, 1610);
           } else {
             loading(true, resp);
           }

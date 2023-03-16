@@ -394,6 +394,7 @@ const DetailBimbingann = {
       tabelUser.innerHTML = tabelUserBimbingan(respDataUser);
       const respDataRiwayat = await getDataRiwayatBimbingan(url.id);
       let count = 0;
+      changeBtnNotif(respDataUser)
       if (respDataRiwayat && respDataUser) {
         bimbingan_kosong.style.display = "none";
         dataUser = {
@@ -414,6 +415,7 @@ const DetailBimbingann = {
     };
 
     const changeBtnNotif = (data) => {
+      console.log(data)
       if (data.token_notif) {
         btn__notifikasiTxt.innerText = "Notifikasi Aktif";
       }

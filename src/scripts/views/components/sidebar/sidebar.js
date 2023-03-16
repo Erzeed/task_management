@@ -48,18 +48,19 @@ class sidebar extends HTMLElement {
             <div class="sidebar__menu">
                 <ul>
                     <li class=${this.class == "home" ? "active" : ""}>
-                      <a href=${this.cekRole() == "dosen" ? "/#/dashboard" : `/#/detailbimbingan/${localStorage.getItem("id")}`}><img src=${logoHome} alt="home" /></a>
+                      <a href=${this.cekRole() == "dosen" ? "/#/dashboard" : `/#/detailbimbingan/${localStorage.getItem("id")}`}><img src=${logoHome} alt="home" />Dashboard</a>
                     </li>
                     <li class=${this.class == "todo" ? "active" : ""}>
-                      <a href="/#/todo"><img src=${logoTask} alt="task" /></a>
+                      <a href="/#/todo"><img src=${logoTask} alt="task" />Tugas</a>
                     </li>
                     <li class=${this.class == "profile" ? "active" : ""}>
-                      <a href="/#/profile"><img src=${logoSetting} alt="setting" /><a/>
+                      <a href="/#/profile"><img src=${logoSetting} alt="setting" />Profile<a/>
                     </li>
                 </ul>
             </div>
             <div class="sidebar__logout">
                 <img src=${logoLogout} alt="logout" />
+                <p>Keluar</p>
             </div>
         </div>
     `;
